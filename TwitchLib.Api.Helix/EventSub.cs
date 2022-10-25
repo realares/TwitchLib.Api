@@ -15,7 +15,8 @@ namespace TwitchLib.Api.Helix
         {
         }
 
-        public Task<CreateEventSubSubscriptionResponse> CreateEventSubSubscriptionAsync(string type, string version, Dictionary<string, string> condition, string method, string callback,
+        public Task<CreateEventSubSubscriptionResponse> CreateEventSubSubscriptionAsync(
+            string type, string version, Dictionary<string, string> condition, string method, string callback,
             string secret, string clientId = null, string accessToken = null)
         {
             if (string.IsNullOrEmpty(type))
@@ -41,7 +42,8 @@ namespace TwitchLib.Api.Helix
             return TwitchPostGenericAsync<CreateEventSubSubscriptionResponse>("/eventsub/subscriptions", ApiVersion.Helix, JsonConvert.SerializeObject(body), null, accessToken, clientId);
         }
 
-        public Task<GetEventSubSubscriptionsResponse> GetEventSubSubscriptionsAsync(string status = null, string type = null, string after = null, string clientId = null, string accessToken = null)
+        public Task<GetEventSubSubscriptionsResponse> GetEventSubSubscriptionsAsync(
+            string status = null, string type = null, string after = null, string clientId = null, string accessToken = null)
         {
             var getParams = new List<KeyValuePair<string, string>>();
 
@@ -55,7 +57,8 @@ namespace TwitchLib.Api.Helix
             return TwitchGetGenericAsync<GetEventSubSubscriptionsResponse>("/eventsub/subscriptions", ApiVersion.Helix, getParams, accessToken, clientId);
         }
 
-        public async Task<bool> DeleteEventSubSubscriptionAsync(string id, string clientId = null, string accessToken = null)
+        public async Task<bool> DeleteEventSubSubscriptionAsync(
+            string id, string clientId = null, string accessToken = null)
         {
             var getParams = new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("id", id) };
 

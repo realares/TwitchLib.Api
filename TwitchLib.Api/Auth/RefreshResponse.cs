@@ -15,5 +15,8 @@ namespace TwitchLib.Api.Auth
 
         [JsonProperty(PropertyName = "scope")]
         public string[] Scopes { get; protected set; }
+
+        [JsonProperty(PropertyName = "token_type")]
+        public string TokenType { get; set; }
     }
 }

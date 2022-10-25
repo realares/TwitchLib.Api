@@ -3,6 +3,7 @@ using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using TwitchLib.Api.Core.Enums;
 using TwitchLib.Api.Core.Exceptions;
@@ -52,7 +53,7 @@ namespace TwitchLib.Api.Core
 
         internal async Task<string> GenerateServerBasedAccessToken()
         {
-            var result = await _http.GeneralRequestAsync($"{BaseAuth}/token?client_id={Settings.ClientId}&client_secret={Settings.Secret}&grant_type=client_credentials", "POST", null, ApiVersion.Helix, Settings.ClientId, null).ConfigureAwait(false);
+            var result = await _http.GeneralRequestAsync($"{BaseAuth}/token?client_id={Settings.ClientId}&client_secret={Settings.Secret}&grant_type=client_credentials", "POST", null, ApiVersion.Auth, Settings.ClientId, null).ConfigureAwait(false);
             if (result.Key == 200)
             {
                 var user = JsonConvert.DeserializeObject<dynamic>(result.Value);
@@ -83,7 +84,8 @@ namespace TwitchLib.Api.Core
             accessToken = await GetAccessTokenAsync(accessToken).ConfigureAwait(false);
             ForceAccessTokenAndClientIdForHelix(clientId, accessToken, api);
 
-            return await _rateLimiter.Perform(async () => (await _http.GeneralRequestAsync(url, "GET", null, api, clientId, accessToken).ConfigureAwait(false)).Value).ConfigureAwait(false);
+            return await _rateLimiter.Perform(async () 
+                => (await _http.GeneralRequestAsync(url, "GET", null, api, clientId, accessToken).ConfigureAwait(false)).Value).ConfigureAwait(false);
         }
 
         protected async Task<T> TwitchGetGenericAsync<T>(string resource, ApiVersion api, List<KeyValuePair<string, string>> getParams = null, string accessToken = null, string clientId = null, string customBase = null)
@@ -148,7 +150,9 @@ namespace TwitchLib.Api.Core
             accessToken = await GetAccessTokenAsync(accessToken).ConfigureAwait(false);
             ForceAccessTokenAndClientIdForHelix(clientId, accessToken, api);
 
-            return await _rateLimiter.Perform(async () => JsonConvert.DeserializeObject<T>((await _http.GeneralRequestAsync(url, "POST", payload, api, clientId, accessToken).ConfigureAwait(false)).Value, _twitchLibJsonDeserializer)).ConfigureAwait(false);
+            return await _rateLimiter
+                .Perform(async () => JsonConvert.DeserializeObject<T>((await _http.GeneralRequestAsync(url, "POST", payload, api, clientId, accessToken).ConfigureAwait(false)).Value, _twitchLibJsonDeserializer))
+                .ConfigureAwait(false);
         }
 
         protected async Task<T> TwitchPostGenericModelAsync<T>(string resource, ApiVersion api, RequestModel model, string accessToken = null, string clientId = null, string customBase = null)
@@ -265,28 +269,33 @@ namespace TwitchLib.Api.Core
         }
 
         // credit: https://stackoverflow.com/questions/14290988/populate-and-return-entities-from-downloadstringcompleted-handler-in-windows-pho
-        private Task<string> SimpleRequestAsync(string url)
+        private async Task<string> SimpleRequestAsync(string url)
         {
-            var tcs = new TaskCompletionSource<string>();
-            var client = new WebClient();
+            //var tcs = new TaskCompletionSource<string>();
+            //var client = new WebClient();
+            using var httpClient = new HttpClient();
 
-            client.DownloadStringCompleted += DownloadStringCompletedEventHandler;
-            client.DownloadString(new Uri(url));
+            var getresponse = await httpClient.GetStringAsync(url).ConfigureAwait(false);
 
-            return tcs.Task;
+            return getresponse;
 
-            // local function
-            void DownloadStringCompletedEventHandler(object sender, DownloadStringCompletedEventArgs args)
-            {
-                if (args.Cancelled)
-                    tcs.SetCanceled();
-                else if (args.Error != null)
-                    tcs.SetException(args.Error);
-                else
-                    tcs.SetResult(args.Result);
+            //client.DownloadStringCompleted += DownloadStringCompletedEventHandler;
+            //client.DownloadString(new Uri(url));
 
-                client.DownloadStringCompleted -= DownloadStringCompletedEventHandler;
-            }
+            //return tcs.Task;
+
+            //// local function
+            //void DownloadStringCompletedEventHandler(object sender, DownloadStringCompletedEventArgs args)
+            //{
+            //    if (args.Cancelled)
+            //        tcs.SetCanceled();
+            //    else if (args.Error != null)
+            //        tcs.SetException(args.Error);
+            //    else
+            //        tcs.SetResult(args.Result);
+
+            //    client.DownloadStringCompleted -= DownloadStringCompletedEventHandler;
+            //}
         }
 
         private readonly JsonSerializerSettings _twitchLibJsonDeserializer = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, MissingMemberHandling = MissingMemberHandling.Ignore };

@@ -20,44 +20,15 @@ namespace TwitchLib.Api.Core.Common
         {
             switch (scope)
             {
-                case AuthScopes.Channel_Check_Subscription:
-                    return "channel_check_subscription";
-                case AuthScopes.Channel_Commercial:
-                    return "channel_commercial";
-                case AuthScopes.Channel_Editor:
-                    return "channel_editor";
-                case AuthScopes.Channel_Feed_Edit:
-                    return "channel_feed_edit";
-                case AuthScopes.Channel_Feed_Read:
-                    return "channel_feed_read";
-                case AuthScopes.Channel_Read:
-                    return "channel_read";
-                case AuthScopes.Channel_Stream:
-                    return "channel_stream";
-                case AuthScopes.Channel_Subscriptions:
-                    return "channel_subscriptions";
-                case AuthScopes.Chat_Login:
-                    return "chat_login";
-                case AuthScopes.Collections_Edit:
-                    return "collections_edit";
-                case AuthScopes.Communities_Edit:
-                    return "communities_edit";
-                case AuthScopes.Communities_Moderate:
-                    return "communities_moderate";
-                case AuthScopes.User_Blocks_Edit:
-                    return "user_blocks_edit";
-                case AuthScopes.User_Blocks_Read:
-                    return "user_blocks_read";
-                case AuthScopes.User_Follows_Edit:
-                    return "user_follows_edit";
-                case AuthScopes.User_Read:
-                    return "user_read";
-                case AuthScopes.User_Subscriptions:
-                    return "user_subscriptions";
-                case AuthScopes.Viewing_Activity_Read:
-                    return "viewing_activity_read";
-                case AuthScopes.OpenId:
-                    return "openid";
+                case AuthScopes.Helix_Chat_Read:
+                    return "chat:read";
+                case AuthScopes.Helix_Chat_Edit:
+                    return "chat:edit";
+                case AuthScopes.Helix_Channel_Read_Vips:
+                    return "channel:read:vips";
+                // end neu
+
+  
                 case AuthScopes.Helix_User_Edit_Broadcast:
                     return "user:edit:broadcast";
                 case AuthScopes.Helix_Analytics_Read_Extensions:

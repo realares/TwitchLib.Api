@@ -2,6 +2,12 @@
 {
     public enum AuthScopes
     {
+        // neu
+        Helix_Chat_Read,
+        Helix_Chat_Edit,
+        Helix_Channel_Read_Vips,
+        // end neu
+
         Any,
         Channel_Check_Subscription,
         Channel_Commercial,
@@ -61,5 +67,7 @@
         Helix_User_Read_Follows,
         Helix_User_Read_Subscriptions,
         None
+
+
     }
 }

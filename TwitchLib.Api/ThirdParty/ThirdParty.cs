@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Timers;
 using TwitchLib.Api.Core;
@@ -99,7 +100,7 @@ namespace TwitchLib.Api.ThirdParty
             public event EventHandler<OnUserAuthorizationDetectedArgs> OnUserAuthorizationDetected;
             public event EventHandler<OnAuthorizationFlowErrorArgs> OnError;
 
-            public CreatedFlow CreateFlow(string applicationTitle, IEnumerable<AuthScopes> scopes)
+            public async Task<CreatedFlow> CreateFlowAsync(string applicationTitle, IEnumerable<AuthScopes> scopes)
             {
                 string scopesStr = null;
                 foreach (var scope in scopes)
@@ -110,15 +111,18 @@ namespace TwitchLib.Api.ThirdParty
 
                 var createUrl = $"{BaseUrl}/create/{Core.Common.Helpers.Base64Encode(applicationTitle)}/{scopesStr}";
 
-                var resp = new WebClient().DownloadString(createUrl);
+                //var resp = new WebClient().DownloadString(createUrl);
+                using var client = new HttpClient();
+                string resp = await client.GetStringAsync(createUrl).ConfigureAwait(false);
                 return JsonConvert.DeserializeObject<CreatedFlow>(resp);
             }
 
-            public RefreshTokenResponse RefreshToken(string refreshToken)
+            public async Task<RefreshTokenResponse> RefreshTokenAsync(string refreshToken)
             {
                 var refreshUrl = $"{BaseUrl}/refresh/{refreshToken}";
 
-                var resp = new WebClient().DownloadString(refreshUrl);
+                using var client = new HttpClient();
+                var resp = await client.GetStringAsync(refreshUrl).ConfigureAwait(false); 
                 return JsonConvert.DeserializeObject<RefreshTokenResponse>(resp);
             }
 
@@ -130,24 +134,34 @@ namespace TwitchLib.Api.ThirdParty
                 _pingTimer.Start();
             }
 
-            public PingResponse PingStatus(string id = null)
+            public async Task<PingResponse> PingStatusAsync(string id = null)
             {
                 if (id != null)
                     _apiId = id;
 
-                var resp = new WebClient().DownloadString($"{BaseUrl}/status/{_apiId}");
+                //var resp = new WebClient().DownloadString($"{BaseUrl}/status/{_apiId}");
+                using var client = new HttpClient();
+                var resp = await client.GetStringAsync($"{BaseUrl}/status/{_apiId}").ConfigureAwait(false);
                 var model = new PingResponse(resp);
 
                 return model;
             }
 
-            private void OnPingTimerElapsed(object sender, ElapsedEventArgs e)
+            private async void OnPingTimerElapsed(object sender, ElapsedEventArgs e)
             {
-                var ping = PingStatus();
+                var ping = await PingStatusAsync();
                 if (ping.Success)
                 {
                     _pingTimer.Stop();
-                    OnUserAuthorizationDetected?.Invoke(null, new OnUserAuthorizationDetectedArgs {Id = ping.Id, Scopes = ping.Scopes, Token = ping.Token, Username = ping.Username, Refresh = ping.Refresh, ClientId = ping.ClientId });
+                    OnUserAuthorizationDetected?.Invoke(null, new OnUserAuthorizationDetectedArgs
+                    {
+                        Id = ping.Id,
+                        Scopes = ping.Scopes,
+                        Token = ping.Token,
+                        Username = ping.Username,
+                        Refresh = ping.Refresh,
+                        ClientId = ping.ClientId
+                    });
                 }
                 else
                 {
