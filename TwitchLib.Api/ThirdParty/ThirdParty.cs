@@ -111,7 +111,6 @@ namespace TwitchLib.Api.ThirdParty
 
                 var createUrl = $"{BaseUrl}/create/{Core.Common.Helpers.Base64Encode(applicationTitle)}/{scopesStr}";
 
-                //var resp = new WebClient().DownloadString(createUrl);
                 using var client = new HttpClient();
                 string resp = await client.GetStringAsync(createUrl).ConfigureAwait(false);
                 return JsonConvert.DeserializeObject<CreatedFlow>(resp);
@@ -139,7 +138,6 @@ namespace TwitchLib.Api.ThirdParty
                 if (id != null)
                     _apiId = id;
 
-                //var resp = new WebClient().DownloadString($"{BaseUrl}/status/{_apiId}");
                 using var client = new HttpClient();
                 var resp = await client.GetStringAsync($"{BaseUrl}/status/{_apiId}").ConfigureAwait(false);
                 var model = new PingResponse(resp);
