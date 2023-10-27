@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,13 +7,13 @@ namespace TwitchLib.Api.Helix.Models.Predictions.CreatePrediction
 {
     public class CreatePredictionRequest
     {
-        [JsonProperty(PropertyName = "broadcaster_id")]
+        [JsonPropertyName("broadcaster_id")]
         public string BroadcasterId { get; set; }
-        [JsonProperty(PropertyName = "title")]
+        [JsonPropertyName("title")]
         public string Title { get; set; }
-        [JsonProperty(PropertyName = "outcomes")]
+        [JsonPropertyName("outcomes")]
         public Outcome[] Outcomes { get; set; }
-        [JsonProperty(PropertyName = "prediction_window")]
+        [JsonPropertyName("prediction_window")]
         public int PredictionWindowSeconds { get; set; }
     }
 }

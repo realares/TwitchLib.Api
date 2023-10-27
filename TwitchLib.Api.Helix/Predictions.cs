@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using System.Text.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,6 +9,8 @@ using TwitchLib.Api.Core.Interfaces;
 using TwitchLib.Api.Helix.Models.Predictions.CreatePrediction;
 using TwitchLib.Api.Helix.Models.Predictions.EndPrediction;
 using TwitchLib.Api.Helix.Models.Predictions.GetPredictions;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace TwitchLib.Api.Helix
 {
@@ -19,7 +20,8 @@ namespace TwitchLib.Api.Helix
         {
         }
 
-        public Task<GetPredictionsResponse> GetPredictionsAsync(string broadcasterId, List<string> ids = null, string after = null, int first = 20, string accessToken = null)
+        public Task<GetPredictionsResponse?> GetPredictionsAsync(
+            string broadcasterId, List<string>? ids = null, string? after = null, int first = 20, string? accessToken = null)
         {
             var getParams = new List<KeyValuePair<string, string>>
             {
@@ -40,14 +42,15 @@ namespace TwitchLib.Api.Helix
             return TwitchGetGenericAsync<GetPredictionsResponse>("/predictions", ApiVersion.Helix, getParams, accessToken);
         }
 
-        public Task<CreatePredictionResponse> CreatePredictionAsync(CreatePredictionRequest request, string accessToken = null)
+        public Task<CreatePredictionResponse?> CreatePredictionAsync(CreatePredictionRequest request, string? accessToken = null)
         {
-            return TwitchPostGenericAsync<CreatePredictionResponse>("/predictions", ApiVersion.Helix, JsonConvert.SerializeObject(request), accessToken: accessToken);
+            return TwitchPostGenericAsync<CreatePredictionResponse>("/predictions", ApiVersion.Helix, JsonSerializer.Serialize(request), accessToken: accessToken);
         }
 
-        public Task<EndPredictionResponse> EndPredictionAsync(string broadcasterId, string id, PredictionEndStatus status, string winningOutcomeId = null, string accessToken = null)
+        public Task<EndPredictionResponse?> EndPredictionAsync(
+            string broadcasterId, string id, PredictionEndStatus status, string? winningOutcomeId = null, string? accessToken = null)
         {
-            JObject json = new JObject();
+            JsonObject json = new JsonObject();
             json["broadcaster_id"] = broadcasterId;
             json["id"] = id;
             json["status"] = status.ToString();

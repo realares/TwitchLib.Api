@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,23 +7,23 @@ namespace TwitchLib.Api.Helix.Models.Moderation.AutomodSettings
 {
     public class AutomodSettings
     {
-        [JsonProperty(PropertyName = "overall_level")]
+        [JsonPropertyName("overall_level")]
         public int? OverallLevel;
-        [JsonProperty(PropertyName = "disability")]
+        [JsonPropertyName("disability")]
         public int? Disability;
-        [JsonProperty(PropertyName = "aggression")]
+        [JsonPropertyName("aggression")]
         public int? Aggression;
-        [JsonProperty(PropertyName = "sexuality_sex_or_gender")]
+        [JsonPropertyName("sexuality_sex_or_gender")]
         public int? SexualitySexOrGender;
-        [JsonProperty(PropertyName = "misogyny")]
+        [JsonPropertyName("misogyny")]
         public int? Misogyny;
-        [JsonProperty(PropertyName = "bullying")]
+        [JsonPropertyName("bullying")]
         public int? Bullying;
-        [JsonProperty(PropertyName = "swearing")]
+        [JsonPropertyName("swearing")]
         public int? Swearing;
-        [JsonProperty(PropertyName = "race_ethnicity_or_religion")]
+        [JsonPropertyName("race_ethnicity_or_religion")]
         public int? RaceEthnicityOrReligion;
-        [JsonProperty(PropertyName = "sex_based_terms")]
+        [JsonPropertyName("sex_based_terms")]
         public int? SexBasedTerms;
     }
 }

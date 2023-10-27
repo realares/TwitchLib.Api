@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,17 +7,17 @@ namespace TwitchLib.Api.Helix.Models.Predictions
 {
     public class Outcome
     {
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; protected set; }
-        [JsonProperty(PropertyName = "title")]
-        public string Title { get; protected set; }
-        [JsonProperty(PropertyName = "users")]
-        public int ChannelPoints { get; protected set; }
-        [JsonProperty(PropertyName = "channel_points")]
-        public int ChannelPointsVotes { get; protected set; }
-        [JsonProperty(PropertyName = "top_predictors")]
-        public TopPredictor[] TopPredictors { get; protected set; }
-        [JsonProperty(PropertyName = "color")]
-        public string Color { get; protected set; }
+        [JsonPropertyName("id")]
+        public string Id { get; set; }
+        [JsonPropertyName("title")]
+        public string Title { get; set; }
+        [JsonPropertyName("users")]
+        public int ChannelPoints { get; set; }
+        [JsonPropertyName("channel_points")]
+        public int ChannelPointsVotes { get; set; }
+        [JsonPropertyName("top_predictors")]
+        public TopPredictor[] TopPredictors { get; set; }
+        [JsonPropertyName("color")]
+        public string Color { get; set; }
     }
 }

@@ -8,12 +8,13 @@ namespace TwitchLib.Api.Core
 {
     public class ApiSettings : IApiSettings, INotifyPropertyChanged
     {
-        private string _clientId;
-        private string _secret;
-        private string _accessToken;
+        private string _clientId = null!;
+        private string _secret = null!;
+        private string _accessToken = null!;
         private bool _skipDynamicScopeValidation;
         private bool _skipAutoServerTokenGeneration;
-        private List<AuthScopes> _scopes;
+        private List<AuthScopes> _scopes = null!;
+
         public string ClientId
         {
             get => _clientId;
@@ -87,7 +88,7 @@ namespace TwitchLib.Api.Core
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {

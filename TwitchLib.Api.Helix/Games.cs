@@ -16,7 +16,7 @@ namespace TwitchLib.Api.Helix
 
             #region GetGames
 
-            public Task<GetGamesResponse> GetGamesAsync(List<string> gameIds = null, List<string> gameNames = null, string accessToken = null)
+            public Task<GetGamesResponse?> GetGamesAsync(List<string>? gameIds = null, List<string>? gameNames = null, string? accessToken = null)
             {
                 if (gameIds == null && gameNames == null || gameIds != null && gameIds.Count == 0 && gameNames == null || gameNames != null && gameNames.Count == 0 && gameIds == null)
                     throw new BadParameterException("Either gameIds or gameNames must have at least one value");
@@ -47,7 +47,7 @@ namespace TwitchLib.Api.Helix
 
             #region GetTopGames
 
-            public Task<GetTopGamesResponse> GetTopGamesAsync(string before = null, string after = null, int first = 20, string accessToken = null)
+            public Task<GetTopGamesResponse?> GetTopGamesAsync(string? before = null, string? after = null, int first = 20, string? accessToken = null)
             {
                 if (first < 0 || first > 100)
                     throw new BadParameterException("'first' parameter must be between 1 (inclusive) and 100 (inclusive).");

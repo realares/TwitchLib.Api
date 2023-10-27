@@ -1,17 +1,22 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace TwitchLib.Api.Helix.Models.Channels.ModifyChannelInformation
 {
-    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class ModifyChannelInformationRequest
     {
-        [JsonProperty(PropertyName = "game_id", NullValueHandling = NullValueHandling.Ignore)]
-        public string GameId { get; set; }
-        [JsonProperty(PropertyName = "title", NullValueHandling = NullValueHandling.Ignore)]
-        public string Title { get; set; }
-        [JsonProperty(PropertyName = "broadcaster_language", NullValueHandling = NullValueHandling.Ignore)]
-        public string BroadcasterLanguage { get; set; }
-        [JsonProperty(PropertyName = "delay", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("game_id")]
+        public string GameId { get; set; } = null!;
+
+        [JsonPropertyName("title")]
+        public string Title { get; set; } = null!;
+
+        [JsonPropertyName("broadcaster_language")]
+        public string BroadcasterLanguage { get; set; } = null!;
+
+        [JsonPropertyName("delay")]
         public int? Delay { get; set; }
+
+        [JsonPropertyName("tags")]
+        public string[] Tags { get; set; } = null!;
     }
 }

@@ -1,11 +1,11 @@
 ﻿using System;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace TwitchLib.Api.Helix.Models.Soundtrack.GetPlaylist
 {
     public class GetPlaylistResponse
     {
-        [JsonProperty(PropertyName = "data")]
-        public PlaylistTrack[] Data { get; protected set; }
+        [JsonPropertyName("data")]
+        public PlaylistTrack[] Data { get; set; }
     }
 }

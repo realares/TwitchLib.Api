@@ -1,12 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace TwitchLib.Api.Core.Models.Undocumented.CSMaps
 {
     public class CSMapsResponse
     {
-        [JsonProperty(PropertyName = "_total")]
-        public int Total { get; protected set; }
-        [JsonProperty(PropertyName = "maps")]
-        public Map[] Maps { get; protected set; }
+        [JsonPropertyName("_total")]
+        public int Total { get; set; }
+        [JsonPropertyName("maps")]
+        public Map[] Maps { get; set; }
     }
 }

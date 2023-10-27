@@ -1,6 +1,7 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using TwitchLib.Api.Core;
 using TwitchLib.Api.Core.Enums;
@@ -23,7 +24,7 @@ namespace TwitchLib.Api.Helix
         {
         }
 
-        public Task<GetUserBlockListResponse> GetUserBlockListAsync(string broadcasterId, int first = 20, string after = null, string accessToken = null)
+        public Task<GetUserBlockListResponse?> GetUserBlockListAsync(string broadcasterId, int first = 20, string? after = null, string? accessToken = null)
         {
             if (first > 100)
                 throw new BadParameterException($"Maximum allowed objects is 100 (you passed {first})");
@@ -49,7 +50,7 @@ namespace TwitchLib.Api.Helix
             return TwitchPutAsync("/users/blocks", ApiVersion.Helix, null, getParams, accessToken);
         }
 
-        public Task UnblockUserAsync(string targetUserId, string accessToken = null)
+        public Task UnblockUserAsync(string targetUserId, string? accessToken = null)
         {
             var getParams = new List<KeyValuePair<string, string>>();
             getParams.Add(new KeyValuePair<string, string>("target_user_id", targetUserId));
@@ -57,7 +58,7 @@ namespace TwitchLib.Api.Helix
             return TwitchDeleteAsync("/user/blocks", ApiVersion.Helix, getParams, accessToken);
         }
 
-        public Task<GetUsersResponse> GetUsersAsync(List<string> ids = null, List<string> logins = null, string accessToken = null)
+        public Task<GetUsersResponse?> GetUsersAsync(List<string>? ids = null, List<string>? logins = null, string? accessToken = null)
         {
             var getParams = new List<KeyValuePair<string, string>>();
             if (ids != null && ids.Count > 0)
@@ -75,7 +76,9 @@ namespace TwitchLib.Api.Helix
             return TwitchGetGenericAsync<GetUsersResponse>("/users", ApiVersion.Helix, getParams, accessToken);
         }
 
-        public Task<GetUsersFollowsResponse> GetUsersFollowsAsync(string after = null, string before = null, int first = 20, string fromId = null, string toId = null, string accessToken = null)
+        [Obsolete("Deprecation Notice: This endpoint is deprecated and will be decommissioned on August 3, 2023. Access to this endpoint is limited to client IDs that have called the endpoint on or before February 17, 2023.")]
+        public Task<GetUsersFollowsResponse?> GetUsersFollowsAsync(
+            string? after = null, string? before = null, int first = 20, string? fromId = null, string? toId = null, string? accessToken = null)
         {
             var getParams = new List<KeyValuePair<string, string>>
                 {
@@ -93,7 +96,7 @@ namespace TwitchLib.Api.Helix
             return TwitchGetGenericAsync<GetUsersFollowsResponse>("/users/follows", ApiVersion.Helix, getParams, accessToken);
         }
 
-        public Task UpdateUserAsync(string description, string accessToken = null)
+        public Task UpdateUserAsync(string description, string? accessToken = null)
         {
             var getParams = new List<KeyValuePair<string, string>>
                 {
@@ -103,12 +106,12 @@ namespace TwitchLib.Api.Helix
             return TwitchPutAsync("/users", ApiVersion.Helix, null, getParams, accessToken);
         }
 
-        public Task<GetUserExtensionsResponse> GetUserExtensionsAsync(string accessToken = null)
+        public Task<GetUserExtensionsResponse?> GetUserExtensionsAsync(string? accessToken = null)
         {
             return TwitchGetGenericAsync<GetUserExtensionsResponse>("/users/extensions/list", ApiVersion.Helix, accessToken: accessToken);
         }
 
-        public Task<GetUserActiveExtensionsResponse> GetUserActiveExtensionsAsync(string userid = null, string accessToken = null)
+        public Task<GetUserActiveExtensionsResponse?> GetUserActiveExtensionsAsync(string? userid = null, string? accessToken = null)
         {
             var getParams = new List<KeyValuePair<string, string>>();
             if (userid != null)
@@ -117,44 +120,44 @@ namespace TwitchLib.Api.Helix
             return TwitchGetGenericAsync<GetUserActiveExtensionsResponse>("/users/extensions", ApiVersion.Helix, getParams, accessToken: accessToken);
         }
 
-        public Task<GetUserActiveExtensionsResponse> UpdateUserExtensionsAsync(IEnumerable<ExtensionSlot> userExtensionStates, string accessToken = null)
-        {
-            var panels = new Dictionary<string, UserExtensionState>();
-            var overlays = new Dictionary<string, UserExtensionState>();
-            var components = new Dictionary<string, UserExtensionState>();
+        //public Task<GetUserActiveExtensionsResponse?> UpdateUserExtensionsAsync(IEnumerable<ExtensionSlot> userExtensionStates, string? accessToken = null)
+        //{
+        //    var panels = new Dictionary<string, UserExtensionState>();
+        //    var overlays = new Dictionary<string, UserExtensionState>();
+        //    var components = new Dictionary<string, UserExtensionState>();
 
-            foreach (var extension in userExtensionStates)
-                switch (extension.Type)
-                {
-                    case ExtensionType.Component:
-                        components.Add(extension.Slot, extension.UserExtensionState);
-                        break;
-                    case ExtensionType.Overlay:
-                        overlays.Add(extension.Slot, extension.UserExtensionState);
-                        break;
-                    case ExtensionType.Panel:
-                        panels.Add(extension.Slot, extension.UserExtensionState);
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(ExtensionType));
-                }
+        //    foreach (var extension in userExtensionStates)
+        //        switch (extension.Type)
+        //        {
+        //            case ExtensionType.Component:
+        //                components.Add(extension.Slot, extension.UserExtensionState);
+        //                break;
+        //            case ExtensionType.Overlay:
+        //                overlays.Add(extension.Slot, extension.UserExtensionState);
+        //                break;
+        //            case ExtensionType.Panel:
+        //                panels.Add(extension.Slot, extension.UserExtensionState);
+        //                break;
+        //            default:
+        //                throw new ArgumentOutOfRangeException(nameof(ExtensionType));
+        //        }
 
-            var json = new JObject();
-            var p = new UpdateUserExtensionsRequest();
+        //    var json = new JsonObject();
+        //    var p = new UpdateUserExtensionsRequest();
 
-            if (panels.Count > 0)
-                p.Panel = panels;
+        //    if (panels.Count > 0)
+        //        p.Panel = panels;
 
-            if (overlays.Count > 0)
-                p.Overlay = overlays;
+        //    if (overlays.Count > 0)
+        //        p.Overlay = overlays;
 
-            if (components.Count > 0)
-                p.Component = components;
+        //    if (components.Count > 0)
+        //        p.Component = components;
 
-            json.Add(new JProperty("data", JObject.FromObject(p)));
-            var payload = json.ToString();
+        //    json.Add(new JsonProperty("data", JsonObject.FromObject(p)));
+        //    var payload = json.ToString();
 
-            return TwitchPutGenericAsync<GetUserActiveExtensionsResponse>("/users/extensions", ApiVersion.Helix, payload, accessToken: accessToken);
-        }
+        //    return TwitchPutGenericAsync<GetUserActiveExtensionsResponse>("/users/extensions", ApiVersion.Helix, payload, accessToken: accessToken);
+        //}
     }
 }

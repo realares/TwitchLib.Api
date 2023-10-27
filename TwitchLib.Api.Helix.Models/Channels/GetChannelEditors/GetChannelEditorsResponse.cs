@@ -1,13 +1,10 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text.Json.Serialization;
 
 namespace TwitchLib.Api.Helix.Models.Channels.GetChannelEditors
 {
     public class GetChannelEditorsResponse
     {
-        [JsonProperty(PropertyName = "data")]
-        public ChannelEditor[] Data { get; protected set; }
+        [JsonPropertyName("data")]
+        public ChannelEditor[] Data { get; set; }
     }
 }

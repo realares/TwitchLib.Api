@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,9 +8,9 @@ namespace TwitchLib.Api.Helix.Models.Moderation.GetBannedEvents
 {
     public class GetBannedEventsResponse
     {
-        [JsonProperty(PropertyName = "data")]
-        public BannedEvent[] Data { get; protected set; }
-        [JsonProperty(PropertyName = "pagination")]
-        public Pagination Pagination { get; protected set; }
+        [JsonPropertyName("data")]
+        public BannedEvent[] Data { get; set; }
+        [JsonPropertyName("pagination")]
+        public Pagination Pagination { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,15 +7,15 @@ namespace TwitchLib.Api.Helix.Models.Extensions.LiveChannels
 {
     public class LiveChannel
     {
-        [JsonProperty(PropertyName = "broadcaster_id")]
-        public string BroadcasterId { get; protected set; }
-        [JsonProperty(PropertyName = "broadcaster_name")]
-        public string BroadcasterName { get; protected set; }
-        [JsonProperty(PropertyName = "game_name")]
-        public string GameName { get; protected set; }
-        [JsonProperty(PropertyName = "game_id")]
-        public string GameId { get; protected set; }
-        [JsonProperty(PropertyName = "title")]
-        public string Title { get; protected set; }
+        [JsonPropertyName("broadcaster_id")]
+        public string BroadcasterId { get; set; }
+        [JsonPropertyName("broadcaster_name")]
+        public string BroadcasterName { get; set; }
+        [JsonPropertyName("game_name")]
+        public string GameName { get; set; }
+        [JsonPropertyName("game_id")]
+        public string GameId { get; set; }
+        [JsonPropertyName("title")]
+        public string Title { get; set; }
     }
 }

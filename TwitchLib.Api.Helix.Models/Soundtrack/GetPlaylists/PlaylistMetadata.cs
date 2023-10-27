@@ -1,17 +1,17 @@
 ﻿using System;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace TwitchLib.Api.Helix.Models.Soundtrack.GetPlaylists
 {
     public class PlaylistMetadata
     {
-        [JsonProperty(PropertyName = "title")]
-        public string Title { get; protected set; }
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; protected set; }
-        [JsonProperty(PropertyName = "image_url")]
-        public string ImageUrl { get; protected set; }
-        [JsonProperty(PropertyName = "description")]
-        public string Description { get; protected set; }
+        [JsonPropertyName("title")]
+        public string Title { get; set; }
+        [JsonPropertyName("id")]
+        public string Id { get; set; }
+        [JsonPropertyName("image_url")]
+        public string ImageUrl { get; set; }
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
     }
 }

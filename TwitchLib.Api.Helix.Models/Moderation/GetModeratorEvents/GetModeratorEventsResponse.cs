@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,9 +8,9 @@ namespace TwitchLib.Api.Helix.Models.Moderation.GetModeratorEvents
 {
     public class GetModeratorEventsResponse
     {
-        [JsonProperty(PropertyName = "data")]
-        public ModeratorEvent[] Data { get; protected set; }
-        [JsonProperty(PropertyName = "pagination")]
-        public Pagination Pagination { get; protected set; }
+        [JsonPropertyName("data")]
+        public ModeratorEvent[] Data { get; set; }
+        [JsonPropertyName("pagination")]
+        public Pagination Pagination { get; set; }
     }
 }

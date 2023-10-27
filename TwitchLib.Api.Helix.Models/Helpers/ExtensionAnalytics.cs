@@ -2,21 +2,21 @@
 {
     public class ExtensionAnalytics
     {
-        public string Date { get; protected set; }
-        public string ExtensionName { get; protected set; }
-        public string ExtensionClientId { get; protected set; }
-        public int Installs { get; protected set; }
-        public int Uninstalls { get; protected set; }
-        public int Activations { get; protected set; }
-        public int UniqueActiveChannels { get; protected set; }
-        public int Renders { get; protected set; }
-        public int UniqueRenders { get; protected set; }
-        public int Views { get; protected set; }
-        public int UniqueViewers { get; protected set; }
-        public int UniqueInteractors { get; protected set; }
-        public int Clicks { get; protected set; }
-        public double ClicksPerInteractor { get; protected set; }
-        public double InteractionRate { get; protected set; }
+        public string Date { get; set; }
+        public string ExtensionName { get; set; }
+        public string ExtensionClientId { get; set; }
+        public int Installs { get; set; }
+        public int Uninstalls { get; set; }
+        public int Activations { get; set; }
+        public int UniqueActiveChannels { get; set; }
+        public int Renders { get; set; }
+        public int UniqueRenders { get; set; }
+        public int Views { get; set; }
+        public int UniqueViewers { get; set; }
+        public int UniqueInteractors { get; set; }
+        public int Clicks { get; set; }
+        public double ClicksPerInteractor { get; set; }
+        public double InteractionRate { get; set; }
 
         public ExtensionAnalytics(string row)
         {

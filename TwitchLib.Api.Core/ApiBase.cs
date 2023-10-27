@@ -1,9 +1,10 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.Http;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using TwitchLib.Api.Core.Enums;
 using TwitchLib.Api.Core.Exceptions;
@@ -15,7 +16,6 @@ namespace TwitchLib.Api.Core
 {
     public class ApiBase
     {
-        private readonly TwitchLibJsonSerializer _jsonSerializer;
         protected readonly IApiSettings Settings;
         private readonly IRateLimiter _rateLimiter;
         private readonly IHttpCallHandler _http;
@@ -24,17 +24,25 @@ namespace TwitchLib.Api.Core
         internal const string BaseAuth = "https://id.twitch.tv/oauth2";
 
         private DateTime? _serverBasedAccessTokenExpiry;
-        private string _serverBasedAccessToken;
+        private string? _serverBasedAccessToken = null;
 
+        private readonly System.Text.Json.JsonSerializerOptions _ms_twitchLibJsonDeserializer;
+   
         public ApiBase(IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http)
         {
             Settings = settings;
             _rateLimiter = rateLimiter;
             _http = http;
-            _jsonSerializer = new TwitchLibJsonSerializer();
+
+            _ms_twitchLibJsonDeserializer = new System.Text.Json.JsonSerializerOptions()
+            {
+                PropertyNameCaseInsensitive = true,
+                DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            };
         }
 
-        public async ValueTask<string> GetAccessTokenAsync(string accessToken = null)
+        public async ValueTask<string?> GetAccessTokenAsync(string? accessToken = null)
         {
             if (!string.IsNullOrEmpty(accessToken))
                 return accessToken;
@@ -51,21 +59,34 @@ namespace TwitchLib.Api.Core
             return null;
         }
 
-        internal async Task<string> GenerateServerBasedAccessToken()
+        internal async Task<string?> GenerateServerBasedAccessToken()
         {
             var result = await _http.GeneralRequestAsync($"{BaseAuth}/token?client_id={Settings.ClientId}&client_secret={Settings.Secret}&grant_type=client_credentials", "POST", null, ApiVersion.Auth, Settings.ClientId, null).ConfigureAwait(false);
             if (result.Key == 200)
             {
-                var user = JsonConvert.DeserializeObject<dynamic>(result.Value);
-                var offset = (int)user.expires_in;
+                var user = System.Text.Json.JsonSerializer.Deserialize<TokeResult>(result.Value);
+                //var user = JsonConvert.DeserializeObject<dynamic>(result.Value);
+                if (user == null) return null;
+                var offset = (int)user.Expires_in;
                 _serverBasedAccessTokenExpiry = DateTime.Now + TimeSpan.FromSeconds(offset);
-                _serverBasedAccessToken = (string)user.access_token;
+                _serverBasedAccessToken = (string)user.Access_token;
                 return _serverBasedAccessToken;
             }
             return null;
         }
+        class TokeResult
+        {
+            [JsonPropertyName("access_token")]
+            public string Access_token { get; set; } = null!;
 
-        internal void ForceAccessTokenAndClientIdForHelix(string clientId, string accessToken, ApiVersion api)
+            [JsonPropertyName("expires_in")]
+            public int Expires_in { get; set; } 
+
+            [JsonPropertyName("token_type")]
+            public string Token_type { get; set; } = null!;
+        }
+
+        internal void ForceAccessTokenAndClientIdForHelix(string? clientId, string? accessToken, ApiVersion api)
         {
             if (api != ApiVersion.Helix)
                 return;
@@ -74,10 +95,10 @@ namespace TwitchLib.Api.Core
             throw new ClientIdAndOAuthTokenRequired("As of May 1, all calls to Twitch's Helix API require Client-ID and OAuth access token be set. Example: api.Settings.AccessToken = \"twitch-oauth-access-token-here\"; api.Settings.ClientId = \"twitch-client-id-here\";");
         }
 
-        protected async Task<T> Twitch__GenericAsync<T>(
+        protected async Task<T?> Twitch__GenericAsync<T>(
             string methode,
-            string resource, ApiVersion api, string payload = null, List<KeyValuePair<string, string>> getParams = null,
-            string accessToken = null, string clientId = null, string customBase = null)
+            string resource, ApiVersion api, string? payload = null, List<KeyValuePair<string, string>>? getParams = null,
+            string? accessToken = null, string? clientId = null, string? customBase = null)
         {
             var url = ConstructResourceUrl(resource, getParams, api, customBase);
 
@@ -88,50 +109,51 @@ namespace TwitchLib.Api.Core
             ForceAccessTokenAndClientIdForHelix(clientId, accessToken, api);
 
             return await _rateLimiter
-                .Perform(async () => JsonConvert.DeserializeObject<T>((await _http.GeneralRequestAsync(url, methode, payload, api, clientId, accessToken)
-                .ConfigureAwait(false)).Value, _twitchLibJsonDeserializer))
-                .ConfigureAwait(false);
+                .Perform(async () => {
+                    var httpresult = (await _http.GeneralRequestAsync(url, methode, payload, api, clientId, accessToken).ConfigureAwait(false)).Value;
+                    return System.Text.Json.JsonSerializer.Deserialize<T>(httpresult, _ms_twitchLibJsonDeserializer);
+                }).ConfigureAwait(false);
         }
 
-        protected Task<T> TwitchGetGenericAsync<T>(
-            string resource, ApiVersion api, List<KeyValuePair<string, string>> getParams = null, 
-            string accessToken = null, string clientId = null, string customBase = null)
+        protected Task<T?> TwitchGetGenericAsync<T>(
+            string resource, ApiVersion api, List<KeyValuePair<string, string>>? getParams = null, 
+            string? accessToken = null, string? clientId = null, string? customBase = null)
         {
             return Twitch__GenericAsync<T>("GET", resource, api, null, getParams, accessToken, clientId, customBase);
         }
 
-        protected Task<T> TwitchPatchGenericAsync<T>(
-            string resource, ApiVersion api, string payload, List<KeyValuePair<string, string>> getParams = null, 
-            string accessToken = null, string clientId = null, string customBase = null)
+        protected Task<T?> TwitchPatchGenericAsync<T>(
+            string resource, ApiVersion api, string payload, List<KeyValuePair<string, string>>? getParams = null, 
+            string? accessToken = null, string? clientId = null, string? customBase = null)
         {
-            return Twitch__GenericAsync<T>("PATH", resource, api, payload, getParams, accessToken, clientId, customBase);
+            return Twitch__GenericAsync<T>("PATCH", resource, api, payload, getParams, accessToken, clientId, customBase);
         }
 
-        protected Task<T> TwitchPostGenericAsync<T>(
-            string resource, ApiVersion api, string payload, List<KeyValuePair<string, string>> getParams = null, 
-            string accessToken = null, string clientId = null, string customBase = null)
+        protected Task<T?> TwitchPostGenericAsync<T>(
+            string resource, ApiVersion api, string? payload = null, List<KeyValuePair<string, string>>? getParams = null, 
+            string? accessToken = null, string? clientId = null, string? customBase = null)
         {
             return Twitch__GenericAsync<T>("POST", resource, api, payload, getParams, accessToken, clientId, customBase);
         }
 
-        protected Task<T> TwitchDeleteGenericAsync<T>(
-            string resource, ApiVersion api, List<KeyValuePair<string, string>> getParams = null, 
-            string accessToken = null, string clientId = null, string customBase = null)
+        protected Task<T?> TwitchDeleteGenericAsync<T>(
+            string resource, ApiVersion api, List<KeyValuePair<string, string>>? getParams = null, 
+            string? accessToken = null, string? clientId = null, string? customBase = null)
         {
             return Twitch__GenericAsync<T>("DELETE", resource, api, null, getParams, accessToken, clientId, customBase);
         }
 
-        protected Task<T> TwitchPutGenericAsync<T>(
-            string resource, ApiVersion api, string payload, List<KeyValuePair<string, string>> getParams = null, 
-            string accessToken = null, string clientId = null, string customBase = null)
+        protected Task<T?> TwitchPutGenericAsync<T>(
+            string resource, ApiVersion api, string payload, List<KeyValuePair<string, string>>? getParams = null, 
+            string? accessToken = null, string? clientId = null, string? customBase = null)
         {
             return Twitch__GenericAsync<T>("PUT", resource, api, payload, getParams, accessToken, clientId, customBase);
         }
 
         protected async Task<string> Twitch__Async(
             string methode, 
-            string resource, ApiVersion api, string payload = null, List<KeyValuePair<string, string>> getParams = null, 
-            string accessToken = null, string clientId = null, string customBase = null)
+            string resource, ApiVersion api, string? payload = null, List<KeyValuePair<string, string>>? getParams = null, 
+            string? accessToken = null, string? clientId = null, string? customBase = null)
         {
             var url = ConstructResourceUrl(resource, getParams, api, customBase);
 
@@ -147,33 +169,39 @@ namespace TwitchLib.Api.Core
                 .ConfigureAwait(false);
         }
 
-        protected Task<string> TwitchGetAsync(string resource, ApiVersion api, List<KeyValuePair<string, string>> getParams = null, string accessToken = null, string clientId = null, string customBase = null)
+        protected Task<string> TwitchGetAsync(string resource, ApiVersion api, 
+            List<KeyValuePair<string, string>>? getParams = null, string? accessToken = null, string? clientId = null, string? customBase = null)
         {
             return Twitch__Async("GET", resource, api, null, getParams, accessToken, clientId, customBase);
         }
 
-        protected Task<string> TwitchPatchAsync(string resource, ApiVersion api, string payload, List<KeyValuePair<string, string>> getParams = null, string accessToken = null, string clientId = null, string customBase = null)
+        protected Task<string> TwitchPatchAsync(string resource, ApiVersion api, string? payload, 
+            List<KeyValuePair<string, string>>? getParams = null, string? accessToken = null, string? clientId = null, string? customBase = null)
         {
             return Twitch__Async("PATCH", resource, api, payload, getParams, accessToken, clientId, customBase);
         }
 
-        protected Task<string> TwitchDeleteAsync(string resource, ApiVersion api, List<KeyValuePair<string, string>> getParams = null, string accessToken = null, string clientId = null, string customBase = null)
+        protected Task<string> TwitchDeleteAsync(string resource, ApiVersion api, 
+            List<KeyValuePair<string, string>>? getParams = null, string? accessToken = null, string? clientId = null, string? customBase = null)
         {
             return Twitch__Async("DELETE", resource, api, null, getParams, accessToken, clientId, customBase);
         }
 
-        protected Task<string> TwitchPostAsync(string resource, ApiVersion api, string payload, List<KeyValuePair<string, string>> getParams = null, string accessToken = null, string clientId = null, string customBase = null)
+        protected Task<string> TwitchPostAsync(string resource, ApiVersion api, 
+            string? payload, List<KeyValuePair<string, string>>? getParams = null, string? accessToken = null, string? clientId = null, string? customBase = null)
         {
             return Twitch__Async("POST", resource, api, payload, getParams, accessToken, clientId, customBase);
         }
 
-        protected Task<string> TwitchPutAsync(string resource, ApiVersion api, string payload, List<KeyValuePair<string, string>> getParams = null, string accessToken = null, string clientId = null, string customBase = null)
+        protected Task<string> TwitchPutAsync(string resource, ApiVersion api, 
+            string? payload, List<KeyValuePair<string, string>>? getParams = null, string? accessToken = null, string? clientId = null, string? customBase = null)
         {
             return Twitch__Async("PUT", resource, api, payload, getParams, accessToken, clientId, customBase);
         }
 
 
-        protected async Task<T> TwitchPostGenericModelAsync<T>(string resource, ApiVersion api, RequestModel model, string accessToken = null, string clientId = null, string customBase = null)
+        protected async Task<T?> TwitchPostGenericModelAsync<T>(string resource, ApiVersion api, 
+            RequestModel model, string? accessToken = null, string? clientId = null, string? customBase = null)
         {
             var url = ConstructResourceUrl(resource, api: api, overrideUrl: customBase);
 
@@ -183,7 +211,13 @@ namespace TwitchLib.Api.Core
             accessToken = await GetAccessTokenAsync(accessToken).ConfigureAwait(false);
             ForceAccessTokenAndClientIdForHelix(clientId, accessToken, api);
 
-            return await _rateLimiter.Perform(async () => JsonConvert.DeserializeObject<T>((await _http.GeneralRequestAsync(url, "POST", model != null ? _jsonSerializer.SerializeObject(model) : "", api, clientId, accessToken).ConfigureAwait(false)).Value, _twitchLibJsonDeserializer)).ConfigureAwait(false);
+            return await _rateLimiter.Perform(async () =>
+                {
+                    var payload = model != null ? System.Text.Json.JsonSerializer.Serialize(model) : "";
+                    var httpresult = (await _http.GeneralRequestAsync(url, "POST", payload, api, clientId, accessToken).ConfigureAwait(false)).Value;
+                    return System.Text.Json.JsonSerializer.Deserialize<T>(httpresult, _ms_twitchLibJsonDeserializer);
+                });
+                //=> JsonConvert.DeserializeObject<T>((await _http.GeneralRequestAsync(url, "POST", model != null ? _jsonSerializer.SerializeObject(model) : "", api, clientId, accessToken).ConfigureAwait(false)).Value, _twitchLibJsonDeserializer)).ConfigureAwait(false);
         }
 
 
@@ -192,12 +226,14 @@ namespace TwitchLib.Api.Core
             return _http.PutBytesAsync(url, payload);
         }
 
-        internal Task<int> RequestReturnResponseCode(string url, string method, List<KeyValuePair<string, string>> getParams = null)
+        internal Task<int> RequestReturnResponseCode(string url, string method, List<KeyValuePair<string, string>>? getParams = null)
         {
             return _http.RequestReturnResponseCodeAsync(url, method, getParams);
         }
 
-        protected async Task<T> GetGenericAsync<T>(string url, List<KeyValuePair<string, string>> getParams = null, string accessToken = null, ApiVersion api = ApiVersion.Helix, string clientId = null)
+        protected async Task<T?> GetGenericAsync<T>(
+            string url, List<KeyValuePair<string, string>>? getParams = null, 
+            string? accessToken = null, ApiVersion api = ApiVersion.Helix, string? clientId = null)
         {
             if (getParams != null)
             {
@@ -216,10 +252,16 @@ namespace TwitchLib.Api.Core
             accessToken = await GetAccessTokenAsync(accessToken).ConfigureAwait(false);
             ForceAccessTokenAndClientIdForHelix(clientId, accessToken, api);
 
-            return await _rateLimiter.Perform(async () => JsonConvert.DeserializeObject<T>((await _http.GeneralRequestAsync(url, "GET", null, api, clientId, accessToken).ConfigureAwait(false)).Value, _twitchLibJsonDeserializer)).ConfigureAwait(false);
+            return await _rateLimiter.Perform(async () =>
+            {
+                var httpresult = (await _http.GeneralRequestAsync(url, "GET", null, api, clientId, accessToken).ConfigureAwait(false)).Value;
+                return System.Text.Json.JsonSerializer.Deserialize<T>(httpresult, _ms_twitchLibJsonDeserializer);
+            });
+            
+
         }
 
-        internal Task<T> GetSimpleGenericAsync<T>(string url, List<KeyValuePair<string, string>> getParams = null)
+        internal Task<T?> GetSimpleGenericAsync<T>(string url, List<KeyValuePair<string, string>>? getParams = null)
         {
             if (getParams != null)
             {
@@ -231,7 +273,12 @@ namespace TwitchLib.Api.Core
                         url += $"&{getParams[i].Key}={Uri.EscapeDataString(getParams[i].Value)}";
                 }
             }
-            return _rateLimiter.Perform(async () => JsonConvert.DeserializeObject<T>(await SimpleRequestAsync(url).ConfigureAwait(false), _twitchLibJsonDeserializer));
+            return _rateLimiter.Perform(async () =>
+            {
+                var httpresult = (await SimpleRequestAsync(url).ConfigureAwait(false));
+                return System.Text.Json.JsonSerializer.Deserialize<T>(httpresult, _ms_twitchLibJsonDeserializer);
+            });
+           // JsonConvert.DeserializeObject<T>(await SimpleRequestAsync(url).ConfigureAwait(false), _twitchLibJsonDeserializer));
         }
 
         private async Task<string> SimpleRequestAsync(string url)
@@ -243,31 +290,11 @@ namespace TwitchLib.Api.Core
             return getresponse;
         }
 
-        private readonly JsonSerializerSettings _twitchLibJsonDeserializer = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, MissingMemberHandling = MissingMemberHandling.Ignore };
-
-        private class TwitchLibJsonSerializer
-        {
-            private readonly JsonSerializerSettings _settings = new JsonSerializerSettings
-            {
-                ContractResolver = new LowercaseContractResolver(),
-                NullValueHandling = NullValueHandling.Ignore
-            };
-
-            public string SerializeObject(object o)
-            {
-                return JsonConvert.SerializeObject(o, Formatting.Indented, _settings);
-            }
-
-            private class LowercaseContractResolver : DefaultContractResolver
-            {
-                protected override string ResolvePropertyName(string propertyName)
-                {
-                    return propertyName.ToLower();
-                }
-            }
-        }
-
-        private string ConstructResourceUrl(string resource = null, List<KeyValuePair<string, string>> getParams = null, ApiVersion api = ApiVersion.Helix, string overrideUrl = null)
+        private string ConstructResourceUrl(
+            string? resource = null, 
+            List<KeyValuePair<string, string>>? getParams = null, 
+            ApiVersion api = ApiVersion.Helix, 
+            string? overrideUrl = null)
         {
             var url = "";
             if (overrideUrl == null)

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TwitchLib.Api.Core;
@@ -11,6 +11,7 @@ using TwitchLib.Api.Helix.Models.Chat.ChatSettings;
 using TwitchLib.Api.Helix.Models.Chat.Emotes.GetChannelEmotes;
 using TwitchLib.Api.Helix.Models.Chat.Emotes.GetEmoteSets;
 using TwitchLib.Api.Helix.Models.Chat.Emotes.GetGlobalEmotes;
+using System.Text.Json;
 
 namespace TwitchLib.Api.Helix
 {
@@ -20,8 +21,11 @@ namespace TwitchLib.Api.Helix
         { }
 
         #region Badges
-        public Task<GetChannelChatBadgesResponse> GetChannelChatBadgesAsync(string broadcasterId, string accessToken = null)
+        public Task<GetChannelChatBadgesResponse?> GetChannelChatBadgesAsync(string broadcasterId, string? accessToken = null)
         {
+            if (string.IsNullOrEmpty(broadcasterId))
+                throw new BadParameterException("broadcasterId must be set");
+
             var getParams = new List<KeyValuePair<string, string>>
             {
                 new KeyValuePair<string, string>("broadcaster_id", broadcasterId)
@@ -29,7 +33,7 @@ namespace TwitchLib.Api.Helix
             return TwitchGetGenericAsync<GetChannelChatBadgesResponse>("/chat/badges", ApiVersion.Helix, getParams, accessToken);
         }
 
-        public Task<GetGlobalChatBadgesResponse> GetGlobalChatBadgesAsync(string accessToken = null)
+        public Task<GetGlobalChatBadgesResponse?> GetGlobalChatBadgesAsync(string? accessToken = null)
         {
             return TwitchGetGenericAsync<GetGlobalChatBadgesResponse>("/chat/badges/global", ApiVersion.Helix, accessToken: accessToken);
         }
@@ -37,8 +41,11 @@ namespace TwitchLib.Api.Helix
 
         #region Emotes
 
-        public Task<GetChannelEmotesResponse> GetChannelEmotesAsync(string broadcasterId, string accessToken = null)
+        public Task<GetChannelEmotesResponse?> GetChannelEmotesAsync(string broadcasterId, string? accessToken = null)
         {
+            if (string.IsNullOrEmpty(broadcasterId))
+                throw new BadParameterException("broadcasterId must be set");
+
             var getParams = new List<KeyValuePair<string, string>>
             {
                 new KeyValuePair<string, string>("broadcaster_id", broadcasterId)
@@ -46,7 +53,7 @@ namespace TwitchLib.Api.Helix
             return TwitchGetGenericAsync<GetChannelEmotesResponse>("/chat/emotes", ApiVersion.Helix, getParams, accessToken);
         }
 
-        public Task<GetEmoteSetsResponse> GetEmoteSetsAsync(string emoteSetId, string accessToken = null)
+        public Task<GetEmoteSetsResponse?> GetEmoteSetsAsync(string emoteSetId, string? accessToken = null)
         {
             var getParams = new List<KeyValuePair<string, string>>
             {
@@ -55,7 +62,7 @@ namespace TwitchLib.Api.Helix
             return TwitchGetGenericAsync<GetEmoteSetsResponse>("/chat/emotes/set", ApiVersion.Helix, getParams, accessToken);
         }
 
-        public Task<GetGlobalEmotesResponse> GetGlobalEmotesAsync(string accessToken = null)
+        public Task<GetGlobalEmotesResponse?> GetGlobalEmotesAsync(string? accessToken = null)
         {
             return TwitchGetGenericAsync<GetGlobalEmotesResponse>("/chat/emotes/global", ApiVersion.Helix, accessToken: accessToken);
         }
@@ -63,7 +70,27 @@ namespace TwitchLib.Api.Helix
 
         #region GetChatSettings
 
-        public Task<GetChatSettingsResponse> GetChatSettingsAsync(string broadcasterId, string moderatorId, string accessToken = null)
+        public Task<GetChatSettingsResponse?> GetChatter(string broadcasterId, string moderatorId, string? accessToken = null, int? first = null, string? afterCursor = null)
+        {
+            if (string.IsNullOrEmpty(broadcasterId))
+                throw new BadParameterException("broadcasterId must be set");
+            if (string.IsNullOrEmpty(moderatorId))
+                throw new BadParameterException("moderatorId must be set");
+
+            var getParams = new List<KeyValuePair<string, string>>()
+            {
+                new KeyValuePair<string, string>("broadcaster_id", broadcasterId),
+                new KeyValuePair<string, string>("moderator_id", moderatorId)
+            };
+            if (first != null)
+                getParams.Add(new KeyValuePair<string, string>("first", first.GetValueOrDefault().ToString()));
+            if (afterCursor != null)
+                getParams.Add(new KeyValuePair<string, string>("after", afterCursor));
+
+            return TwitchGetGenericAsync<GetChatSettingsResponse>("/chat/settings", ApiVersion.Helix, getParams, accessToken);
+        }
+
+        public Task<GetChatSettingsResponse?> GetChatSettingsAsync(string broadcasterId, string moderatorId, string? accessToken = null)
         {
             if (string.IsNullOrEmpty(broadcasterId))
                 throw new BadParameterException("broadcasterId must be set");
@@ -83,7 +110,7 @@ namespace TwitchLib.Api.Helix
 
         #region UpdateChatSettings
 
-        public Task<UpdateChatSettingsResponse> UpdateChatSettingsAsync(string broadcasterId, string moderatorId, ChatSettings settings, string accessToken = null)
+        public Task<UpdateChatSettingsResponse?> UpdateChatSettingsAsync(string broadcasterId, string moderatorId, ChatSettings settings, string? accessToken = null)
         {
             if (string.IsNullOrEmpty(broadcasterId))
                 throw new BadParameterException("broadcasterId must be set");
@@ -98,7 +125,7 @@ namespace TwitchLib.Api.Helix
                 new KeyValuePair<string, string>("moderator_id", moderatorId)
             };
 
-            return TwitchPatchGenericAsync<UpdateChatSettingsResponse>("/chat/settings", ApiVersion.Helix, JsonConvert.SerializeObject(settings), getParams, accessToken);
+            return TwitchPatchGenericAsync<UpdateChatSettingsResponse>("/chat/settings", ApiVersion.Helix, JsonSerializer.Serialize(settings), getParams, accessToken);
         }
 
         #endregion

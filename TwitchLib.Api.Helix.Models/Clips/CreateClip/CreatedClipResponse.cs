@@ -1,10 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace TwitchLib.Api.Helix.Models.Clips.CreateClip
 {
     public class CreatedClipResponse
     {
-        [JsonProperty(PropertyName = "data")]
-        public CreatedClip[] CreatedClips { get; protected set; }
+        [JsonPropertyName("data")]
+        public CreatedClip[] CreatedClips { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,6 +7,7 @@ using TwitchLib.Api.Core;
 using TwitchLib.Api.Core.Enums;
 using TwitchLib.Api.Core.Interfaces;
 using TwitchLib.Api.Helix.Models.Ads;
+using System.Text.Json;
 
 namespace TwitchLib.Api.Helix
 {
@@ -17,9 +18,9 @@ namespace TwitchLib.Api.Helix
         }
 
         #region StartCommercial
-        public Task<StartCommercialResponse> StartCommercialAsync(StartCommercialRequest request, string accessToken = null)
+        public Task<StartCommercialResponse?> StartCommercialAsync(StartCommercialRequest request, string? accessToken = null)
         {
-            return TwitchPostGenericAsync<StartCommercialResponse>("/channels/commercial", ApiVersion.Helix, JsonConvert.SerializeObject(request), null, accessToken);
+            return TwitchPostGenericAsync<StartCommercialResponse>("/channels/commercial", ApiVersion.Helix, JsonSerializer.Serialize(request), null, accessToken);
         }
         #endregion
     }

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,7 +7,7 @@ namespace TwitchLib.Api.Helix.Models.Bits
 {
     public class GetCheermotesResponse
     {
-        [JsonProperty(PropertyName = "data")]
-        public Cheermote[] Listings { get; protected set; }
+        [JsonPropertyName("data")]
+        public Cheermote[] Listings { get; set; }
     }
 }

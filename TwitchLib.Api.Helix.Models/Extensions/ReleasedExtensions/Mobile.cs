@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,7 +7,7 @@ namespace TwitchLib.Api.Helix.Models.Extensions.ReleasedExtensions
 {
     public class Mobile
     {
-        [JsonProperty(PropertyName = "viewer_url")]
-        public string ViewerUrl { get; protected set; }
+        [JsonPropertyName("viewer_url")]
+        public string ViewerUrl { get; set; }
     }
 }

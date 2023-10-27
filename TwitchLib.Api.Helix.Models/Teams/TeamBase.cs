@@ -1,25 +1,25 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace TwitchLib.Api.Helix.Models.Teams
 {
     public abstract class TeamBase
     {
-        [JsonProperty(PropertyName = "banner")]
-        public string Banner { get; protected set; }
-        [JsonProperty(PropertyName = "background_image_url")]
-        public string BackgroundImageUrl { get; protected set; }
-        [JsonProperty(PropertyName = "created_at")]
-        public string CreatedAt { get; protected set; }
-        [JsonProperty(PropertyName = "updated_at")]
-        public string UpdatedAt { get; protected set; }
-        public string Info { get; protected set; }
-        [JsonProperty(PropertyName = "thumbnail_url")]
-        public string ThumbnailUrl { get; protected set; }
-        [JsonProperty(PropertyName = "team_name")]
-        public string TeamName { get; protected set; }
-        [JsonProperty(PropertyName = "team_display_name")]
-        public string TeamDisplayName { get; protected set; }
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; protected set; }
+        [JsonPropertyName("banner")]
+        public string Banner { get; set; }
+        [JsonPropertyName("background_image_url")]
+        public string BackgroundImageUrl { get; set; }
+        [JsonPropertyName("created_at")]
+        public string CreatedAt { get; set; }
+        [JsonPropertyName("updated_at")]
+        public string UpdatedAt { get; set; }
+        public string Info { get; set; }
+        [JsonPropertyName("thumbnail_url")]
+        public string ThumbnailUrl { get; set; }
+        [JsonPropertyName("team_name")]
+        public string TeamName { get; set; }
+        [JsonPropertyName("team_display_name")]
+        public string TeamDisplayName { get; set; }
+        [JsonPropertyName("id")]
+        public string Id { get; set; }
     }
 }

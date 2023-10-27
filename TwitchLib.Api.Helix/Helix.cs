@@ -43,11 +43,11 @@ namespace TwitchLib.Api.Helix
         /// <param name="rateLimiter">Instance Of RateLimiter, otherwise no ratelimiter is used.</param>
         /// <param name="settings">Instance of ApiSettings, otherwise defaults used, can be changed later</param>
         /// <param name="http">Instance of HttpCallHandler, otherwise default handler used</param>
-        public Helix(ILoggerFactory loggerFactory = null, IRateLimiter rateLimiter = null, IApiSettings settings = null, IHttpCallHandler http = null)
+        public Helix(ILoggerFactory? loggerFactory = null, IRateLimiter? rateLimiter = null, IApiSettings? settings = null, IHttpCallHandler? http = null)
         {
-            _logger = loggerFactory?.CreateLogger<Helix>();
+            _logger = loggerFactory?.CreateLogger<Helix>()!;
             rateLimiter = rateLimiter ?? BypassLimiter.CreateLimiterBypassInstance();
-            http = http ?? new TwitchHttpClient(loggerFactory?.CreateLogger<TwitchHttpClient>());
+            http = http ?? new TwitchHttpClient(loggerFactory?.CreateLogger<TwitchHttpClient>()!);
             Settings = settings ?? new ApiSettings();
 
             Analytics = new Analytics(Settings, rateLimiter, http);
@@ -61,7 +61,7 @@ namespace TwitchLib.Api.Helix
             EventSub = new EventSub(Settings, rateLimiter, http);
             Extensions = new Extensions(Settings, rateLimiter, http);
             Games = new Games(Settings, rateLimiter, http);
-            Goals = new Goals(settings, rateLimiter, http);
+            Goals = new Goals(Settings, rateLimiter, http);
             HypeTrain = new HypeTrain(Settings, rateLimiter, http);
             Moderation = new Moderation(Settings, rateLimiter, http);
             Polls = new Polls(Settings, rateLimiter, http);

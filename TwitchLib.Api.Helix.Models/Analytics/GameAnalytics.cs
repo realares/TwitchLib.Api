@@ -1,16 +1,16 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace TwitchLib.Api.Helix.Models.Analytics
 {
     public class GameAnalytics
     {
-        [JsonProperty(PropertyName = "game_id")]
-        public string GameId { get; protected set; }
-        [JsonProperty(PropertyName = "URL")]
-        public string Url { get; protected set; }
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; protected set; }
-        [JsonProperty(PropertyName = "date_range")]
-        public Common.DateRange DateRange { get; protected set; }
+        [JsonPropertyName("game_id")]
+        public string GameId { get; set; }
+        [JsonPropertyName("URL")]
+        public string Url { get; set; }
+        [JsonPropertyName("type")]
+        public string Type { get; set; }
+        [JsonPropertyName("date_range")]
+        public Common.DateRange DateRange { get; set; }
     }
 }

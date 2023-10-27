@@ -1,33 +1,33 @@
 ﻿using System;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace TwitchLib.Api.Core.Models.Undocumented.TwitchPrimeOffers
 {
     public class Offer
     {
-        [JsonProperty(PropertyName = "applicableGame")]
-        public string ApplicableGame { get; protected set; }
-        [JsonProperty(PropertyName = "assets")]
-        public Asset[] Assets { get; protected set; }
-        [JsonProperty(PropertyName = "contentCategories")]
-        public string[] ContentCategories { get; protected set; }
-        [JsonProperty(PropertyName = "contentClaimInstructions")]
-        public string ContentClaimInstruction { get; protected set; }
-        [JsonProperty(PropertyName = "contentDeliveryMethod")]
-        public string ContentDeliveryMethod { get; protected set; }
-        [JsonProperty(PropertyName = "endTime")]
-        public DateTime EndTime { get; protected set; }
-        [JsonProperty(PropertyName = "offerDescription")]
-        public string OfferDescription { get; protected set; }
-        [JsonProperty(PropertyName = "offerId")]
-        public string OfferId { get; protected set; }
-        [JsonProperty(PropertyName = "offerTitle")]
-        public string OfferTitle { get; protected set; }
-        [JsonProperty(PropertyName = "priority")]
-        public int Priority { get; protected set; }
-        [JsonProperty(PropertyName = "publisherName")]
-        public string PublisherName { get; protected set; }
-        [JsonProperty(PropertyName = "startTime")]
-        public DateTime StartTime { get; protected set; }
+        [JsonPropertyName("applicableGame")]
+        public string ApplicableGame { get; set; }
+        [JsonPropertyName("assets")]
+        public Asset[] Assets { get; set; }
+        [JsonPropertyName("contentCategories")]
+        public string[] ContentCategories { get; set; }
+        [JsonPropertyName("contentClaimInstructions")]
+        public string ContentClaimInstruction { get; set; }
+        [JsonPropertyName("contentDeliveryMethod")]
+        public string ContentDeliveryMethod { get; set; }
+        [JsonPropertyName("endTime")]
+        public DateTime EndTime { get; set; }
+        [JsonPropertyName("offerDescription")]
+        public string OfferDescription { get; set; }
+        [JsonPropertyName("offerId")]
+        public string OfferId { get; set; }
+        [JsonPropertyName("offerTitle")]
+        public string OfferTitle { get; set; }
+        [JsonPropertyName("priority")]
+        public int Priority { get; set; }
+        [JsonPropertyName("publisherName")]
+        public string PublisherName { get; set; }
+        [JsonPropertyName("startTime")]
+        public DateTime StartTime { get; set; }
     }
 }

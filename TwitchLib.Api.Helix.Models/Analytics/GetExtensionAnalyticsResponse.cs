@@ -1,10 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace TwitchLib.Api.Helix.Models.Analytics
 {
     public class GetExtensionAnalyticsResponse
     {
-        [JsonProperty(PropertyName = "data")]
-        public ExtensionAnalytics[] Data { get; protected set; }
+        [JsonPropertyName("data")]
+        public ExtensionAnalytics[] Data { get; set; }
     }
 }

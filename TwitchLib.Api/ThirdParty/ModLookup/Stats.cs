@@ -1,18 +1,18 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace TwitchLib.Api.ThirdParty.ModLookup
 {
     public class Stats
     {
-        [JsonProperty(PropertyName = "relations")]
-        public int Relations { get; protected set; }
-        [JsonProperty(PropertyName = "channels_total")]
-        public int ChannelsTotal { get; protected set; }
-        [JsonProperty(PropertyName = "users")]
-        public int Users { get; protected set; }
-        [JsonProperty(PropertyName = "channels_no_mods")]
-        public int ChannelsNoMods { get; protected set; }
-        [JsonProperty(PropertyName = "channels_only_broadcaster")]
-        public int ChannelsOnlyBroadcaster { get; protected set; }
+        [JsonPropertyName("relations")]
+        public int Relations { get; set; }
+        [JsonPropertyName("channels_total")]
+        public int ChannelsTotal { get; set; }
+        [JsonPropertyName("users")]
+        public int Users { get; set; }
+        [JsonPropertyName("channels_no_mods")]
+        public int ChannelsNoMods { get; set; }
+        [JsonPropertyName("channels_only_broadcaster")]
+        public int ChannelsOnlyBroadcaster { get; set; }
     }
 }

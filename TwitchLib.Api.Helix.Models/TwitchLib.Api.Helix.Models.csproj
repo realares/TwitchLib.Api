@@ -1,30 +1,28 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	  <TargetFrameworks>net7.0;net6.0</TargetFrameworks>
+	  <TargetFrameworks>net7.0</TargetFrameworks>
     <PackageId>TwitchLib.Api.Helix.Models</PackageId>
-    <VersionPrefix>3.5.1</VersionPrefix>
+    <VersionPrefix>4.0.0</VersionPrefix>
     <VersionSuffix>$(VersionSuffix)</VersionSuffix>
     <Description>Project containing the Helix models used in TwitchLib.Api</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Authors>swiftyspiffy, Prom3theu5, Syzuna, LuckyNoS7evin</Authors>
+    <Authors>realares,swiftyspiffy, Prom3theu5, Syzuna, LuckyNoS7evin</Authors>
     <Company></Company>
     <PackageIcon>twitchlib.png</PackageIcon>
     <PackageProjectUrl>https://github.com/TwitchLib/TwitchLib.Api</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Copyright>Copyright 2021</Copyright>
+    <Copyright>Copyright 2023</Copyright>
     <PackageReleaseNotes>Incremental changes.</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/swiftyspiffy/TwitchLib</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <PackageTags>twitch library irc chat c# csharp api events pubsub net standard 2.0</PackageTags>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <AssemblyVersion>3.5.1</AssemblyVersion>
-    <FileVersion>3.5.1</FileVersion>
+    <AssemblyVersion>4.0.0</AssemblyVersion>
+    <FileVersion>4.0.0</FileVersion>
+	<LangVersion>10</LangVersion>
+	<Nullable>enable</Nullable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\TwitchLib.Api.Core.Enums\TwitchLib.Api.Core.Enums.csproj" />
@@ -32,5 +30,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="twitchlib.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Channels\" />
   </ItemGroup>
 </Project>

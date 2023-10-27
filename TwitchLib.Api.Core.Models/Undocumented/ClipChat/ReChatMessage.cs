@@ -1,14 +1,14 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace TwitchLib.Api.Core.Models.Undocumented.ClipChat
 {
     public class ReChatMessage
     {
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; protected set; }
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; protected set; }
-        [JsonProperty(PropertyName = "attributes")]
-        public ReChatMessageAttributes Attributes { get; protected set; }
+        [JsonPropertyName("type")]
+        public string Type { get; set; }
+        [JsonPropertyName("id")]
+        public string Id { get; set; }
+        [JsonPropertyName("attributes")]
+        public ReChatMessageAttributes Attributes { get; set; }
     }
 }

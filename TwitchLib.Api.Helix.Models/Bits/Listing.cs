@@ -1,18 +1,18 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace TwitchLib.Api.Helix.Models.Bits
 {
     public class Listing
     {
-        [JsonProperty(PropertyName = "user_id")]
-        public string UserId { get; protected set; }
-        [JsonProperty(PropertyName = "user_login")]
-        public string UserLogin { get; protected set; }
-        [JsonProperty(PropertyName = "user_name")]
-        public string UserName { get; protected set; }
-        [JsonProperty(PropertyName = "rank")]
-        public int Rank { get; protected set; }
-        [JsonProperty(PropertyName = "score")]
-        public int Score { get; protected set; }
+        [JsonPropertyName("user_id")]
+        public string UserId { get; set; }
+        [JsonPropertyName("user_login")]
+        public string UserLogin { get; set; }
+        [JsonPropertyName("user_name")]
+        public string UserName { get; set; }
+        [JsonPropertyName("rank")]
+        public int Rank { get; set; }
+        [JsonPropertyName("score")]
+        public int Score { get; set; }
     }
 }

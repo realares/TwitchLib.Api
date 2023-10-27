@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,9 +7,10 @@ namespace TwitchLib.Api.Helix.Models.Ads
 {
     public class StartCommercialRequest
     {
-        [JsonProperty(PropertyName = "broadcaster_id")]
+        [JsonPropertyName("broadcaster_id")]
         public string BroadcasterId { get; set; }
-        [JsonProperty(PropertyName = "length")]
+
+        [JsonPropertyName("length")]
         public int Length { get; set; }
     }
 }

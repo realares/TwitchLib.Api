@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,13 +7,13 @@ namespace TwitchLib.Api.Helix.Models.Streams.CreateStreamMarker
 {
     public class CreatedMarker
     {
-        [JsonProperty(PropertyName = "id")]
-        public int Id { get; protected set; }
-        [JsonProperty(PropertyName = "created_at")]
-        public DateTime CreatedAt { get; protected set; }
-        [JsonProperty(PropertyName = "description")]
-        public string Description { get; protected set; }
-        [JsonProperty(PropertyName = "position_seconds")]
-        public int PositionSeconds { get; protected set; }
+        [JsonPropertyName("id")]
+        public int Id { get; set; }
+        [JsonPropertyName("created_at")]
+        public DateTime CreatedAt { get; set; }
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
+        [JsonPropertyName("position_seconds")]
+        public int PositionSeconds { get; set; }
     }
 }

@@ -1,16 +1,16 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace TwitchLib.Api.Core.Models.Undocumented.TwitchPrimeOffers
 {
     public class Asset
     {
-        [JsonProperty(PropertyName = "assetType")]
-        public string AssetType { get; protected set; }
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; protected set; }
-        [JsonProperty(PropertyName = "location2x")]
-        public string Location2x { get; protected set; }
-        [JsonProperty(PropertyName = "mediaType")]
-        public string MediaType { get; protected set; }
+        [JsonPropertyName("assetType")]
+        public string AssetType { get; set; }
+        [JsonPropertyName("location")]
+        public string Location { get; set; }
+        [JsonPropertyName("location2x")]
+        public string Location2x { get; set; }
+        [JsonPropertyName("mediaType")]
+        public string MediaType { get; set; }
     }
 }

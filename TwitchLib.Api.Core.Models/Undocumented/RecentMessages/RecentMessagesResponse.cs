@@ -1,10 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace TwitchLib.Api.Core.Models.Undocumented.RecentMessages
 {
     public class RecentMessagesResponse
     {
-        [JsonProperty(PropertyName = "messages")]
-        public string[] Messages { get; protected set; }
+        [JsonPropertyName("messages")]
+        public string[] Messages { get; set; }
     }
 }

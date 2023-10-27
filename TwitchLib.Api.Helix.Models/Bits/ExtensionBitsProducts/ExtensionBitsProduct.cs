@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,17 +7,17 @@ namespace TwitchLib.Api.Helix.Models.Bits.ExtensionBitsProducts
 {
     public class ExtensionBitsProduct
     {
-        [JsonProperty(PropertyName = "sku")]
-        public string Sku { get; protected set; }
-        [JsonProperty(PropertyName = "cost")]
-        public Cost Cost { get; protected set; }
-        [JsonProperty(PropertyName = "in_development")]
-        public bool InDevelopment { get; protected set; }
-        [JsonProperty(PropertyName = "display_name")]
-        public string DisplayName { get; protected set; }
-        [JsonProperty(PropertyName = "expiration")]
-        public DateTime Expiration { get; protected set; }
-        [JsonProperty(PropertyName = "is_broadcast")]
-        public bool IsBroadcast { get; protected set; }
+        [JsonPropertyName("sku")]
+        public string Sku { get; set; }
+        [JsonPropertyName("cost")]
+        public Cost Cost { get; set; }
+        [JsonPropertyName("in_development")]
+        public bool InDevelopment { get; set; }
+        [JsonPropertyName("display_name")]
+        public string DisplayName { get; set; }
+        [JsonPropertyName("expiration")]
+        public DateTime Expiration { get; set; }
+        [JsonPropertyName("is_broadcast")]
+        public bool IsBroadcast { get; set; }
     }
 }

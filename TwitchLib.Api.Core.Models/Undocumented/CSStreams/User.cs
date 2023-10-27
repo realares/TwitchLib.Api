@@ -1,61 +1,61 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System;
 
 namespace TwitchLib.Api.Core.Models.Undocumented.CSStreams
 {
     public class User
     {
-        [JsonProperty(PropertyName = "mature")]
-        public bool Mature { get; protected set; }
-        [JsonProperty(PropertyName = "status")]
-        public string Status { get; protected set; }
-        [JsonProperty(PropertyName = "broadcaster_language")]
-        public string BroadcasterLanguage { get; protected set; }
-        [JsonProperty(PropertyName = "display_name")]
-        public string DisplayName { get; protected set; }
-        [JsonProperty(PropertyName = "game")]
-        public string Game { get; protected set; }
-        [JsonProperty(PropertyName = "localized_game")]
-        public LocalizedGame LocalizedGame { get; protected set; }
-        [JsonProperty(PropertyName = "_id")]
-        public string Id { get; protected set; }
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; protected set; }
-        [JsonProperty(PropertyName = "bio")]
-        public string Bio { get; protected set; }
-        [JsonProperty(PropertyName = "partner")]
-        public bool Partner { get; protected set; }
-        [JsonProperty(PropertyName = "created_at")]
-        public DateTime CreatedAt { get; protected set; }
-        [JsonProperty(PropertyName = "updated_at")]
-        public DateTime UpdatedAt { get; protected set; }
-        [JsonProperty(PropertyName = "delay")]
-        public string Delay { get; protected set; }
-        [JsonProperty(PropertyName = "prerolls")]
-        public bool Prerolls { get; protected set; }
-        [JsonProperty(PropertyName = "postrolls")]
-        public bool Postrolls { get; protected set; }
-        [JsonProperty(PropertyName = "primary_team_name")]
-        public string PrimaryTeamName { get; protected set; }
-        [JsonProperty(PropertyName = "primary_team_display_name")]
-        public string PrimaryTeamDisplayName { get; protected set; }
-        [JsonProperty(PropertyName = "logo")]
-        public string Logo { get; protected set; }
-        [JsonProperty(PropertyName = "banner")]
-        public string Banner { get; protected set; }
-        [JsonProperty(PropertyName = "video_banner")]
-        public string VideoBanner { get; protected set; }
-        [JsonProperty(PropertyName = "background")]
-        public string Background { get; protected set; }
-        [JsonProperty(PropertyName = "profile_banner")]
-        public string ProfileBanner { get; protected set; }
-        [JsonProperty(PropertyName = "profile_banner_background_color")]
-        public string ProfileBannerBackgroundColor { get; protected set; }
-        [JsonProperty(PropertyName = "url")]
-        public string Url { get; protected set; }
-        [JsonProperty(PropertyName = "views")]
-        public int Views { get; protected set; }
-        [JsonProperty(PropertyName = "followers")]
-        public int Followers { get; protected set; }
+        [JsonPropertyName("mature")]
+        public bool Mature { get; set; }
+        [JsonPropertyName("status")]
+        public string Status { get; set; }
+        [JsonPropertyName("broadcaster_language")]
+        public string BroadcasterLanguage { get; set; }
+        [JsonPropertyName("display_name")]
+        public string DisplayName { get; set; }
+        [JsonPropertyName("game")]
+        public string Game { get; set; }
+        [JsonPropertyName("localized_game")]
+        public LocalizedGame LocalizedGame { get; set; }
+        [JsonPropertyName("_id")]
+        public string Id { get; set; }
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+        [JsonPropertyName("bio")]
+        public string Bio { get; set; }
+        [JsonPropertyName("partner")]
+        public bool Partner { get; set; }
+        [JsonPropertyName("created_at")]
+        public DateTime CreatedAt { get; set; }
+        [JsonPropertyName("updated_at")]
+        public DateTime UpdatedAt { get; set; }
+        [JsonPropertyName("delay")]
+        public string Delay { get; set; }
+        [JsonPropertyName("prerolls")]
+        public bool Prerolls { get; set; }
+        [JsonPropertyName("postrolls")]
+        public bool Postrolls { get; set; }
+        [JsonPropertyName("primary_team_name")]
+        public string PrimaryTeamName { get; set; }
+        [JsonPropertyName("primary_team_display_name")]
+        public string PrimaryTeamDisplayName { get; set; }
+        [JsonPropertyName("logo")]
+        public string Logo { get; set; }
+        [JsonPropertyName("banner")]
+        public string Banner { get; set; }
+        [JsonPropertyName("video_banner")]
+        public string VideoBanner { get; set; }
+        [JsonPropertyName("background")]
+        public string Background { get; set; }
+        [JsonPropertyName("profile_banner")]
+        public string ProfileBanner { get; set; }
+        [JsonPropertyName("profile_banner_background_color")]
+        public string ProfileBannerBackgroundColor { get; set; }
+        [JsonPropertyName("url")]
+        public string Url { get; set; }
+        [JsonPropertyName("views")]
+        public int Views { get; set; }
+        [JsonPropertyName("followers")]
+        public int Followers { get; set; }
     }
 }

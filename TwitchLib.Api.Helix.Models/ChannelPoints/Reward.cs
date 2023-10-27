@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,13 +7,13 @@ namespace TwitchLib.Api.Helix.Models.ChannelPoints
 {
     public class Reward
     {
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; protected set; }
-        [JsonProperty(PropertyName = "title")]
-        public string Title { get; protected set; }
-        [JsonProperty(PropertyName = "prompt")]
-        public string Prompt { get; protected set; }
-        [JsonProperty(PropertyName = "cost")]
-        public int Cost { get; protected set; }
+        [JsonPropertyName("id")]
+        public string Id { get; set; }
+        [JsonPropertyName("title")]
+        public string Title { get; set; }
+        [JsonPropertyName("prompt")]
+        public string Prompt { get; set; }
+        [JsonPropertyName("cost")]
+        public int Cost { get; set; }
     }
 }

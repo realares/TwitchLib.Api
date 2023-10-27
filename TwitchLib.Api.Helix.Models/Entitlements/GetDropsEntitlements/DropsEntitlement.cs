@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System;
 using TwitchLib.Api.Core.Enums;
 
@@ -6,19 +6,19 @@ namespace TwitchLib.Api.Helix.Models.Entitlements.GetDropsEntitlements
 {
     public class DropsEntitlement
     {
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; protected set; }
-        [JsonProperty(PropertyName = "benefit_id")]
-        public string BenefitId { get; protected set; }
-        [JsonProperty(PropertyName = "timestamp")]
-        public DateTime Timestamp { get; protected set; }
-        [JsonProperty(PropertyName = "user_id")]
-        public string UserId { get; protected set; }
-        [JsonProperty(PropertyName = "game_id")]
-        public string GameId { get; protected set; }
-        [JsonProperty(PropertyName = "fulfillment_status")]
-        public FulfillmentStatus FulfillmentStatus { get; protected set; }
-        [JsonProperty(PropertyName = "updated_at")]
-        public DateTime UpdatedAt { get; protected set; }
+        [JsonPropertyName("id")]
+        public string Id { get; set; }
+        [JsonPropertyName("benefit_id")]
+        public string BenefitId { get; set; }
+        [JsonPropertyName("timestamp")]
+        public DateTime Timestamp { get; set; }
+        [JsonPropertyName("user_id")]
+        public string UserId { get; set; }
+        [JsonPropertyName("game_id")]
+        public string GameId { get; set; }
+        [JsonPropertyName("fulfillment_status")]
+        public FulfillmentStatus FulfillmentStatus { get; set; }
+        [JsonPropertyName("updated_at")]
+        public DateTime UpdatedAt { get; set; }
     }
 }

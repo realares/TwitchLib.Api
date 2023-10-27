@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System;
 using System.Collections.Generic;
 
@@ -6,27 +6,27 @@ namespace TwitchLib.Api.Helix.Models.Search
 {
     public class Channel
     {
-        [JsonProperty(PropertyName = "game_id")]
-        public string GameId { get; protected set; }
-        [JsonProperty(PropertyName = "game_name")]
-        public string GameName { get; protected set; }
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; protected set; }
-        [JsonProperty(PropertyName = "broadcaster_login")]
-        public string BroadcasterLogin { get; protected set; }
-        [JsonProperty(PropertyName = "display_name")]
-        public string DisplayName { get; protected set; }
-        [JsonProperty(PropertyName = "broadcaster_language")]
-        public string BroadcasterLanguage { get; protected set; }
-        [JsonProperty(PropertyName = "title")]
-        public string Title { get; protected set; }
-        [JsonProperty(PropertyName = "thumbnail_url")]
-        public string ThumbnailUrl { get; protected set; }
-        [JsonProperty(PropertyName = "is_live")]
-        public bool IsLive { get; protected set; }
-        [JsonProperty(PropertyName = "started_at")]
-        public DateTime? StartedAt { get; protected set; }
-        [JsonProperty(PropertyName = "tag_ids")]
-        public List<string> TagIds { get; protected set; }
+        [JsonPropertyName("game_id")]
+        public string GameId { get; set; }
+        [JsonPropertyName("game_name")]
+        public string GameName { get; set; }
+        [JsonPropertyName("id")]
+        public string Id { get; set; }
+        [JsonPropertyName("broadcaster_login")]
+        public string BroadcasterLogin { get; set; }
+        [JsonPropertyName("display_name")]
+        public string DisplayName { get; set; }
+        [JsonPropertyName("broadcaster_language")]
+        public string BroadcasterLanguage { get; set; }
+        [JsonPropertyName("title")]
+        public string Title { get; set; }
+        [JsonPropertyName("thumbnail_url")]
+        public string ThumbnailUrl { get; set; }
+        [JsonPropertyName("is_live")]
+        public bool IsLive { get; set; }
+        [JsonPropertyName("started_at")]
+        public DateTime? StartedAt { get; set; }
+        [JsonPropertyName("tag_ids")]
+        public List<string> TagIds { get; set; }
     }
 }

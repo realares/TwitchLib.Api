@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using System.Text.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,6 +9,8 @@ using TwitchLib.Api.Core.Interfaces;
 using TwitchLib.Api.Helix.Models.Polls.CreatePoll;
 using TwitchLib.Api.Helix.Models.Polls.EndPoll;
 using TwitchLib.Api.Helix.Models.Polls.GetPolls;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace TwitchLib.Api.Helix
 {
@@ -19,7 +20,8 @@ namespace TwitchLib.Api.Helix
         {
         }
 
-        public Task<GetPollsResponse> GetPollsAsync(string broadcasterId, List<string> ids = null, string after = null, int first = 20, string accessToken = null)
+        public Task<GetPollsResponse?> GetPollsAsync(
+            string broadcasterId, List<string>? ids = null, string? after = null, int first = 20, string? accessToken = null)
         {
             var getParams = new List<KeyValuePair<string, string>>
             { 
@@ -40,14 +42,14 @@ namespace TwitchLib.Api.Helix
             return TwitchGetGenericAsync<GetPollsResponse>("/polls", ApiVersion.Helix, getParams, accessToken);
         }
 
-        public Task<CreatePollResponse> CreatePollAsync(CreatePollRequest request, string accessToken = null)
+        public Task<CreatePollResponse?> CreatePollAsync(CreatePollRequest request, string? accessToken = null)
         {
-            return TwitchPostGenericAsync<CreatePollResponse>("/polls", ApiVersion.Helix, JsonConvert.SerializeObject(request), accessToken: accessToken);
+            return TwitchPostGenericAsync<CreatePollResponse>("/polls", ApiVersion.Helix, JsonSerializer.Serialize(request), accessToken: accessToken);
         }
 
-        public Task<EndPollResponse> EndPollAsync(string broadcasterId, string id, PollStatusEnum status, string accessToken = null)
+        public Task<EndPollResponse?> EndPollAsync(string broadcasterId, string id, PollStatusEnum status, string? accessToken = null)
         {
-            JObject json = new JObject();
+            JsonObject json = new JsonObject();
             json["broadcaster_id"] = broadcasterId;
             json["id"] = id;
             json["status"] = status.ToString();

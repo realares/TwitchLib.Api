@@ -1,13 +1,13 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using TwitchLib.Api.Helix.Models.Common;
 
 namespace TwitchLib.Api.Helix.Models.Search
 {
     public class SearchChannelsResponse
     {
-        [JsonProperty(PropertyName = "data")]
-        public Channel[] Channels { get; protected set; }
-        [JsonProperty(PropertyName = "pagination")]
-        public Pagination Pagination { get; protected set; }
+        [JsonPropertyName("data")]
+        public Channel[] Channels { get; set; }
+        [JsonPropertyName("pagination")]
+        public Pagination Pagination { get; set; }
     }
 }

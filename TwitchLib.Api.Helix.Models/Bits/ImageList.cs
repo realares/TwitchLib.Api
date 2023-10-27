@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 using System;
 using System.Collections.Generic;
 
@@ -6,9 +6,9 @@ namespace TwitchLib.Api.Helix.Models.Bits
 {
     public class ImageList
     {
-        [JsonProperty(PropertyName = "animated")]
-        public Dictionary<string, string> Animated { get; protected set; }
-        [JsonProperty(PropertyName = "static")]
-        public Dictionary<string, string> Static { get; protected set; }
+        [JsonPropertyName("animated")]
+        public Dictionary<string, string> Animated { get; set; }
+        [JsonPropertyName("static")]
+        public Dictionary<string, string> Static { get; set; }
     }
 }

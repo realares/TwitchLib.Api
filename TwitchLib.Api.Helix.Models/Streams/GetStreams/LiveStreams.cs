@@ -1,16 +1,16 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace TwitchLib.Api.Helix.Models.Streams.GetStreams
 {
     public class LiveStreams
     {
         #region Total
-        [JsonProperty(PropertyName = "_total")]
-        public int Total { get; protected set; }
+        [JsonPropertyName("_total")]
+        public int Total { get; set; }
         #endregion
         #region Streams
-        [JsonProperty(PropertyName = "streams")]
-        public Stream[] Streams { get; protected set; }
+        [JsonPropertyName("streams")]
+        public Stream[] Streams { get; set; }
         #endregion
     }
 }

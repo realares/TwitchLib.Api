@@ -1,19 +1,19 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System;
 
 namespace TwitchLib.Api.Helix.Models.Schedule.UpdateChannelStreamSegment
 {
     public class UpdateChannelStreamSegmentRequest
     {
-        [JsonProperty("start_time")]
+        [JsonPropertyName("start_time")]
         public DateTime StartTime { get; set; }
-        [JsonProperty("duration")]
+        [JsonPropertyName("duration")]
         public string Duration { get; set; }
-        [JsonProperty("category_id")]
+        [JsonPropertyName("category_id")]
         public string CategoryId { get; set; }
-        [JsonProperty("is_canceled")]
+        [JsonPropertyName("is_canceled")]
         public bool IsCanceled { get; set; }
-        [JsonProperty("timezone")]
+        [JsonPropertyName("timezone")]
         public string Timezone { get; set; }
     }
 }

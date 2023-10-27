@@ -1,12 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace TwitchLib.Api.Core.Models.Undocumented.CSStreams
 {
     public class CSStreams
     {
-        [JsonProperty(PropertyName = "_total")]
-        public int Total { get; protected set; }
-        [JsonProperty(PropertyName = "streams")]
-        public CSStream[] Streams { get; protected set; }
+        [JsonPropertyName("_total")]
+        public int Total { get; set; }
+        [JsonPropertyName("streams")]
+        public CSStream[] Streams { get; set; }
     }
 }

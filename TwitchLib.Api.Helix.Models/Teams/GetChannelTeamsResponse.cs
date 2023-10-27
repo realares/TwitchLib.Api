@@ -1,10 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace TwitchLib.Api.Helix.Models.Teams
 {
     public class GetChannelTeamsResponse
     {
-        [JsonProperty(PropertyName = "data")]
-        public ChannelTeam[] ChannelTeams { get; protected set; }
+        [JsonPropertyName("data")]
+        public ChannelTeam[] ChannelTeams { get; set; }
     }
 }

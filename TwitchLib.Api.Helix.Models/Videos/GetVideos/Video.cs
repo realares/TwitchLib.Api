@@ -1,36 +1,36 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace TwitchLib.Api.Helix.Models.Videos.GetVideos
 {
     public class Video
     {
-        [JsonProperty(PropertyName = "created_at")]
-        public string CreatedAt { get; protected set; }
-        [JsonProperty(PropertyName = "description")]
-        public string Description { get; protected set; }
-        [JsonProperty(PropertyName = "duration")]
-        public string Duration { get; protected set; }
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; protected set; }
-        [JsonProperty(PropertyName = "language")]
-        public string Language { get; protected set; }
-        [JsonProperty(PropertyName = "published_at")]
-        public string PublishedAt { get; protected set; }
-        [JsonProperty(PropertyName = "thumbnail_url")]
-        public string ThumbnailUrl { get; protected set; }
-        [JsonProperty(PropertyName = "title")]
-        public string Title { get; protected set; }
-        [JsonProperty(PropertyName = "user_id")]
-        public string UserId { get; protected set; }
-        [JsonProperty(PropertyName = "user_login")]
-        public string UserLogin { get; protected set; }
-        [JsonProperty(PropertyName = "user_name")]
-        public string UserName { get; protected set; }
-        [JsonProperty(PropertyName = "view_count")]
-        public int ViewCount { get; protected set; }
-        [JsonProperty(PropertyName = "stream_id")]
-        public string StreamId { get; protected set; }
-        [JsonProperty(PropertyName = "muted_segments")]
-        public MutedSegment[] MutedSegments { get; protected set; }
+        [JsonPropertyName("created_at")]
+        public string CreatedAt { get; set; }
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
+        [JsonPropertyName("duration")]
+        public string Duration { get; set; }
+        [JsonPropertyName("id")]
+        public string Id { get; set; }
+        [JsonPropertyName("language")]
+        public string Language { get; set; }
+        [JsonPropertyName("published_at")]
+        public string PublishedAt { get; set; }
+        [JsonPropertyName("thumbnail_url")]
+        public string ThumbnailUrl { get; set; }
+        [JsonPropertyName("title")]
+        public string Title { get; set; }
+        [JsonPropertyName("user_id")]
+        public string UserId { get; set; }
+        [JsonPropertyName("user_login")]
+        public string UserLogin { get; set; }
+        [JsonPropertyName("user_name")]
+        public string UserName { get; set; }
+        [JsonPropertyName("view_count")]
+        public int ViewCount { get; set; }
+        [JsonPropertyName("stream_id")]
+        public string StreamId { get; set; }
+        [JsonPropertyName("muted_segments")]
+        public MutedSegment[] MutedSegments { get; set; }
     }
 }

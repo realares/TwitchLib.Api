@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,21 +7,21 @@ namespace TwitchLib.Api.Helix.Models.Polls.CreatePoll
 {
     public class CreatePollRequest
     {
-        [JsonProperty(PropertyName = "broadcaster_id")]
+        [JsonPropertyName("broadcaster_id")]
         public string BroadcasterId { get; set; }
-        [JsonProperty(PropertyName = "title")]
+        [JsonPropertyName("title")]
         public string Title { get; set; }
-        [JsonProperty(PropertyName = "choices")]
+        [JsonPropertyName("choices")]
         public Choice[] Choices { get; set; }
-        [JsonProperty(PropertyName = "bits_voting_enabled")]
+        [JsonPropertyName("bits_voting_enabled")]
         public bool BitsVotingEnabled { get; set; }
-        [JsonProperty(PropertyName = "bits_per_vote")]
+        [JsonPropertyName("bits_per_vote")]
         public int BitsPerVote { get; set; }
-        [JsonProperty(PropertyName = "channel_points_voting_enabled")]
+        [JsonPropertyName("channel_points_voting_enabled")]
         public bool ChannelPointsVotingEnabled { get; set; }
-        [JsonProperty(PropertyName = "channel_points_per_vote")]
+        [JsonPropertyName("channel_points_per_vote")]
         public int ChannelPointsPerVote { get; set; }
-        [JsonProperty(PropertyName = "duration")]
+        [JsonPropertyName("duration")]
         public int DurationSeconds { get; set; }
     }
 }

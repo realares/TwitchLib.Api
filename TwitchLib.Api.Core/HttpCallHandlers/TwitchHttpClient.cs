@@ -73,8 +73,9 @@ namespace TwitchLib.Api.Core.HttpCallHandlers
                 var respStr = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 return new KeyValuePair<int, string>((int)response.StatusCode, respStr);
             }
+            string error = await response.Content.ReadAsStringAsync();
 
-            HandleWebException(response);
+            HandleWebException(response, error);
             return new KeyValuePair<int, string>(0, null);
         }
 
@@ -100,7 +101,7 @@ namespace TwitchLib.Api.Core.HttpCallHandlers
             return (int)response.StatusCode;
         }
 
-        private void HandleWebException(HttpResponseMessage errorResp)
+        private void HandleWebException(HttpResponseMessage errorResp, string realerror = null)
         {
             switch (errorResp.StatusCode)
             {

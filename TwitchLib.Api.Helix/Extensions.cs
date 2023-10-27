@@ -19,7 +19,8 @@ namespace TwitchLib.Api.Helix
 
         #region GetExtensionTransactions
 
-        public Task<GetExtensionTransactionsResponse> GetExtensionTransactionsAsync(string extensionId, List<string> ids = null, string after = null, int first = 20, string applicationAccessToken = null)
+        public Task<GetExtensionTransactionsResponse?> GetExtensionTransactionsAsync(
+            string extensionId, List<string>? ids = null, string? after = null, int first = 20, string? applicationAccessToken = null)
         {
             if(extensionId == null)
                 throw new BadParameterException("extensionId cannot be null");
@@ -45,7 +46,7 @@ namespace TwitchLib.Api.Helix
 
         #region GetExtensionLiveChannels
 
-        public Task<GetExtensionLiveChannelsResponse> GetExtensionLiveChannelsAsync(string extensionId, int first = 20, string after = null, string accessToken = null)
+        public Task<GetExtensionLiveChannelsResponse?> GetExtensionLiveChannelsAsync(string extensionId, int first = 20, string? after = null, string? accessToken = null)
         {
             if (string.IsNullOrEmpty(extensionId))
                 throw new BadParameterException("extensionId must be set");
@@ -68,7 +69,7 @@ namespace TwitchLib.Api.Helix
 
         #region GetReleasedExtensions
 
-        public Task<GetReleasedExtensionsResponse> GetReleasedExtensionsAsync(string extensionId, string extensionVersion = null, string accessToken = null)
+        public Task<GetReleasedExtensionsResponse?> GetReleasedExtensionsAsync(string extensionId, string? extensionVersion = null, string? accessToken = null)
         {
             if (string.IsNullOrEmpty(extensionId))
                 throw new BadParameterException("extensionId must be set");

@@ -2,6 +2,6 @@
 {
     public class UsernameChangeResponse
     {
-        public UsernameChangeListing[] UsernameChangeListings { get; protected set; }
+        public UsernameChangeListing[] UsernameChangeListings { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,23 +7,23 @@ namespace TwitchLib.Api.Helix.Models.Goals
 {
     public class CreatorGoal
     {
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; protected set; }
-        [JsonProperty(PropertyName = "broadcaster_id")]
-        public string BroadcasterId { get; protected set; }
-        [JsonProperty(PropertyName = "broadcaster_name")]
-        public string BroadcasterName { get; protected set; }
-        [JsonProperty(PropertyName = "broadcaster_login")]
-        public string BroadcasterLogin { get; protected set; }
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; protected set; }
-        [JsonProperty(PropertyName = "description")]
-        public string Description { get; protected set; }
-        [JsonProperty(PropertyName = "current_amount")]
-        public int CurrentAmount { get; protected set; }
-        [JsonProperty(PropertyName = "target_amount")]
-        public int TargetAmount { get; protected set; }
-        [JsonProperty(PropertyName = "created_at")]
-        public DateTime CreatedAt { get; protected set; }
+        [JsonPropertyName("id")]
+        public string Id { get; set; }
+        [JsonPropertyName("broadcaster_id")]
+        public string BroadcasterId { get; set; }
+        [JsonPropertyName("broadcaster_name")]
+        public string BroadcasterName { get; set; }
+        [JsonPropertyName("broadcaster_login")]
+        public string BroadcasterLogin { get; set; }
+        [JsonPropertyName("type")]
+        public string Type { get; set; }
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
+        [JsonPropertyName("current_amount")]
+        public int CurrentAmount { get; set; }
+        [JsonPropertyName("target_amount")]
+        public int TargetAmount { get; set; }
+        [JsonPropertyName("created_at")]
+        public DateTime CreatedAt { get; set; }
     }
 }

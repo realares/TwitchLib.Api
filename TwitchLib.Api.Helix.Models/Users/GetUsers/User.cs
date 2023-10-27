@@ -1,31 +1,31 @@
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 using System;
 
 namespace TwitchLib.Api.Helix.Models.Users.GetUsers
 {
     public class User
     {
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; protected set; }
-        [JsonProperty(PropertyName = "login")]
-        public string Login { get; protected set; }
-        [JsonProperty(PropertyName = "display_name")]
-        public string DisplayName { get; protected set; }
-        [JsonProperty(PropertyName = "created_at")]
-        public DateTime CreatedAt { get; protected set; }
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; protected set; }
-        [JsonProperty(PropertyName = "broadcaster_type")]
-        public string BroadcasterType { get; protected set; }
-        [JsonProperty(PropertyName = "description")]
-        public string Description { get; protected set; }
-        [JsonProperty(PropertyName = "profile_image_url")]
-        public string ProfileImageUrl { get; protected set; }
-        [JsonProperty(PropertyName = "offline_image_url")]
-        public string OfflineImageUrl { get; protected set; }
-        [JsonProperty(PropertyName = "view_count")]
-        public long ViewCount { get; protected set; }
-        [JsonProperty(PropertyName = "email")]
-        public string Email { get; protected set; }
+        [JsonPropertyName("id")]
+        public string Id { get; set; }
+        [JsonPropertyName("login")]
+        public string Login { get; set; }
+        [JsonPropertyName("display_name")]
+        public string DisplayName { get; set; }
+        [JsonPropertyName("created_at")]
+        public DateTime CreatedAt { get; set; }
+        [JsonPropertyName("type")]
+        public string Type { get; set; }
+        [JsonPropertyName("broadcaster_type")]
+        public string BroadcasterType { get; set; }
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
+        [JsonPropertyName("profile_image_url")]
+        public string ProfileImageUrl { get; set; }
+        [JsonPropertyName("offline_image_url")]
+        public string OfflineImageUrl { get; set; }
+        [JsonPropertyName("view_count")]
+        public long ViewCount { get; set; }
+        [JsonPropertyName("email")]
+        public string Email { get; set; }
     }
 }

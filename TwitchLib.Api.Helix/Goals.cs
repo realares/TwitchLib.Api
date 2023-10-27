@@ -17,7 +17,7 @@ namespace TwitchLib.Api.Helix
         }
 
         #region GetCreatorGoals
-        public Task<GetCreatorGoalsResponse> GetCreatorGoalsAsync(string broadcasterId, string accessToken = null)
+        public Task<GetCreatorGoalsResponse?> GetCreatorGoalsAsync(string broadcasterId, string? accessToken = null)
         {
             if (string.IsNullOrEmpty(broadcasterId))
                 throw new BadParameterException("broadcasterId cannot be null or empty");

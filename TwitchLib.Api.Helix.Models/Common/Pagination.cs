@@ -1,10 +1,15 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace TwitchLib.Api.Helix.Models.Common
 {
-    public class Pagination
+    public record Pagination
     {
-        [JsonProperty(PropertyName = "cursor")]
-        public string Cursor { get; protected set; }
+        public Pagination(string cursor)
+        {
+            Cursor = cursor;
+        }
+
+        [JsonPropertyName("cursor")]
+        public string Cursor { get; set; } = null!;
     }
 }

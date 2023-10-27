@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -12,6 +12,7 @@ using TwitchLib.Api.Events;
 using TwitchLib.Api.ThirdParty.AuthorizationFlow;
 using TwitchLib.Api.ThirdParty.ModLookup;
 using TwitchLib.Api.ThirdParty.UsernameChange;
+using System.Text.Json;
 
 namespace TwitchLib.Api.ThirdParty
 {
@@ -113,7 +114,7 @@ namespace TwitchLib.Api.ThirdParty
 
                 using var client = new HttpClient();
                 string resp = await client.GetStringAsync(createUrl).ConfigureAwait(false);
-                return JsonConvert.DeserializeObject<CreatedFlow>(resp);
+                return JsonSerializer.Deserialize<CreatedFlow>(resp);
             }
 
             public async Task<RefreshTokenResponse> RefreshTokenAsync(string refreshToken)
@@ -122,7 +123,7 @@ namespace TwitchLib.Api.ThirdParty
 
                 using var client = new HttpClient();
                 var resp = await client.GetStringAsync(refreshUrl).ConfigureAwait(false); 
-                return JsonConvert.DeserializeObject<RefreshTokenResponse>(resp);
+                return JsonSerializer.Deserialize<RefreshTokenResponse>(resp);
             }
 
             public void BeginPingingStatus(string id, int intervalMs = 5000)

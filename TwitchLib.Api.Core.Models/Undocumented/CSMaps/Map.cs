@@ -1,16 +1,16 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace TwitchLib.Api.Core.Models.Undocumented.CSMaps
 {
     public class Map
     {
-        [JsonProperty(PropertyName = "map")]
-        public string MapCode { get; protected set; }
-        [JsonProperty(PropertyName = "map_name")]
-        public string MapName { get; protected set; }
-        [JsonProperty(PropertyName = "map_image")]
-        public string MapImage { get; protected set; }
-        [JsonProperty(PropertyName = "viewers")]
-        public int Viewers { get; protected set; }
+        [JsonPropertyName("map")]
+        public string MapCode { get; set; }
+        [JsonPropertyName("map_name")]
+        public string MapName { get; set; }
+        [JsonPropertyName("map_image")]
+        public string MapImage { get; set; }
+        [JsonPropertyName("viewers")]
+        public int Viewers { get; set; }
     }
 }

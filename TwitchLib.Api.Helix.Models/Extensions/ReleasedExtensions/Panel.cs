@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,11 +7,11 @@ namespace TwitchLib.Api.Helix.Models.Extensions.ReleasedExtensions
 {
     public class Panel
     {
-        [JsonProperty(PropertyName = "viewer_url")]
-        public string ViewerUrl { get; protected set; }
-        [JsonProperty(PropertyName = "height")]
-        public int Height { get; protected set; }
-        [JsonProperty(PropertyName = "can_link_external_content")]
-        public bool CanLinkExternalContent { get; protected set; }
+        [JsonPropertyName("viewer_url")]
+        public string ViewerUrl { get; set; }
+        [JsonPropertyName("height")]
+        public int Height { get; set; }
+        [JsonPropertyName("can_link_external_content")]
+        public bool CanLinkExternalContent { get; set; }
     }
 }

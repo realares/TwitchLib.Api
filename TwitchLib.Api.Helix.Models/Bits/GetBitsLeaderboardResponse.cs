@@ -1,14 +1,14 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace TwitchLib.Api.Helix.Models.Bits
 {
     public class GetBitsLeaderboardResponse
     {
-        [JsonProperty(PropertyName = "data")]
-        public Listing[] Listings { get; protected set; }
-        [JsonProperty(PropertyName = "date_range")]
-        public DateRange DateRange { get; protected set; }
-        [JsonProperty(PropertyName = "total")]
-        public int Total { get; protected set; }
+        [JsonPropertyName("data")]
+        public Listing[] Listings { get; set; }
+        [JsonPropertyName("date_range")]
+        public DateRange DateRange { get; set; }
+        [JsonPropertyName("total")]
+        public int Total { get; set; }
     }
 }

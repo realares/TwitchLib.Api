@@ -57,6 +57,7 @@
         Helix_Moderator_Read_Blocked_Terms,
         Helix_Moderator_Read_Automod_Settings,
         Helix_Moderator_Read_Chat_Settings,
+        Helix_Moderator_Read_Followers,
         Helix_User_Edit,
         Helix_User_Edit_Broadcast,
         Helix_User_Edit_Follows,

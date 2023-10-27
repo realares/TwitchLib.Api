@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 using TwitchLib.Api.Core;
 using TwitchLib.Api.Core.Enums;
 using TwitchLib.Api.Core.Exceptions;
@@ -9,6 +9,7 @@ using TwitchLib.Api.Helix.Models.Entitlements.GetCodeStatus;
 using TwitchLib.Api.Helix.Models.Entitlements.GetDropsEntitlements;
 using TwitchLib.Api.Helix.Models.Entitlements.RedeemCode;
 using TwitchLib.Api.Helix.Models.Entitlements.UpdateDropsEntitlements;
+using System.Text.Json;
 
 namespace TwitchLib.Api.Helix
 {
@@ -19,7 +20,7 @@ namespace TwitchLib.Api.Helix
         }
 
         #region GetCodeStatus
-        public Task<GetCodeStatusResponse> GetCodeStatusAsync(List<string> codes, string userId, string accessToken = null)
+        public Task<GetCodeStatusResponse?> GetCodeStatusAsync(List<string> codes, string userId, string? accessToken = null)
         {
             if (codes == null || codes.Count == 0 || codes.Count > 20)
                 throw new BadParameterException("codes cannot be null and must ahve between 1 and 20 items");
@@ -40,7 +41,8 @@ namespace TwitchLib.Api.Helix
         #endregion
 
         #region GetDropsEntitlements
-        public Task<GetDropsEntitlementsResponse> GetDropsEntitlementsAsync(string id = null, string userId = null, string gameId = null, string after = null, int first = 20, string accessToken = null)
+        public Task<GetDropsEntitlementsResponse?> GetDropsEntitlementsAsync(
+            string? id = null, string? userId = null, string? gameId = null, string? after = null, int first = 20, string? accessToken = null)
         {
             var getParams = new List<KeyValuePair<string, string>>
             {
@@ -69,7 +71,7 @@ namespace TwitchLib.Api.Helix
 
         #region UpdateDropsEntitlements
 
-        public Task<UpdateDropsEntitlementsResponse> UpdateDropsEntitlementsAsync(string[] entitlementIds, FulfillmentStatus fulfillmentStatus, string accessToken)
+        public Task<UpdateDropsEntitlementsResponse?> UpdateDropsEntitlementsAsync(string[] entitlementIds, FulfillmentStatus fulfillmentStatus, string? accessToken = null)
         {
             var body = new
             {
@@ -77,13 +79,13 @@ namespace TwitchLib.Api.Helix
                 fulfillment_status = fulfillmentStatus.ToString()
             };
 
-            return TwitchPatchGenericAsync<UpdateDropsEntitlementsResponse>("/entitlements/drops", ApiVersion.Helix, JsonConvert.SerializeObject(body), null, accessToken);
+            return TwitchPatchGenericAsync<UpdateDropsEntitlementsResponse>("/entitlements/drops", ApiVersion.Helix, JsonSerializer.Serialize(body), null, accessToken);
         }
 
         #endregion
 
         #region RedeemCode
-        public Task<RedeemCodeResponse> RedeemCodeAsync(List<string> codes, string accessToken = null)
+        public Task<RedeemCodeResponse?> RedeemCodeAsync(List<string> codes, string? accessToken = null)
         {
             if (codes == null || codes.Count == 0 || codes.Count > 20)
                 throw new BadParameterException("codes cannot be null and must ahve between 1 and 20 items");

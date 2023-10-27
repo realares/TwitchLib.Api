@@ -1,16 +1,16 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace TwitchLib.Api.Core.Models.Undocumented.CSStreams
 {
     public class Box
     {
-        [JsonProperty(PropertyName = "small")]
-        public string Small { get; protected set; }
-        [JsonProperty(PropertyName = "medium")]
-        public string Medium { get; protected set; }
-        [JsonProperty(PropertyName = "large")]
-        public string Large { get; protected set; }
-        [JsonProperty(PropertyName = "template")]
-        public string Template { get; protected set; }
+        [JsonPropertyName("small")]
+        public string Small { get; set; }
+        [JsonPropertyName("medium")]
+        public string Medium { get; set; }
+        [JsonPropertyName("large")]
+        public string Large { get; set; }
+        [JsonPropertyName("template")]
+        public string Template { get; set; }
     }
 }

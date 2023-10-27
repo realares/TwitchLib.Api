@@ -1,10 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace TwitchLib.Api.Helix.Models.Chat.Emotes.GetEmoteSets
 {
     public class GetEmoteSetsResponse
     {
-        [JsonProperty("data")]
-        public EmoteSet[] EmoteSets { get; protected set; }
+        [JsonPropertyName("data")]
+        public EmoteSet[] EmoteSets { get; set; }
     }
 }

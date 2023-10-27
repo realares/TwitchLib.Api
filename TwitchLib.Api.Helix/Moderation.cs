@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using System.Text.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -16,6 +15,8 @@ using TwitchLib.Api.Helix.Models.Moderation.GetBannedEvents;
 using TwitchLib.Api.Helix.Models.Moderation.GetBannedUsers;
 using TwitchLib.Api.Helix.Models.Moderation.GetModeratorEvents;
 using TwitchLib.Api.Helix.Models.Moderation.GetModerators;
+using System.Text.Json.Nodes;
+using System.Text.Json;
 
 namespace TwitchLib.Api.Helix
 {
@@ -25,12 +26,12 @@ namespace TwitchLib.Api.Helix
         {
         }
 
-        public Task ManageHeldAutoModMessagesAsync(string userId, string msgId, ManageHeldAutoModMessageActionEnum action, string accessToken = null)
+        public Task ManageHeldAutoModMessagesAsync(string userId, string msgId, ManageHeldAutoModMessageActionEnum action, string? accessToken = null)
         {
             if(String.IsNullOrEmpty(userId) || String.IsNullOrEmpty(msgId))
                 throw new BadParameterException("userId and msgId cannot be null and must be greater than 0 length");
 
-            JObject json = new JObject();
+            JsonObject json = new JsonObject();
             json["user_id"] = userId;
             json["msg_id"] = msgId;
             json["action"] = action.ToString().ToUpper();
@@ -40,7 +41,7 @@ namespace TwitchLib.Api.Helix
 
         #region CheckAutoModeStatus
 
-        public Task<CheckAutoModStatusResponse> CheckAutoModStatusAsync(List<Message> messages, string broadcasterId, string accessToken = null)
+        public Task<CheckAutoModStatusResponse?> CheckAutoModStatusAsync(List<Message> messages, string broadcasterId, string? accessToken = null)
         {
             if (messages == null || messages.Count == 0)
                 throw new BadParameterException("messages cannot be null and must be greater than 0 length");
@@ -58,14 +59,16 @@ namespace TwitchLib.Api.Helix
                 Messages = messages.ToArray()
             };
 
-            return TwitchPostGenericAsync<CheckAutoModStatusResponse>("/moderation/enforcements/status", ApiVersion.Helix, JsonConvert.SerializeObject(request), getParams, accessToken);
+            return TwitchPostGenericAsync<CheckAutoModStatusResponse>(
+                "/moderation/enforcements/status", ApiVersion.Helix, JsonSerializer.Serialize(request), getParams, accessToken);
         }
 
         #endregion
 
         #region GetBannedEvents
 
-        public Task<GetBannedEventsResponse> GetBannedEventsAsync(string broadcasterId, List<string> userIds = null, string after = null, string first = null, string accessToken = null)
+        public Task<GetBannedEventsResponse?> GetBannedEventsAsync(
+            string broadcasterId, List<string>? userIds = null, string? after = null, string? first = null, string? accessToken = null)
         {
             if (broadcasterId == null || broadcasterId.Length == 0)
                 throw new BadParameterException("broadcasterId cannot be null and must be greater than 0 length");
@@ -92,7 +95,8 @@ namespace TwitchLib.Api.Helix
 
         #region GetBannedUsers
 
-        public Task<GetBannedUsersResponse> GetBannedUsersAsync(string broadcasterId, List<string> userIds = null, string after = null, string before = null, string accessToken = null)
+        public Task<GetBannedUsersResponse?> GetBannedUsersAsync(
+            string broadcasterId, List<string>? userIds = null, string? after = null, string? before = null, string? accessToken = null)
         {
             if (broadcasterId == null || broadcasterId.Length == 0)
                 throw new BadParameterException("broadcasterId cannot be null and must be greater than 0 length");
@@ -119,7 +123,7 @@ namespace TwitchLib.Api.Helix
 
         #region GetModerators
 
-        public Task<GetModeratorsResponse> GetModeratorsAsync(string broadcasterId, List<string> userIds = null, string after = null, string accessToken = null)
+        public Task<GetModeratorsResponse?> GetModeratorsAsync(string broadcasterId, List<string>? userIds = null, string? after = null, string? accessToken = null)
         {
             if (broadcasterId == null || broadcasterId.Length == 0)
                 throw new BadParameterException("broadcasterId cannot be null and must be greater than 0 length");
@@ -143,7 +147,7 @@ namespace TwitchLib.Api.Helix
 
         #region GetModeratorEvents
 
-        public Task<GetModeratorEventsResponse> GetModeratorEventsAsync(string broadcasterId, List<string> userIds = null, string accessToken = null)
+        public Task<GetModeratorEventsResponse?> GetModeratorEventsAsync(string broadcasterId, List<string>? userIds = null, string? accessToken = null)
         {
             if (broadcasterId == null || broadcasterId.Length == 0)
                 throw new BadParameterException("broadcasterId cannot be null and must be greater than 0 length");
@@ -173,7 +177,7 @@ namespace TwitchLib.Api.Helix
         /// <param name="accessToken">optional access token to override the one used while creating the TwitchAPI object</param>
         /// <returns cref="BanUserResponse"></returns>
         /// <exception cref="BadParameterException"></exception>
-        public Task<BanUserResponse> BanUserAsync(string broadcasterId, string moderatorId, BanUserRequest banUserRequest, string accessToken = null)
+        public Task<BanUserResponse?> BanUserAsync(string broadcasterId, string moderatorId, BanUserRequest banUserRequest, string? accessToken = null)
         {
             if (string.IsNullOrEmpty(broadcasterId))
                 throw new BadParameterException("broadcasterId must be set");
@@ -204,14 +208,14 @@ namespace TwitchLib.Api.Helix
                 data = banUserRequest
             };
 
-            return TwitchPostGenericAsync<BanUserResponse>("/moderation/bans", ApiVersion.Helix, JsonConvert.SerializeObject(body), getParams, accessToken);
+            return TwitchPostGenericAsync<BanUserResponse>("/moderation/bans", ApiVersion.Helix, JsonSerializer.Serialize(body), getParams, accessToken);
         }
 
         #endregion
 
         #region UnbanUsers
 
-        public Task UnbanUserAsync(string broadcasterId, string moderatorId, string userId, string accessToken = null)
+        public Task UnbanUserAsync(string broadcasterId, string moderatorId, string userId, string? accessToken = null)
         {
             if (string.IsNullOrEmpty(broadcasterId))
                 throw new BadParameterException("broadcasterId must be set");
@@ -234,7 +238,7 @@ namespace TwitchLib.Api.Helix
 
         #region GetAutomodSettings
 
-        public Task<GetAutomodSettingsResponse> GetAutomodSettingsAsync(string broadcasterId, string moderatorId, string accessToken = null)
+        public Task<GetAutomodSettingsResponse?> GetAutomodSettingsAsync(string broadcasterId, string moderatorId, string? accessToken = null)
         {
             if (string.IsNullOrEmpty(broadcasterId))
                 throw new BadParameterException("broadcasterId must be set");
@@ -254,7 +258,7 @@ namespace TwitchLib.Api.Helix
 
         #region UpdateAutomodSettings
 
-        public Task<UpdateAutomodSettingsResponse> UpdateAutomodSettingsAsync(string broadcasterId, string moderatorId, AutomodSettings settings, string accessToken = null)
+        public Task<UpdateAutomodSettingsResponse?> UpdateAutomodSettingsAsync(string broadcasterId, string moderatorId, AutomodSettings settings, string? accessToken = null)
         {
             if (string.IsNullOrEmpty(broadcasterId))
                 throw new BadParameterException("broadcasterId must be set");
@@ -269,14 +273,14 @@ namespace TwitchLib.Api.Helix
                 new KeyValuePair<string, string>("moderator_id", moderatorId),
             };
 
-            return TwitchPutGenericAsync<UpdateAutomodSettingsResponse>("/moderation/automod/settings", ApiVersion.Helix, JsonConvert.SerializeObject(settings), getParams, accessToken);
+            return TwitchPutGenericAsync<UpdateAutomodSettingsResponse>("/moderation/automod/settings", ApiVersion.Helix, JsonSerializer.Serialize(settings), getParams, accessToken);
         }
 
         #endregion
 
         #region GetBlockedTerms
 
-        public Task<GetBlockedTermsResponse> GetBlockedTermsAsync(string broadcasterId, string moderatorId, string after = null, int first = 20, string accessToken = null)
+        public Task<GetBlockedTermsResponse?> GetBlockedTermsAsync(string broadcasterId, string moderatorId, string? after = null, int first = 20, string? accessToken = null)
         {
             if (string.IsNullOrEmpty(broadcasterId))
                 throw new BadParameterException("broadcasterId must be set");
@@ -302,7 +306,7 @@ namespace TwitchLib.Api.Helix
 
         #region AddBlockedTerm
 
-        public Task<AddBlockedTermResponse> AddBlockedTermAsync(string broadcasterId, string moderatorId, string term, string accessToken = null)
+        public Task<AddBlockedTermResponse?> AddBlockedTermAsync(string broadcasterId, string moderatorId, string term, string? accessToken = null)
         {
             if (string.IsNullOrEmpty(broadcasterId))
                 throw new BadParameterException("broadcasterId must be set");
@@ -317,7 +321,7 @@ namespace TwitchLib.Api.Helix
                 new KeyValuePair<string, string>("moderator_id", moderatorId),
             };
 
-            JObject body = new JObject();
+            JsonObject body = new JsonObject();
             body["text"] = term;
 
             return TwitchPostGenericAsync<AddBlockedTermResponse>("/moderation/blocked_terms", ApiVersion.Helix, body.ToString(), getParams, accessToken);
@@ -327,7 +331,7 @@ namespace TwitchLib.Api.Helix
 
         #region DeleteBlockedTerm
 
-        public Task DeleteBlockedTermAsync(string broadcasterId, string moderatorId, string termId, string accessToken = null)
+        public Task DeleteBlockedTermAsync(string broadcasterId, string moderatorId, string termId, string? accessToken = null)
         {
             if (string.IsNullOrEmpty(broadcasterId))
                 throw new BadParameterException("broadcasterId must be set");

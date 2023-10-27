@@ -1,26 +1,26 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace TwitchLib.Api.Core.Models.Undocumented.ClipChat
 {
     public class ReChatMessageAttributes
     {
-        [JsonProperty(PropertyName = "command")]
-        public string Command { get; protected set; }
-        [JsonProperty(PropertyName = "room")]
-        public string Room { get; protected set; }
-        [JsonProperty(PropertyName = "timestamp")]
-        public string Timestamp { get; protected set; }
-        [JsonProperty(PropertyName = "video-offset")]
-        public long VideoOffset { get; protected set; }
-        [JsonProperty(PropertyName = "deleted")]
-        public bool Deleted { get; protected set; }
-        [JsonProperty(PropertyName = "message")]
-        public string Message { get; protected set; }
-        [JsonProperty(PropertyName = "from")]
-        public string From { get; protected set; }
-        [JsonProperty(PropertyName = "tags")]
-        public ReChatMessageAttributesTags Tags { get; protected set; }
-        [JsonProperty(PropertyName = "color")]
-        public string Color { get; protected set; }
+        [JsonPropertyName("command")]
+        public string Command { get; set; }
+        [JsonPropertyName("room")]
+        public string Room { get; set; }
+        [JsonPropertyName("timestamp")]
+        public string Timestamp { get; set; }
+        [JsonPropertyName("video-offset")]
+        public long VideoOffset { get; set; }
+        [JsonPropertyName("deleted")]
+        public bool Deleted { get; set; }
+        [JsonPropertyName("message")]
+        public string Message { get; set; }
+        [JsonPropertyName("from")]
+        public string From { get; set; }
+        [JsonPropertyName("tags")]
+        public ReChatMessageAttributesTags Tags { get; set; }
+        [JsonPropertyName("color")]
+        public string Color { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,29 +8,29 @@ namespace TwitchLib.Api.Helix.Models.Predictions
 {
     public class Prediction
     {
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; protected set; }
-        [JsonProperty(PropertyName = "broadcaster_id")]
-        public string BroadcasterId { get; protected set; }
-        [JsonProperty(PropertyName = "broadcaster_name")]
-        public string BroadcasterName { get; protected set; }
-        [JsonProperty(PropertyName = "broadcaster_login")]
-        public string BroadcasterLogin { get; protected set; }
-        [JsonProperty(PropertyName = "title")]
-        public string Title { get; protected set; }
-        [JsonProperty(PropertyName = "winning_outcome_id")]
-        public string WinningOutcomeId { get; protected set; }
-        [JsonProperty(PropertyName = "outcomes")]
-        public Outcome[] Outcomes { get; protected set; }
-        [JsonProperty(PropertyName = "prediction_window")]
-        public string PredictionWindow { get; protected set; }
-        [JsonProperty(PropertyName = "status")]
-        public PredictionStatus Status { get; protected set; }
-        [JsonProperty(PropertyName = "created_at")]
-        public string CreatedAt { get; protected set; }
-        [JsonProperty(PropertyName = "ended_at")]
-        public string EndedAt { get; protected set; }
-        [JsonProperty(PropertyName = "locked_at")]
-        public string LockedAt { get; protected set; }        
+        [JsonPropertyName("id")]
+        public string Id { get; set; }
+        [JsonPropertyName("broadcaster_id")]
+        public string BroadcasterId { get; set; }
+        [JsonPropertyName("broadcaster_name")]
+        public string BroadcasterName { get; set; }
+        [JsonPropertyName("broadcaster_login")]
+        public string BroadcasterLogin { get; set; }
+        [JsonPropertyName("title")]
+        public string Title { get; set; }
+        [JsonPropertyName("winning_outcome_id")]
+        public string WinningOutcomeId { get; set; }
+        [JsonPropertyName("outcomes")]
+        public Outcome[] Outcomes { get; set; }
+        [JsonPropertyName("prediction_window")]
+        public string PredictionWindow { get; set; }
+        [JsonPropertyName("status")]
+        public PredictionStatus Status { get; set; }
+        [JsonPropertyName("created_at")]
+        public string CreatedAt { get; set; }
+        [JsonPropertyName("ended_at")]
+        public string EndedAt { get; set; }
+        [JsonPropertyName("locked_at")]
+        public string LockedAt { get; set; }        
     }
 }

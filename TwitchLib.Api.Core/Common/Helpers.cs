@@ -105,6 +105,8 @@ namespace TwitchLib.Api.Core.Common
                     return "moderator:read:chat_settings";
                 case AuthScopes.Helix_User_Read_Follows:
                     return "user:read:follows";
+                case AuthScopes.Helix_Moderator_Read_Followers:
+                    return "moderator:read:followers";
                 case AuthScopes.Any:
                 case AuthScopes.None:
                 default:

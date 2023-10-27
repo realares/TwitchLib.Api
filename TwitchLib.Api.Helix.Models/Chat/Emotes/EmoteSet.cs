@@ -1,14 +1,17 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
 
 namespace TwitchLib.Api.Helix.Models.Chat.Emotes
 {
-    public class EmoteSet : Emote
+    public record EmoteSet : Emote
     {
-        [JsonProperty("emote_type")]
-        public string EmoteType { get; protected set; }
-        [JsonProperty("emote_set_id")]
-        public string EmoteSetId { get; protected set; }
-        [JsonProperty("owner_id")]
-        public string OwnerId { get; protected set; }
+        [JsonPropertyName("emote_type")]
+        public string EmoteType { get; set; } = null!;
+
+        [JsonPropertyName("emote_set_id")]
+        public string EmoteSetId { get; set; } = null!;
+
+        [JsonPropertyName("owner_id")]
+        public string OwnerId { get; set; } = null!;
     }
 }

@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using System.Text.Json.Serialization;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TwitchLib.Api.Core;
@@ -12,6 +11,8 @@ using TwitchLib.Api.Helix.Models.Streams.GetStreamKey;
 using TwitchLib.Api.Helix.Models.Streams.GetStreamMarkers;
 using TwitchLib.Api.Helix.Models.Streams.GetStreams;
 using TwitchLib.Api.Helix.Models.Streams.GetStreamTags;
+using System.Text.Json.Nodes;
+using System.Text.Json;
 
 namespace TwitchLib.Api.Helix
 {
@@ -21,7 +22,9 @@ namespace TwitchLib.Api.Helix
         {
         }
 
-        public Task<GetStreamsResponse> GetStreamsAsync(string after = null, List<string> communityIds = null, int first = 20, List<string> gameIds = null, List<string> languages = null, string type = "all", List<string> userIds = null, List<string> userLogins = null, string accessToken = null)
+        public Task<GetStreamsResponse?> GetStreamsAsync(
+            string? after = null, List<string>? communityIds = null, int first = 20, List<string>? gameIds = null, 
+            List<string>? languages = null, string type = "all", List<string>? userIds = null, List<string>? userLogins = null, string? accessToken = null)
         {
             var getParams = new List<KeyValuePair<string, string>>
                 {
@@ -63,7 +66,7 @@ namespace TwitchLib.Api.Helix
             return TwitchGetGenericAsync<GetStreamsResponse>($"/streams", ApiVersion.Helix, getParams, accessToken);
         }
 
-        public Task<GetStreamTagsResponse> GetStreamTagsAsync(string broadcasterId, string accessToken = null)
+        public Task<GetStreamTagsResponse?> GetStreamTagsAsync(string broadcasterId, string? accessToken = null)
         {
             if (string.IsNullOrEmpty(broadcasterId))
             {
@@ -76,23 +79,25 @@ namespace TwitchLib.Api.Helix
             return TwitchGetGenericAsync<GetStreamTagsResponse>("/streams/tags", ApiVersion.Helix, getParams, accessToken);
         }
 
-        public Task ReplaceStreamTagsAsync(string broadcasterId, List<string> tagIds = null, string accessToken = null)
+        public Task ReplaceStreamTagsAsync(string broadcasterId, List<string>? tagIds = null, string? accessToken = null)
         {
             var getParams = new List<KeyValuePair<string, string>>();
             getParams.Add(new KeyValuePair<string, string>("broadcaster_id", broadcasterId));
 
-            string payload = null;
+            string? payload = null;
             if (tagIds != null && tagIds.Count > 0)
             {
-                dynamic dynamicPayload = new JObject();
-                dynamicPayload.tag_ids = new JArray(tagIds);
-                payload = dynamicPayload.ToString();
-            }
+                var dyn =  new { tag_ids = tagIds };
 
+                //dynamic dynamicPayload = new JsonObject();
+                //dynamicPayload.tag_ids = new JsonArray(tagIds);
+                //payload = dynamicPayload.ToString();
+                payload = JsonSerializer.Serialize(dyn);
+            }
             return TwitchPutAsync("/streams/tags", ApiVersion.Helix, payload, getParams, accessToken);
         }
 
-        public Task<GetStreamKeyResponse> GetStreamKeyAsync(string broadcasterId, string accessToken = null)
+        public Task<GetStreamKeyResponse?> GetStreamKeyAsync(string broadcasterId, string accessToken = null)
         {
             var getParams = new List<KeyValuePair<string, string>>
             {
@@ -102,12 +107,12 @@ namespace TwitchLib.Api.Helix
             return TwitchGetGenericAsync<GetStreamKeyResponse>("/streams/key", ApiVersion.Helix, getParams, accessToken);
         }
 
-        public Task<CreateStreamMarkerResponse> CreateStreamMarkerAsync(CreateStreamMarkerRequest request, string accessToken = null)
+        public Task<CreateStreamMarkerResponse?> CreateStreamMarkerAsync(CreateStreamMarkerRequest request, string? accessToken = null)
         {
-            return TwitchPostGenericAsync<CreateStreamMarkerResponse>("/streams/markers", ApiVersion.Helix, JsonConvert.SerializeObject(request), null, accessToken);
+            return TwitchPostGenericAsync<CreateStreamMarkerResponse>("/streams/markers", ApiVersion.Helix, JsonSerializer.Serialize(request), null, accessToken);
         }
 
-        public Task<GetStreamMarkersResponse> GetStreamMarkersAsync(string userId, string videoId, string accessToken = null)
+        public Task<GetStreamMarkersResponse?> GetStreamMarkersAsync(string userId, string videoId, string? accessToken = null)
         {
             var getParams = new List<KeyValuePair<string, string>>
             {
@@ -118,7 +123,7 @@ namespace TwitchLib.Api.Helix
             return TwitchGetGenericAsync<GetStreamMarkersResponse>("/stream/markers", ApiVersion.Helix, getParams, accessToken);
         }
 
-        public Task<GetFollowedStreamsResponse> GetFollowedStreamsAsync(string userId, int first = 100, string after = null, string accessToken = null)
+        public Task<GetFollowedStreamsResponse?> GetFollowedStreamsAsync(string userId, int first = 100, string? after = null, string? accessToken = null)
         {
             if (first < 1 || first > 100)
                 throw new BadParameterException("first cannot be less than 1 or greater than 100");

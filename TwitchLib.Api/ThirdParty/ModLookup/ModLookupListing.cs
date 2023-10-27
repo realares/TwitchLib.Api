@@ -1,16 +1,16 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace TwitchLib.Api.ThirdParty.ModLookup
 {
     public class ModLookupListing
     {
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; protected set; }
-        [JsonProperty(PropertyName = "followers")]
-        public int Followers { get; protected set; }
-        [JsonProperty(PropertyName = "views")]
-        public int Views { get; protected set; }
-        [JsonProperty(PropertyName = "partnered")]
-        public bool Partnered { get; protected set; }
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+        [JsonPropertyName("followers")]
+        public int Followers { get; set; }
+        [JsonPropertyName("views")]
+        public int Views { get; set; }
+        [JsonPropertyName("partnered")]
+        public bool Partnered { get; set; }
     }
 }
