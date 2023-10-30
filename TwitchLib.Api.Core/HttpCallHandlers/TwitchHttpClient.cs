@@ -38,7 +38,7 @@ namespace TwitchLib.Api.Core.HttpCallHandlers
         }
 
         public async Task<KeyValuePair<int, string>> GeneralRequestAsync(string url, string method,
-            string payload = null, ApiVersion api = ApiVersion.Helix, string clientId = null, string accessToken = null)
+            string? payload = null, ApiVersion api = ApiVersion.Helix, string? clientId = null, string? accessToken = null)
         {
             var request = new HttpRequestMessage
             {
@@ -79,7 +79,7 @@ namespace TwitchLib.Api.Core.HttpCallHandlers
             return new KeyValuePair<int, string>(0, null);
         }
 
-        public async Task<int> RequestReturnResponseCodeAsync(string url, string method, List<KeyValuePair<string, string>> getParams = null)
+        public async Task<int> RequestReturnResponseCodeAsync(string url, string method, List<KeyValuePair<string, string>>? getParams = null)
         {
             if (getParams != null)
             {
@@ -101,7 +101,7 @@ namespace TwitchLib.Api.Core.HttpCallHandlers
             return (int)response.StatusCode;
         }
 
-        private void HandleWebException(HttpResponseMessage errorResp, string realerror = null)
+        private void HandleWebException(HttpResponseMessage errorResp, string? realerror = null)
         {
             switch (errorResp.StatusCode)
             {

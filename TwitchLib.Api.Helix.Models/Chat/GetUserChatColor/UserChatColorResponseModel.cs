@@ -1,11 +1,12 @@
-﻿using System.Text.Json.Serialization;
+﻿
+using System.Text.Json.Serialization;
 
-namespace TwitchLib.Api.Helix.Models.Bits
+namespace TwitchLib.Api.Helix.Models.Chat.GetUserChatColor
 {
-    public class Listing
+    public class UserChatColorResponseModel
     {
         /// <summary>
-        /// An ID that identifies a user on the leaderboard.
+        /// The ID of the user.
         /// </summary>
         [JsonPropertyName("user_id")]
         public string UserId { get; set; } = null!;
@@ -23,15 +24,9 @@ namespace TwitchLib.Api.Helix.Models.Bits
         public string UserName { get; set; } = null!;
 
         /// <summary>
-        /// The user’s position on the leaderboard.
+        /// The Hex color code that the user uses in chat for their name. If the user hasn’t specified a color in their settings, the string is empty.
         /// </summary>
-        [JsonPropertyName("rank")]
-        public int Rank { get; set; }
-
-        /// <summary>
-        /// The number of Bits the user has cheered.
-        /// </summary>
-        [JsonPropertyName("score")]
-        public int Score { get; set; }
+        [JsonPropertyName("color")]
+        public string Color { get; set; } = null!;
     }
 }

@@ -9,14 +9,24 @@ namespace TwitchLib.Api.Helix.Models.Bits
     {
         [JsonPropertyName("min_bits")]
         public int MinBits { get; set; }
+
+
         [JsonPropertyName("id")]
-        public string Id { get; set; }
+        public string Id { get; set; } = null!;
+
+
         [JsonPropertyName("color")]
-        public string Color { get; set; }
+        public string Color { get; set; } = null!;
+
+
         [JsonPropertyName("images")]
-        public Images Images { get; set; }
+        public Images Images { get; set; } = null!;
+
+
         [JsonPropertyName("can_cheer")]
         public bool CanCheer { get; set; }
+
+
         [JsonPropertyName("show_in_bits_card")]
         public bool ShowInBitsCard { get; set; }
     }

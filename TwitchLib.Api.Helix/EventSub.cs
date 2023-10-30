@@ -7,6 +7,7 @@ using TwitchLib.Api.Core.Exceptions;
 using TwitchLib.Api.Core.Interfaces;
 using TwitchLib.Api.Helix.Models.EventSub;
 using System.Text.Json;
+using System.Net;
 
 namespace TwitchLib.Api.Helix
 {
@@ -65,7 +66,7 @@ namespace TwitchLib.Api.Helix
 
             var response = await TwitchDeleteAsync("/eventsub/subscriptions", ApiVersion.Helix, getParams, accessToken, clientId);
 
-            return !string.IsNullOrWhiteSpace(response);
+            return response.Key == (int)HttpStatusCode.NoContent;
         }
     }
 }

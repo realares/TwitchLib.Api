@@ -6,8 +6,9 @@ namespace TwitchLib.Api.Helix.Models.Games
     public class GetTopGamesResponse
     {
         [JsonPropertyName("data")]
-        public Game[] Data { get; set; }
+        public Game[] Data { get; set; } = null!;
+
         [JsonPropertyName("pagination")]
-        public Pagination Pagination { get; set; }
+        public Pagination Pagination { get; set; } = null!;
     }
 }

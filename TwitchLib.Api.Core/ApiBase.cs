@@ -150,7 +150,7 @@ namespace TwitchLib.Api.Core
             return Twitch__GenericAsync<T>("PUT", resource, api, payload, getParams, accessToken, clientId, customBase);
         }
 
-        protected async Task<string> Twitch__Async(
+        protected async Task<KeyValuePair<int, string>> Twitch__Async(
             string methode, 
             string resource, ApiVersion api, string? payload = null, List<KeyValuePair<string, string>>? getParams = null, 
             string? accessToken = null, string? clientId = null, string? customBase = null)
@@ -165,40 +165,39 @@ namespace TwitchLib.Api.Core
 
             return await _rateLimiter
                 .Perform(async () => (await _http.GeneralRequestAsync(url, methode, payload, api, clientId, accessToken)
-                .ConfigureAwait(false)).Value)
+                .ConfigureAwait(false)))
                 .ConfigureAwait(false);
         }
 
-        protected Task<string> TwitchGetAsync(string resource, ApiVersion api, 
+        protected Task<KeyValuePair<int, string>> TwitchGetAsync(string resource, ApiVersion api, 
             List<KeyValuePair<string, string>>? getParams = null, string? accessToken = null, string? clientId = null, string? customBase = null)
         {
             return Twitch__Async("GET", resource, api, null, getParams, accessToken, clientId, customBase);
         }
 
-        protected Task<string> TwitchPatchAsync(string resource, ApiVersion api, string? payload, 
+        protected Task<KeyValuePair<int, string>> TwitchPatchAsync(string resource, ApiVersion api, string? payload, 
             List<KeyValuePair<string, string>>? getParams = null, string? accessToken = null, string? clientId = null, string? customBase = null)
         {
             return Twitch__Async("PATCH", resource, api, payload, getParams, accessToken, clientId, customBase);
         }
 
-        protected Task<string> TwitchDeleteAsync(string resource, ApiVersion api, 
+        protected Task<KeyValuePair<int, string>> TwitchDeleteAsync(string resource, ApiVersion api, 
             List<KeyValuePair<string, string>>? getParams = null, string? accessToken = null, string? clientId = null, string? customBase = null)
         {
             return Twitch__Async("DELETE", resource, api, null, getParams, accessToken, clientId, customBase);
         }
 
-        protected Task<string> TwitchPostAsync(string resource, ApiVersion api, 
+        protected Task<KeyValuePair<int, string>> TwitchPostAsync(string resource, ApiVersion api, 
             string? payload, List<KeyValuePair<string, string>>? getParams = null, string? accessToken = null, string? clientId = null, string? customBase = null)
         {
             return Twitch__Async("POST", resource, api, payload, getParams, accessToken, clientId, customBase);
         }
 
-        protected Task<string> TwitchPutAsync(string resource, ApiVersion api, 
+        protected Task<KeyValuePair<int, string>> TwitchPutAsync(string resource, ApiVersion api, 
             string? payload, List<KeyValuePair<string, string>>? getParams = null, string? accessToken = null, string? clientId = null, string? customBase = null)
         {
             return Twitch__Async("PUT", resource, api, payload, getParams, accessToken, clientId, customBase);
         }
-
 
         protected async Task<T?> TwitchPostGenericModelAsync<T>(string resource, ApiVersion api, 
             RequestModel model, string? accessToken = null, string? clientId = null, string? customBase = null)
@@ -257,8 +256,6 @@ namespace TwitchLib.Api.Core
                 var httpresult = (await _http.GeneralRequestAsync(url, "GET", null, api, clientId, accessToken).ConfigureAwait(false)).Value;
                 return System.Text.Json.JsonSerializer.Deserialize<T>(httpresult, _ms_twitchLibJsonDeserializer);
             });
-            
-
         }
 
         internal Task<T?> GetSimpleGenericAsync<T>(string url, List<KeyValuePair<string, string>>? getParams = null)
@@ -278,7 +275,6 @@ namespace TwitchLib.Api.Core
                 var httpresult = (await SimpleRequestAsync(url).ConfigureAwait(false));
                 return System.Text.Json.JsonSerializer.Deserialize<T>(httpresult, _ms_twitchLibJsonDeserializer);
             });
-           // JsonConvert.DeserializeObject<T>(await SimpleRequestAsync(url).ConfigureAwait(false), _twitchLibJsonDeserializer));
         }
 
         private async Task<string> SimpleRequestAsync(string url)

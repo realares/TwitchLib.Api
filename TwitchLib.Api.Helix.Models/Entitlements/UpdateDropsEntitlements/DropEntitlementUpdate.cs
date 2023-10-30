@@ -5,8 +5,10 @@ namespace TwitchLib.Api.Helix.Models.Entitlements.UpdateDropsEntitlements
 {
     public class DropEntitlementUpdate
     {
+        [JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
         [JsonPropertyName("status")]
         public DropEntitlementUpdateStatus Status { get; set; }
+
         [JsonPropertyName("ids")]
         public string[] Ids { get; set; }
     }

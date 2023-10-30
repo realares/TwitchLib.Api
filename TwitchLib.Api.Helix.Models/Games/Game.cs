@@ -5,10 +5,12 @@ namespace TwitchLib.Api.Helix.Models.Games
     public class Game
     {
         [JsonPropertyName("id")]
-        public string Id { get; set; }
+        public string Id { get; set; } = null!;
+
         [JsonPropertyName("name")]
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
+
         [JsonPropertyName("box_art_url")]
-        public string BoxArtUrl { get; set; }
+        public string BoxArtUrl { get; set; } = null!;
     }
 }
