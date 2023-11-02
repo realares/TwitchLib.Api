@@ -20,7 +20,7 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <AssemblyVersion>4.0.0</AssemblyVersion>
     <FileVersion>4.0.0</FileVersion>
-	<LangVersion>10</LangVersion>
+	<LangVersion>latest</LangVersion>
 	<Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
