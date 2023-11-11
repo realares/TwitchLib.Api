@@ -3,7 +3,7 @@ using TwitchLib.Api.Helix.Models.Common;
 
 namespace TwitchLib.Api.Helix.Models.Channels.GetFollowedChannels
 {
-    public class GetFollowedChannelsResponse
+    public record GetFollowedChannelsResponse
     {
         /// <summary>
         /// The list of broadcasters that the user follows.

@@ -2,7 +2,7 @@
 
 namespace TwitchLib.Api.Helix.Models.Games
 {
-    public class GetGamesResponse
+    public record GetGamesResponse
     {
         [JsonPropertyName("data")]
         public Game[] Games { get; set; } = null!;

@@ -6,7 +6,7 @@ using TwitchLib.Api.Helix.Models.Common;
 
 namespace TwitchLib.Api.Helix.Models.Moderation.BlockedTerms
 {
-    public class GetBlockedTermsResponse
+    public record GetBlockedTermsResponse
     {
         [JsonPropertyName("data")]
         public BlockedTerm[] Data { get; set; }

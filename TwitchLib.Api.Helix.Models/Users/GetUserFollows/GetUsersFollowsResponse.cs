@@ -4,7 +4,7 @@ using TwitchLib.Api.Helix.Models.Users.Internal;
 
 namespace TwitchLib.Api.Helix.Models.Users.GetUserFollows
 {
-    public class GetUsersFollowsResponse
+    public record GetUsersFollowsResponse
     {
         [JsonPropertyName("data")]
         public Follow[] Follows { get; set; }

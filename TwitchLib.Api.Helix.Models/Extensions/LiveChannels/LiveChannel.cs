@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.Extensions.LiveChannels
 {
-    public class LiveChannel
+    public record LiveChannel
     {
         [JsonPropertyName("broadcaster_id")]
         public string BroadcasterId { get; set; }

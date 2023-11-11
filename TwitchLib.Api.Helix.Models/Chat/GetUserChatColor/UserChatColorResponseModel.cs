@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace TwitchLib.Api.Helix.Models.Chat.GetUserChatColor
 {
-    public class UserChatColorResponseModel
+    public record UserChatColorResponseModel
     {
         /// <summary>
         /// The ID of the user.

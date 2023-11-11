@@ -2,7 +2,7 @@
 
 namespace TwitchLib.Api.Helix.Models.Users.Internal
 {
-    public class UserExtension
+    public record UserExtension
     {
         [JsonPropertyName("id")]
         public string Id { get; set; }

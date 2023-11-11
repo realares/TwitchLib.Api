@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.Streams.GetFollowedStreams
 {
-    public class Stream
+    public record Stream
     {
         [JsonPropertyName("id")]
         public string Id { get; set; }

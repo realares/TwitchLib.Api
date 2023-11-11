@@ -6,7 +6,7 @@ namespace TwitchLib.Api.Helix.Models.Channels.GetChannelEditors
     /// <summary>
     /// <para>A user that is a channel editor for the broadcaster.</para>
     /// </summary>
-    public class ChannelEditor
+    public record ChannelEditor
     {
         /// <summary>
         /// <para>An ID that uniquely identifies a user with editor permissions.</para>

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.Polls.CreatePoll
 {
-    public class Choice
+    public record Choice
     {
         [JsonPropertyName("title")]
         public string Title { get; set; }

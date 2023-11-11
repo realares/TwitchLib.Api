@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.Chat.ChatSettings
 {
-    public class GetChatSettingsResponse
+    public record GetChatSettingsResponse
     {
         [JsonPropertyName("data")]
         public ChatSettingsResponseModel[] Data { get; set; } = null!;

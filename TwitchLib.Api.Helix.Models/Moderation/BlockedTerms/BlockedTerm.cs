@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.Moderation.BlockedTerms
 {
-    public class BlockedTerm
+    public record BlockedTerm
     {
         [JsonPropertyName("broadcaster_id")]
         public string BroadcasterId { get; set; }

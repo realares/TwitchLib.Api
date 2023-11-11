@@ -6,7 +6,7 @@ using TwitchLib.Api.Helix.Models.Common;
 
 namespace TwitchLib.Api.Helix.Models.Moderation.GetModeratorEvents
 {
-    public class GetModeratorEventsResponse
+    public record GetModeratorEventsResponse
     {
         [JsonPropertyName("data")]
         public ModeratorEvent[] Data { get; set; }

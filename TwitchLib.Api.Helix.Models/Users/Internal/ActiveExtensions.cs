@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TwitchLib.Api.Helix.Models.Users.Internal
 {
-    public class ActiveExtensions
+    public record ActiveExtensions
     {
         [JsonPropertyName("panel")]
         public Dictionary<string, UserActiveExtension> Panel { get; set; }

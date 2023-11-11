@@ -3,7 +3,7 @@ using TwitchLib.Api.Core.Enums;
 
 namespace TwitchLib.Api.Helix.Models.Entitlements
 {
-    public class Status
+    public record Status
     {
         [JsonPropertyName("code")]
         public string Code { get; set; }

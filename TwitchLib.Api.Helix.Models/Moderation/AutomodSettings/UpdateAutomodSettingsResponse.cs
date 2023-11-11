@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.Moderation.AutomodSettings
 {
-    public class UpdateAutomodSettingsResponse
+    public record UpdateAutomodSettingsResponse
     {
         [JsonPropertyName("data")]
         public AutomodSettings[] Data { get; set; }

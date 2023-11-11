@@ -2,7 +2,7 @@
 
 namespace TwitchLib.Api.Helix.Models.Teams
 {
-    public class GetTeamsResponse
+    public record GetTeamsResponse
     {
         [JsonPropertyName("data")]
         public Team[] Teams { get; set; }

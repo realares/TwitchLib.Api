@@ -3,7 +3,7 @@ using System;
 
 namespace TwitchLib.Api.Helix.Models.Common
 {
-    public class DateRange
+    public record DateRange
     {
         [JsonPropertyName("started_at")]
         public DateTime StartedAt { get; set; }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.ChannelPoints
 {
-    public class DefaultImage
+    public record DefaultImage
     {
 
         [JsonPropertyName("url_1x")]

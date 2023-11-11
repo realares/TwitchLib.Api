@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.Extensions.ReleasedExtensions
 {
-    public class IconUrls
+    public record IconUrls
     {
         [JsonPropertyName("100x100")]
         public string Size100x100 { get; set; }

@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace TwitchLib.Api.Helix.Models.Soundtrack
 {
-    public class Source
+    public record Source
     {
         [JsonPropertyName("id")]
         public string Id { get; set; }

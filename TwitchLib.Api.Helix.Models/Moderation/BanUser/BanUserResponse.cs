@@ -2,7 +2,7 @@
 
 namespace TwitchLib.Api.Helix.Models.Moderation.BanUser
 {
-    public class BanUserResponse
+    public record BanUserResponse
     {
         [JsonPropertyName("data")]
         public BannedUser[] Data { get; set; }

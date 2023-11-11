@@ -8,7 +8,7 @@ namespace TwitchLib.Api.Helix.Models.Ads
     /// <summary>
     /// <para>Request Body for StartCommercial</para>
     /// </summary>
-    public class StartCommercialRequest
+    public record StartCommercialRequest
     {
         /// <summary>
         /// <para>The ID of the partner or affiliate broadcaster that wants to run the commercial.</para>

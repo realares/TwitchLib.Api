@@ -2,7 +2,7 @@
 
 namespace TwitchLib.Api.Helix.Models.HypeTrain
 {
-    public class HypeTrain
+    public record HypeTrain
     {
         [JsonPropertyName("id")]
         public string Id { get; set; }

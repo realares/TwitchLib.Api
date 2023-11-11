@@ -2,7 +2,7 @@
 
 namespace TwitchLib.Api.Helix.Models.Chat.Emotes
 {
-    public class EmoteImages
+    public record EmoteImages
     {
         [JsonPropertyName("url_1x")]
         public string Url1X { get; set; } = null!;

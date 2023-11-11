@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.ChannelPoints.UpdateCustomReward
 {
-    public class UpdateCustomRewardRequest
+    public record UpdateCustomRewardRequest
     {
         [JsonPropertyName("broadcaster_id")]
         public string? BroadcasterId { get; set; }

@@ -6,7 +6,7 @@ using TwitchLib.Api.Helix.Models.Common;
 
 namespace TwitchLib.Api.Helix.Models.Streams.GetStreamMarkers
 {
-    public class GetStreamMarkersResponse
+    public record GetStreamMarkersResponse
     {
         [JsonPropertyName("data")]
         public UserMarkerListing[] Data { get; set; }

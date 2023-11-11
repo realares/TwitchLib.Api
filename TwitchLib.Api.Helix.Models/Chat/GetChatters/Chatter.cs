@@ -2,7 +2,7 @@
 
 namespace TwitchLib.Api.Helix.Models.Chat.GetChatters
 {
-    public class Chatter
+    public record Chatter
     {
         /// <summary>
         /// The ID of a user that’s connected to the broadcaster’s chat room.

@@ -6,7 +6,7 @@ using TwitchLib.Api.Helix.Models.Common;
 
 namespace TwitchLib.Api.Helix.Models.Moderation.GetModerators
 {
-    public class GetModeratorsResponse
+    public record GetModeratorsResponse
     {
         [JsonPropertyName("data")]
         public Moderator[] Data { get; set; }

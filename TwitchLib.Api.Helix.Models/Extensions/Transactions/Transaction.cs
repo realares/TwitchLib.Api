@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.Extensions.Transactions
 {
-    public class Transaction
+    public record Transaction
     {
         [JsonPropertyName("id")]
         public string Id { get; set; }

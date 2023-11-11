@@ -4,7 +4,7 @@ using TwitchLib.Api.Core.Enums;
 
 namespace TwitchLib.Api.Helix.Models.Entitlements.GetDropsEntitlements
 {
-    public class DropsEntitlement
+    public record DropsEntitlement
     {
         [JsonPropertyName("id")]
         public string Id { get; set; }

@@ -3,7 +3,7 @@ using TwitchLib.Api.Helix.Models.Common;
 
 namespace TwitchLib.Api.Helix.Models.Channels.GetChannelVIPs
 {
-    public class GetChannelVIPsResponse
+    public record GetChannelVIPsResponse
     {
         /// <summary>
         /// The list of VIPs. The list is empty if the channel doesn’t have VIP users. The list does not include the broadcaster.

@@ -6,7 +6,7 @@ namespace TwitchLib.Api.Helix.Models.ContentClassificationLabels
     /// <summary>
     /// <para>The list of Content Classification Labels available.</para>
     /// </summary>
-    public class ContentClassificationLabel
+    public record ContentClassificationLabel
     {
         /// <summary>
         /// <para>Unique identifier for the Content Classification Labels.</para>

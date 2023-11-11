@@ -1,6 +1,6 @@
 ﻿namespace TwitchLib.Api.Helix.Models.Chat
 {
-    public class AnnouncementColors
+    public record AnnouncementColors
     {
         private AnnouncementColors(string value) { Value = value; }
 

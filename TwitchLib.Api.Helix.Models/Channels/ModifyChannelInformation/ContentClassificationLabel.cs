@@ -6,7 +6,7 @@ namespace TwitchLib.Api.Helix.Models.Channels.ModifyChannelInformation
     /// <summary>
     /// <para>Labels that can be set for the channel's Content Classification Labels</para>
     /// </summary>
-    public class ContentClassificationLabel
+    public record ContentClassificationLabel
     {
         /// <summary>
         /// <para>ID of the Content Classification Labels that must be added/removed from the channel.</para>

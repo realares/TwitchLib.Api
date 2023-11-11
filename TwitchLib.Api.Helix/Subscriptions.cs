@@ -14,7 +14,7 @@ namespace TwitchLib.Api.Helix
         {
         }
 
-        public Task<CheckUserSubscriptionResponse> CheckUserSubscriptionAsync(string broadcasterId, string userId, string accessToken = null)
+        public Task<CheckUserSubscriptionResponse?> CheckUserSubscriptionAsync(string broadcasterId, string userId, string? accessToken = null)
         {
 
             if (string.IsNullOrEmpty(broadcasterId))
@@ -31,7 +31,7 @@ namespace TwitchLib.Api.Helix
             return TwitchGetGenericAsync<CheckUserSubscriptionResponse>("/subscriptions/user", ApiVersion.Helix, getParams, accessToken);
         } 
 
-        public Task<GetUserSubscriptionsResponse> GetUserSubscriptionsAsync(string broadcasterId, List<string> userIds, string accessToken = null)
+        public Task<GetUserSubscriptionsResponse?> GetUserSubscriptionsAsync(string broadcasterId, List<string> userIds, string? accessToken = null)
         {
             if (string.IsNullOrEmpty(broadcasterId))
             {
@@ -52,8 +52,8 @@ namespace TwitchLib.Api.Helix
             return TwitchGetGenericAsync<GetUserSubscriptionsResponse>("/subscriptions", ApiVersion.Helix, getParams, accessToken);
         }
 
-        public Task<GetBroadcasterSubscriptionsResponse> GetBroadcasterSubscriptionsAsync(string broadcasterId, string cursor = null,
-            int first = 20, string accessToken = null)
+        public Task<GetBroadcasterSubscriptionsResponse?> GetBroadcasterSubscriptionsAsync(string broadcasterId, string? cursor = null,
+            int first = 20, string? accessToken = null)
         {
             if (string.IsNullOrEmpty(broadcasterId))
             {

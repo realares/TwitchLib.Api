@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.Chat.ChatSettings
 {
-    public class UpdateChatSettingsResponseModel
+    public record UpdateChatSettingsResponseModel
     {
         [JsonPropertyName("broadcaster_id")]
         public string BroadcasterId { get; set; }

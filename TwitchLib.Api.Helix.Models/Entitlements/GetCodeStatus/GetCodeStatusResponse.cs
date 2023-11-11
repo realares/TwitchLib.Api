@@ -2,7 +2,7 @@
 
 namespace TwitchLib.Api.Helix.Models.Entitlements.GetCodeStatus
 {
-    public class GetCodeStatusResponse
+    public record GetCodeStatusResponse
     {
         [JsonPropertyName("data")]
         public Status[] Data { get; set; }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.Predictions.CreatePrediction
 {
-    public class CreatePredictionRequest
+    public record CreatePredictionRequest
     {
         [JsonPropertyName("broadcaster_id")]
         public string BroadcasterId { get; set; }

@@ -6,7 +6,7 @@ using TwitchLib.Api.Helix.Models.Common;
 
 namespace TwitchLib.Api.Helix.Models.Moderation.GetBannedEvents
 {
-    public class GetBannedEventsResponse
+    public record GetBannedEventsResponse
     {
         [JsonPropertyName("data")]
         public BannedEvent[] Data { get; set; }

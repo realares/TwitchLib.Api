@@ -2,7 +2,7 @@
 
 namespace TwitchLib.Api.Helix.Models.Bits
 {
-    public class Listing
+    public record Listing
     {
         /// <summary>
         /// An ID that identifies a user on the leaderboard.

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.Videos.DeleteVideos
 {
-    public class DeleteVideosResponse
+    public record DeleteVideosResponse
     {
         [JsonPropertyName("data")]
         public string[] Data { get; set; }

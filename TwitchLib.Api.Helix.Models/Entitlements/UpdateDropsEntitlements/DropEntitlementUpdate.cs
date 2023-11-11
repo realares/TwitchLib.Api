@@ -3,7 +3,7 @@ using TwitchLib.Api.Core.Enums;
 
 namespace TwitchLib.Api.Helix.Models.Entitlements.UpdateDropsEntitlements
 {
-    public class DropEntitlementUpdate
+    public record DropEntitlementUpdate
     {
         [JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
         [JsonPropertyName("status")]

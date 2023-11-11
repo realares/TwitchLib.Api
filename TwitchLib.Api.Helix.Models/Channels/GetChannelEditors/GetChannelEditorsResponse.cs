@@ -5,7 +5,7 @@ namespace TwitchLib.Api.Helix.Models.Channels.GetChannelEditors
     /// <summary>
     /// <para>Response for GetChannelEditors that returns a list of the broadcaster's channels editors.</para>
     /// </summary>
-    public class GetChannelEditorsResponse
+    public record GetChannelEditorsResponse
     {
 
         /// <summary>

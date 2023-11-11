@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.Moderation.GetModeratorEvents
 {
-    public class EventData
+    public record EventData
     {
         [JsonPropertyName("broadcaster_id")]
         public string BroadcasterId { get; set; }

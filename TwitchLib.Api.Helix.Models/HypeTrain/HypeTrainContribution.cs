@@ -2,7 +2,7 @@
 
 namespace TwitchLib.Api.Helix.Models.HypeTrain
 {
-    public class HypeTrainContribution
+    public record HypeTrainContribution
     {
         [JsonPropertyName("total")]
         public int Total { get; set; }

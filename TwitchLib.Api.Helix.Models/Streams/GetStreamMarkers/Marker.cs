@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.Streams.GetStreamMarkers
 {
-    public class Marker
+    public record Marker
     {
         [JsonPropertyName("id")]
         public string Id { get; set; }

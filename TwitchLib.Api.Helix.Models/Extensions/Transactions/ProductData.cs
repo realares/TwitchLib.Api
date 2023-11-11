@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.Extensions.Transactions
 {
-    public class ProductData
+    public record ProductData
     {
         [JsonPropertyName("domain")]
         public string Domain { get; set; }
@@ -23,7 +23,7 @@ namespace TwitchLib.Api.Helix.Models.Extensions.Transactions
         public bool Broadcast { get; set; }
     }
 
-    public class Cost
+    public record Cost
     {
         [JsonPropertyName("amount")]
         public int Amount { get; set; }

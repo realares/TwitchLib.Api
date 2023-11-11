@@ -2,7 +2,7 @@
 
 namespace TwitchLib.Api.Helix.Models.Teams
 {
-    public abstract class TeamBase
+    public abstract record TeamBase
     {
         [JsonPropertyName("banner")]
         public string Banner { get; set; }

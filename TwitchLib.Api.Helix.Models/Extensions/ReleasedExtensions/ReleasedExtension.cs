@@ -6,7 +6,7 @@ using TwitchLib.Api.Core.Enums;
 
 namespace TwitchLib.Api.Helix.Models.Extensions.ReleasedExtensions
 {
-    public class ReleasedExtension
+    public record ReleasedExtension
     {
         [JsonPropertyName("author_name")]
         public string AuthorName { get; set; }

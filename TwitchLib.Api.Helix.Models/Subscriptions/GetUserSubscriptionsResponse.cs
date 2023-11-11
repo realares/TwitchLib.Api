@@ -2,7 +2,7 @@
 
 namespace TwitchLib.Api.Helix.Models.Subscriptions
 {
-    public class GetUserSubscriptionsResponse
+    public record GetUserSubscriptionsResponse
     {
         [JsonPropertyName("data")]
         public Subscription[] Data { get; set; }

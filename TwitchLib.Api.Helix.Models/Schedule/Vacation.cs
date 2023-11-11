@@ -3,7 +3,7 @@ using System;
 
 namespace TwitchLib.Api.Helix.Models.Schedule
 {
-    public class Vacation
+    public record Vacation
     {
         [JsonPropertyName("start_time")]
         public DateTime StartTime { get; set; }

@@ -6,7 +6,7 @@ using TwitchLib.Api.Helix.Models.Common;
 
 namespace TwitchLib.Api.Helix.Models.Predictions.GetPredictions
 {
-    public class GetPredictionsResponse
+    public record GetPredictionsResponse
     {
         [JsonPropertyName("data")]
         public Prediction[] Data { get; set; }

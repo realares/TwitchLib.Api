@@ -2,7 +2,7 @@
 
 namespace TwitchLib.Api.Helix.Models.Chat.Emotes.GetEmoteSets
 {
-    public class GetEmoteSetsResponse
+    public record GetEmoteSetsResponse
     {
         [JsonPropertyName("data")]
         public EmoteSet[] EmoteSets { get; set; }

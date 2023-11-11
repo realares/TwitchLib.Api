@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.Extensions.ReleasedExtensions
 {
-    public class Views
+    public record Views
     {
         [JsonPropertyName("mobile")]
         public Mobile Mobile { get; set; }

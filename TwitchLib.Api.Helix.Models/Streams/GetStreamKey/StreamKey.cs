@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.Streams.GetStreamKey
 {
-    public class StreamKey
+    public record StreamKey
     {
         [JsonPropertyName("stream_key")]
         public string Key { get; set; }

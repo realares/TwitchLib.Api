@@ -2,7 +2,7 @@
 
 namespace TwitchLib.Api.Helix.Models.Bits
 {
-    public class GetBitsLeaderboardResponse
+    public record GetBitsLeaderboardResponse
     {
         /// <summary>
         /// A list of leaderboard leaders. The leaders are returned in rank order by how much they’ve cheered. 

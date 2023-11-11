@@ -6,7 +6,7 @@ namespace TwitchLib.Api.Helix.Models.Channels.ModifyChannelInformation
     /// <para>A request to update a channel's properties</para>
     /// <para>All fields are optional but you must specify at least one field.</para>
     /// </summary>
-    public class ModifyChannelInformationRequest
+    public record ModifyChannelInformationRequest
     {
         /// <summary>
         /// <para>The ID of the game that the broadcaster will be playing.</para>

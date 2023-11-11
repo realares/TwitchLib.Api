@@ -97,7 +97,7 @@ namespace TwitchLib.Api.Helix
             return TwitchPutAsync("/streams/tags", ApiVersion.Helix, payload, getParams, accessToken);
         }
 
-        public Task<GetStreamKeyResponse?> GetStreamKeyAsync(string broadcasterId, string accessToken = null)
+        public Task<GetStreamKeyResponse?> GetStreamKeyAsync(string broadcasterId, string? accessToken = null)
         {
             var getParams = new List<KeyValuePair<string, string>>
             {

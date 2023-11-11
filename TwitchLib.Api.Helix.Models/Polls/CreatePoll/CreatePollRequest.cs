@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.Polls.CreatePoll
 {
-    public class CreatePollRequest
+    public record CreatePollRequest
     {
         [JsonPropertyName("broadcaster_id")]
         public string BroadcasterId { get; set; }

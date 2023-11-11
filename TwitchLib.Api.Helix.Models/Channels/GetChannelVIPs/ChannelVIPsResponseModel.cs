@@ -2,7 +2,7 @@
 
 namespace TwitchLib.Api.Helix.Models.Channels.GetChannelVIPs
 {
-    public class ChannelVIPsResponseModel
+    public record ChannelVIPsResponseModel
     {
         /// <summary>
         /// An ID that uniquely identifies the VIP user.

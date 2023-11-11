@@ -5,7 +5,7 @@ namespace TwitchLib.Api.Helix.Models.Analytics
     /// <summary>
     /// <para>A analytic report for an extension.</para>
     /// </summary>
-    public class ExtensionAnalytics
+    public record ExtensionAnalytics
     {
         /// <summary>
         /// <para>An ID that identifies the extension that the analytic report was generated for.</para>

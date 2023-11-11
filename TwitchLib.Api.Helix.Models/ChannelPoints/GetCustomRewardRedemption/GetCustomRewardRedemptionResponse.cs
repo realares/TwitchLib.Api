@@ -6,7 +6,7 @@ using TwitchLib.Api.Helix.Models.Common;
 
 namespace TwitchLib.Api.Helix.Models.ChannelPoints.GetCustomRewardRedemption
 {
-    public class GetCustomRewardRedemptionResponse
+    public record GetCustomRewardRedemptionResponse
     {
         [JsonPropertyName("data")]
         public RewardRedemption[] Data { get; set; }

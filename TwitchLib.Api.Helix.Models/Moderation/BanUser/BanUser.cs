@@ -1,6 +1,6 @@
 ﻿namespace TwitchLib.Api.Helix.Models.Moderation.BanUser
 {
-    public class BanUser
+    public record BanUser
     {
         public string UserId;
         public string Reason;

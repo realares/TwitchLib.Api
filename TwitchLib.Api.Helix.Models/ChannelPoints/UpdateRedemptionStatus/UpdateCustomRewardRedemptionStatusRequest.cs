@@ -6,7 +6,7 @@ using TwitchLib.Api.Core.Enums;
 
 namespace TwitchLib.Api.Helix.Models.ChannelPoints.UpdateCustomRewardRedemptionStatus
 {
-    public class UpdateCustomRewardRedemptionStatusRequest
+    public record UpdateCustomRewardRedemptionStatusRequest
     {
         [JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
         [JsonPropertyName("status")]

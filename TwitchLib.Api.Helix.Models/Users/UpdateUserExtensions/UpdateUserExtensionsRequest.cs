@@ -4,7 +4,7 @@ using TwitchLib.Api.Helix.Models.Users.Internal;
 
 namespace TwitchLib.Api.Helix.Models.Users.UpdateUserExtensions
 {
-    public class UpdateUserExtensionsRequest
+    public record UpdateUserExtensionsRequest
     {
         [JsonPropertyName("panel")]
         public Dictionary<string, UserExtensionState> Panel { get; set; }

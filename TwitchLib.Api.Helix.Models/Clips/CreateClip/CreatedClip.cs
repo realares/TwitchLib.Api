@@ -5,7 +5,7 @@ namespace TwitchLib.Api.Helix.Models.Clips.CreateClip
     /// <summary>
     /// A Twitch clip created from CreateClip
     /// </summary>
-    public class CreatedClip
+    public record CreatedClip
     {
         /// <summary>
         /// <para>A URL that you can use to edit the clip’s title, identify the part of the clip to publish, and publish the clip.</para>

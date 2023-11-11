@@ -3,7 +3,7 @@ using System;
 
 namespace TwitchLib.Api.Helix.Models.Schedule.CreateChannelStreamSegment
 {
-    public class CreateChannelStreamSegmentRequest
+    public record CreateChannelStreamSegmentRequest
     {
         // required
         [JsonPropertyName("start_time")]

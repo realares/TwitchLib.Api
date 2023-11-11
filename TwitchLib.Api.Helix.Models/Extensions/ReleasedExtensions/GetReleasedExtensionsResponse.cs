@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.Extensions.ReleasedExtensions
 {
-    public class GetReleasedExtensionsResponse
+    public record GetReleasedExtensionsResponse
     {
         [JsonPropertyName("data")]
         public ReleasedExtension[] Data { get; set; }

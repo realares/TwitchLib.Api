@@ -3,7 +3,7 @@ using System;
 
 namespace TwitchLib.Api.Helix.Models.Moderation.GetBannedEvents
 {
-    public class EventData
+    public record EventData
     {
         [JsonPropertyName("broadcaster_id")]
         public string BroadcasterId { get; set; }

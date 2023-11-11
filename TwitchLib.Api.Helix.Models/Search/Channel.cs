@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace TwitchLib.Api.Helix.Models.Search
 {
-    public class Channel
+    public record Channel
     {
         [JsonPropertyName("game_id")]
         public string GameId { get; set; }

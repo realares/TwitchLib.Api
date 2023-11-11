@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace TwitchLib.Api.Helix.Models.Bits
 {
-    public class ImageList
+    public record ImageList
     {
         [JsonPropertyName("animated")]
         public Dictionary<string, string> Animated { get; set; } = null!;

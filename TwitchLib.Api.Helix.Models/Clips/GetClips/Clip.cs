@@ -5,7 +5,7 @@ namespace TwitchLib.Api.Helix.Models.Clips.GetClips
     /// <summary>
     /// A clip that was created from a broadcaster's stream.
     /// </summary>
-    public class Clip
+    public record Clip
     {
         /// <summary>
         /// An ID that uniquely identifies the clip.

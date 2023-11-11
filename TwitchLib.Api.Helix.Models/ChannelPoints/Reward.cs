@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.ChannelPoints
 {
-    public class Reward
+    public record Reward
     {
         [JsonPropertyName("id")]
         public string Id { get; set; }

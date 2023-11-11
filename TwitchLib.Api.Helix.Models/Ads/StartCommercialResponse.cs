@@ -8,7 +8,7 @@ namespace TwitchLib.Api.Helix.Models.Ads
     /// <summary>
     /// The response for starting a commercial on a specified channel.
     /// </summary>
-    public class StartCommercialResponse
+    public record StartCommercialResponse
     {
         /// <summary>
         /// The length of the commercial you requested. 

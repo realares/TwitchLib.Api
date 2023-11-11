@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.Users.GetUserBlockList
 {
-    public class BlockedUser
+    public record BlockedUser
     {
         [JsonPropertyName("user_id")]
         public string Id { get; set; }

@@ -3,7 +3,7 @@ using TwitchLib.Api.Helix.Models.Common;
 
 namespace TwitchLib.Api.Helix.Models.Search
 {
-    public class SearchChannelsResponse
+    public record SearchChannelsResponse
     {
         [JsonPropertyName("data")]
         public Channel[] Channels { get; set; }

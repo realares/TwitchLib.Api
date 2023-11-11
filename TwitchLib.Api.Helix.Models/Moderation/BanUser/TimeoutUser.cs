@@ -2,7 +2,7 @@
 
 namespace TwitchLib.Api.Helix.Models.Moderation.BanUser
 {
-    public class TimeoutUser
+    public record TimeoutUser
     {
         public string UserId;
         public string Reason;

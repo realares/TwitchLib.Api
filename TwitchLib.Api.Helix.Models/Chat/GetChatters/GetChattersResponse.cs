@@ -3,7 +3,7 @@ using TwitchLib.Api.Helix.Models.Common;
 
 namespace TwitchLib.Api.Helix.Models.Chat.GetChatters
 {
-    public class GetChattersResponse
+    public record GetChattersResponse
     {
         /// <summary>
         /// List of login names that are connected to the broadcaster’s chat room.

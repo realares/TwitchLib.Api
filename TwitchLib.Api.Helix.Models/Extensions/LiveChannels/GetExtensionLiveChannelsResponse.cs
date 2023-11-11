@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.Extensions.LiveChannels
 {
-    public class GetExtensionLiveChannelsResponse
+    public record GetExtensionLiveChannelsResponse
     {
         [JsonPropertyName("data")]
         public LiveChannel[] Data { get; set; }

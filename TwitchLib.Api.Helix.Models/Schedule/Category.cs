@@ -2,7 +2,7 @@
 
 namespace TwitchLib.Api.Helix.Models.Schedule
 {
-    public class Category
+    public record Category
     {
         [JsonPropertyName("id")]
         public string Id { get; set; }

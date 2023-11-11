@@ -7,7 +7,7 @@ namespace TwitchLib.Api.Helix.Models.Analytics
     /// <para>The response for GetExtensionAnalytics that gets a list of analytic reports for one or more extensions.</para>
     /// <para>The response contains the URLs used to download the reports (CSV files) and the URLs are only valid for 5 minutes.</para>
     /// </summary>
-    public class GetExtensionAnalyticsResponse
+    public record GetExtensionAnalyticsResponse
     {
         /// <summary>
         /// <para>A list of analytic reports for the extensions.</para>

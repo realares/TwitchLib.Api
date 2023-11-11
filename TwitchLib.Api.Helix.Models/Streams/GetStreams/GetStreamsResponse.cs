@@ -2,7 +2,7 @@
 
 namespace TwitchLib.Api.Helix.Models.Streams.GetStreams
 {
-    public class GetStreamsResponse
+    public record GetStreamsResponse
     {
         [JsonPropertyName("data")]
         public Stream[] Streams { get; set; }

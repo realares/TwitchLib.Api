@@ -2,7 +2,7 @@
 
 namespace TwitchLib.Api.Helix.Models.Videos.GetVideos
 {
-    public class Video
+    public record Video
     {
         [JsonPropertyName("created_at")]
         public string CreatedAt { get; set; }

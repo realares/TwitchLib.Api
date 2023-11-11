@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.Common
 {
-    public class Tag
+    public record Tag
     {
         [JsonPropertyName("tag_id")]
         public string TagId { get; set; }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.Goals
 {
-    public class GetCreatorGoalsResponse
+    public record GetCreatorGoalsResponse
     {
         [JsonPropertyName("data")]
         public CreatorGoal[] Data { get; set; }

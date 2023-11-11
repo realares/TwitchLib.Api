@@ -6,7 +6,7 @@ using TwitchLib.Api.Core.Enums;
 
 namespace TwitchLib.Api.Helix.Models.ChannelPoints
 {
-    public class RewardRedemption
+    public record RewardRedemption
     {
         [JsonPropertyName("broadcaster_id")]
         public string BroadcasterId { get; set; }

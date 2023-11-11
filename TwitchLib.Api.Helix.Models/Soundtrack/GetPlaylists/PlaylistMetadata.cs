@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace TwitchLib.Api.Helix.Models.Soundtrack.GetPlaylists
 {
-    public class PlaylistMetadata
+    public record PlaylistMetadata
     {
         [JsonPropertyName("title")]
         public string Title { get; set; }

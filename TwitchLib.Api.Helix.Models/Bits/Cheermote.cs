@@ -8,7 +8,7 @@ namespace TwitchLib.Api.Helix.Models.Bits
     /// <summary>
     /// Cheermotes are animated emotes that viewers can assign Bits to and can be used in any Bits-enabled channel’s chat room.
     /// </summary>
-    public class Cheermote
+    public record Cheermote
     {
         /// <summary>
         /// <para>The name portion of the Cheermote string that you use in chat to cheer Bits. 

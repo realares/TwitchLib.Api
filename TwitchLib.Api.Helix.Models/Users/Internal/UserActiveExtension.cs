@@ -2,7 +2,7 @@
 
 namespace TwitchLib.Api.Helix.Models.Users.Internal
 {
-    public class UserActiveExtension
+    public record UserActiveExtension
     {
         [JsonPropertyName("active")]
         public bool Active { get; set; }

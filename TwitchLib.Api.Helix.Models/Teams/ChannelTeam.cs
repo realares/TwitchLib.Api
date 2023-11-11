@@ -2,7 +2,7 @@
 
 namespace TwitchLib.Api.Helix.Models.Teams
 {
-    public class ChannelTeam : TeamBase
+    public record ChannelTeam : TeamBase
     {
         [JsonPropertyName("broadcaster_id")]
         public string BroadcasterId { get; set; }

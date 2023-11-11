@@ -6,7 +6,7 @@ using TwitchLib.Api.Core.Enums;
 
 namespace TwitchLib.Api.Helix.Models.Predictions
 {
-    public class Prediction
+    public record Prediction
     {
         [JsonPropertyName("id")]
         public string Id { get; set; }

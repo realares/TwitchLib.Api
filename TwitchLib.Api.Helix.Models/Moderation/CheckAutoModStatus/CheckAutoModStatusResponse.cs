@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.Moderation.CheckAutoModStatus
 {
-    public class CheckAutoModStatusResponse
+    public record CheckAutoModStatusResponse
     {
         [JsonPropertyName("data")]
         public AutoModResult[] Data { get; set; }

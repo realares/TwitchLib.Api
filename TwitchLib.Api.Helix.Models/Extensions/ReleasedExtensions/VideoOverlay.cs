@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.Extensions.ReleasedExtensions
 {
-    public class VideoOverlay
+    public record VideoOverlay
     {
         [JsonPropertyName("viewer_url")]
         public string ViewerUrl { get; set; }

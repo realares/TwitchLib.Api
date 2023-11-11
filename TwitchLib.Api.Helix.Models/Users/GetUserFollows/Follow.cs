@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace TwitchLib.Api.Helix.Models.Users.GetUserFollows
 {
-    public class Follow
+    public record Follow
     {
         [JsonPropertyName("from_id")]
         public string FromUserId { get; set; }

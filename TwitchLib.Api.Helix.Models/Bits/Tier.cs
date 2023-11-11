@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.Bits
 {
-    public class Tier
+    public record Tier
     {
         [JsonPropertyName("min_bits")]
         public int MinBits { get; set; }

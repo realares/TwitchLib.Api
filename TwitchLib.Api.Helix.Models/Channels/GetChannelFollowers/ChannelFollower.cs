@@ -3,7 +3,7 @@ using System;
 
 namespace TwitchLib.Api.Helix.Models.Channels.GetChannelFollowers
 {
-    public class ChannelFollower
+    public record ChannelFollower
     {
         /// <summary>
         /// An ID that uniquely identifies the user that’s following the broadcaster.

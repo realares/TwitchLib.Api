@@ -2,7 +2,7 @@
 
 namespace TwitchLib.Api.Helix.Models.Videos.GetVideos
 {
-    public class MutedSegment
+    public record MutedSegment
     {
         [JsonPropertyName("duration")]
         public int Duration { get; set; }

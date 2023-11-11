@@ -2,7 +2,7 @@
 
 namespace TwitchLib.Api.Helix.Models.Streams.GetStreams
 {
-    public class LiveStreams
+    public record LiveStreams
     {
         #region Total
         [JsonPropertyName("_total")]

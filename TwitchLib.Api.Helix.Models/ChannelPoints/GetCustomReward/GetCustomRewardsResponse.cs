@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.ChannelPoints.GetCustomReward
 {
-    public class GetCustomRewardsResponse
+    public record GetCustomRewardsResponse
     {
         [JsonPropertyName("data")]
         public CustomReward[] Data { get; set; }

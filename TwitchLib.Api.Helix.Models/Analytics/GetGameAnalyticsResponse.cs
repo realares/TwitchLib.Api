@@ -6,7 +6,7 @@ namespace TwitchLib.Api.Helix.Models.Analytics
     /// <para>Response for GetGameAnalytics which gets gets a list of analytic reports for one or more games.</para>
     /// <para>The response contains the URLs used to download the reports (CSV files) and the URLs are only valid for 5 minutes.</para>
     /// </summary>
-    public class GetGameAnalyticsResponse
+    public record GetGameAnalyticsResponse
     {
         /// <summary>
         /// <para>A list of game analytics reports.</para>

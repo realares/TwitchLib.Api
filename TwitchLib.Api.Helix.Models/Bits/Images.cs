@@ -3,7 +3,7 @@ using System;
 
 namespace TwitchLib.Api.Helix.Models.Bits
 {
-    public class Images
+    public record Images
     {
         [JsonPropertyName("dark")]
         public ImageList Dark { get; set; } = null!;

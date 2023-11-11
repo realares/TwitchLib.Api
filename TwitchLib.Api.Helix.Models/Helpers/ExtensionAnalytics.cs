@@ -1,6 +1,6 @@
 ﻿namespace TwitchLib.Api.Helix.Models.Helpers
 {
-    public class ExtensionAnalytics
+    public record ExtensionAnalytics
     {
         public string Date { get; set; }
         public string ExtensionName { get; set; }

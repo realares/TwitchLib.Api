@@ -2,7 +2,7 @@
 
 namespace TwitchLib.Api.Helix.Models.Users.Internal
 { 
-    public class ExtensionSlot
+    public record ExtensionSlot
     {
         public ExtensionType Type;
         public string Slot;

@@ -2,7 +2,7 @@
 
 namespace TwitchLib.Api.Helix.Models.Chat.Badges.GetGlobalChatBadges
 {
-    public class GetGlobalChatBadgesResponse
+    public record GetGlobalChatBadgesResponse
     {
         [JsonPropertyName("data")]
         public BadgeEmoteSet[] EmoteSet { get; set; }

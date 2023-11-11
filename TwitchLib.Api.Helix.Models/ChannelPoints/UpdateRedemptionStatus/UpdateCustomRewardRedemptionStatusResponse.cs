@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.ChannelPoints.UpdateRedemptionStatus
 {
-    public class UpdateRedemptionStatusResponse
+    public record UpdateRedemptionStatusResponse
     {
         [JsonPropertyName("data")]
         public RewardRedemption[] Data { get; set; }

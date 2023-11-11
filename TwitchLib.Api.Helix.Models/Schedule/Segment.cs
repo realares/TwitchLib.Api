@@ -3,7 +3,7 @@ using System;
 
 namespace TwitchLib.Api.Helix.Models.Schedule
 {
-    public class Segment
+    public record Segment
     {
         [JsonPropertyName("id")]
         public string Id { get; set; }

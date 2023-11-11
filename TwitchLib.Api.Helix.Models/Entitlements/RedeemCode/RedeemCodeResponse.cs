@@ -2,7 +2,7 @@
 
 namespace TwitchLib.Api.Helix.Models.Entitlements.RedeemCode
 {
-    public class RedeemCodeResponse
+    public record RedeemCodeResponse
     {
         [JsonPropertyName("data")]
         public Status[] Data { get; set; }

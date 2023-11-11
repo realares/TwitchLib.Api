@@ -2,7 +2,7 @@
 
 namespace TwitchLib.Api.Helix.Models.Schedule.UpdateChannelStreamSegment
 {
-    public class UpdateChannelStreamSegmentResponse
+    public record UpdateChannelStreamSegmentResponse
     {
         [JsonPropertyName("data")]
         public ChannelStreamSchedule Schedule { get; set; }

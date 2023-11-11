@@ -3,7 +3,7 @@ using TwitchLib.Api.Helix.Models.Common;
 
 namespace TwitchLib.Api.Helix.Models.Schedule.GetChannelStreamSchedule
 {
-    public class GetChannelStreamScheduleResponse
+    public record GetChannelStreamScheduleResponse
     {
         [JsonPropertyName("data")]
         public ChannelStreamSchedule Schedule { get; set; }

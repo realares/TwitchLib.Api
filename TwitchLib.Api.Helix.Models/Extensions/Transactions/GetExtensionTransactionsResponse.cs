@@ -3,7 +3,7 @@ using TwitchLib.Api.Helix.Models.Common;
 
 namespace TwitchLib.Api.Helix.Models.Extensions.Transactions
 {
-    public class GetExtensionTransactionsResponse
+    public record GetExtensionTransactionsResponse
     {
         [JsonPropertyName("data")]
         public Transaction[] Data { get; set; }

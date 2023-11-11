@@ -2,7 +2,7 @@
 
 namespace TwitchLib.Api.Helix.Models.Chat.Badges
 {
-    public class BadgeEmoteSet
+    public record BadgeEmoteSet
     {
         [JsonPropertyName("set_id")]
         public string SetId { get; set; }

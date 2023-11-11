@@ -2,7 +2,7 @@
 
 namespace TwitchLib.Api.Helix.Models.Moderation.BanUser
 {
-    public class BanUserRequest
+    public record BanUserRequest
     {
         [JsonPropertyName("user_id")]
         public string UserId { get; set; } = null!;

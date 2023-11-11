@@ -2,7 +2,7 @@
 
 namespace TwitchLib.Api.Helix.Models.EventSub
 {
-    public class CreateEventSubSubscriptionResponse
+    public record CreateEventSubSubscriptionResponse
     {
         [JsonPropertyName("data")]
         public EventSubSubscription[] Subscriptions { get; set; }

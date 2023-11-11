@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.Streams.CreateStreamMarker
 {
-    public class CreateStreamMarkerResponse
+    public record CreateStreamMarkerResponse
     {
         [JsonPropertyName("data")]
         public CreatedMarker[] Data { get; set; }

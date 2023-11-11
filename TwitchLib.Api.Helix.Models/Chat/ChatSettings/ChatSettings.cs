@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.Chat.ChatSettings
 {
-    public class ChatSettings
+    public record ChatSettings
     {
         [JsonPropertyName("slow_mode")]
         public bool SlowMode;

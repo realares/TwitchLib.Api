@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.ChannelPoints
 {
-    public class GlobalCooldownSetting
+    public record GlobalCooldownSetting
     {
         [JsonPropertyName("is_enabled")]
         public bool IsEnabled { get; set; }

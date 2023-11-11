@@ -2,7 +2,7 @@
 
 namespace TwitchLib.Api.Helix.Models.Channels.GetFollowedChannels
 {
-    public class FollowedChannel
+    public record FollowedChannel
     {
         /// <summary>
         /// An ID that uniquely identifies the broadcaster that this user is following.

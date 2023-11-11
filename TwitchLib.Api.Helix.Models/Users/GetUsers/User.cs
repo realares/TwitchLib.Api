@@ -3,7 +3,7 @@ using System;
 
 namespace TwitchLib.Api.Helix.Models.Users.GetUsers
 {
-    public class User
+    public record User
     {
         [JsonPropertyName("id")]
         public string Id { get; set; }

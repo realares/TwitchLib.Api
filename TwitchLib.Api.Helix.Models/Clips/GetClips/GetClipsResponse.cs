@@ -6,7 +6,7 @@ namespace TwitchLib.Api.Helix.Models.Clips.GetClips
     /// <summary>
     /// Response for GetClips which returns one or more video clips that were captured from streams.
     /// </summary>
-    public class GetClipsResponse
+    public record GetClipsResponse
     {
         /// <summary>
         /// <para>The list of video clips.</para>

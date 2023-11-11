@@ -4,7 +4,7 @@ using TwitchLib.Api.Helix.Models.Games;
 
 namespace TwitchLib.Api.Helix.Models.Search
 {
-    public class SearchCategoriesResponse
+    public record SearchCategoriesResponse
     {
         [JsonPropertyName("data")]
         public Game[] Games { get; set; }

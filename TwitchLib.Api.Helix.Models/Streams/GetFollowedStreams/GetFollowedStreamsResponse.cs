@@ -6,7 +6,7 @@ using TwitchLib.Api.Helix.Models.Common;
 
 namespace TwitchLib.Api.Helix.Models.Streams.GetFollowedStreams
 {
-    public class GetFollowedStreamsResponse
+    public record GetFollowedStreamsResponse
     {
         [JsonPropertyName("data")]
         public Stream[] Data { get; set; }

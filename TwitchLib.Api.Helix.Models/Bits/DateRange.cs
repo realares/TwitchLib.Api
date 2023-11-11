@@ -8,7 +8,7 @@ namespace TwitchLib.Api.Helix.Models.Bits
     /// The dates are calculated by using the started_at and period query parameters. 
     /// If you don’t specify the started_at query parameter, the fields contain empty strings.
     /// </summary>
-    public class DateRange
+    public record DateRange
     {
         /// <summary>
         /// The reporting window’s start date.

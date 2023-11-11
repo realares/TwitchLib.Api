@@ -3,7 +3,7 @@ using TwitchLib.Api.Helix.Models.Common;
 
 namespace TwitchLib.Api.Helix.Models.HypeTrain
 {
-    public class GetHypeTrainResponse
+    public record GetHypeTrainResponse
     {
         [JsonPropertyName("data")]
         public HypeTrain[] HypeTrain { get; set; }

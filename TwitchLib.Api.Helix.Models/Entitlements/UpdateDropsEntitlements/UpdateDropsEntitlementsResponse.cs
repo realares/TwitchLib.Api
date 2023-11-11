@@ -2,7 +2,7 @@
 
 namespace TwitchLib.Api.Helix.Models.Entitlements.UpdateDropsEntitlements
 {
-    public class UpdateDropsEntitlementsResponse
+    public record UpdateDropsEntitlementsResponse
     {
         [JsonPropertyName("data")]
         public DropEntitlementUpdate[] DropEntitlementUpdates { get; set; }

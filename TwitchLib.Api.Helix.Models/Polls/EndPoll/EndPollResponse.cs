@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.Polls.EndPoll
 {
-    public class EndPollResponse
+    public record EndPollResponse
     {
         [JsonPropertyName("data")]
         public Poll[] Data { get; set; }

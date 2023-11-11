@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.Bits.ExtensionBitsProducts
 {
-    public class UpdateExtensionBitsProductResponse
+    public record UpdateExtensionBitsProductResponse
     {
         [JsonPropertyName("data")]
         public ExtensionBitsProduct[] Data { get; set; }

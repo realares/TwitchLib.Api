@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.ChannelPoints
 {
-    public class MaxPerUserPerStreamSetting
+    public record MaxPerUserPerStreamSetting
     {
         [JsonPropertyName("is_enabled")]
         public bool IsEnabled { get; set; }

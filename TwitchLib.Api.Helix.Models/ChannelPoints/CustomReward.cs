@@ -6,7 +6,7 @@ using TwitchLib.Api.Helix.Models.ChannelPoints.UpdateCustomReward;
 
 namespace TwitchLib.Api.Helix.Models.ChannelPoints
 {
-    public class CustomReward
+    public record CustomReward
     {
         [JsonPropertyName("broadcaster_id")]
         public string BroadcasterId { get; set; }

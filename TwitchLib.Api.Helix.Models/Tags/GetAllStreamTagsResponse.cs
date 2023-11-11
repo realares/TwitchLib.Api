@@ -6,7 +6,7 @@ using TwitchLib.Api.Helix.Models.Common;
 
 namespace TwitchLib.Api.Helix.Models.Tags
 {
-    public class GetAllStreamTagsResponse
+    public record GetAllStreamTagsResponse
     {
         [JsonPropertyName("data")]
         public Tag[] Data { get; set; }

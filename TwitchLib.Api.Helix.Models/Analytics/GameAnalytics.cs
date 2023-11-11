@@ -5,7 +5,7 @@ namespace TwitchLib.Api.Helix.Models.Analytics
     /// <summary>
     /// <para></para>
     /// </summary>
-    public class GameAnalytics
+    public record GameAnalytics
     {
         /// <summary>
         /// <para>An ID that identifies the game that the analytic report was generated for.</para>

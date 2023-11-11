@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TwitchLib.Api.Helix.Models.Moderation.AutomodSettings
 {
-    public class AutomodSettings
+    public record AutomodSettings
     {
         [JsonPropertyName("overall_level")]
         public int? OverallLevel;
