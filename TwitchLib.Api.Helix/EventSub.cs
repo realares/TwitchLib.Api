@@ -8,12 +8,14 @@ using TwitchLib.Api.Core.Interfaces;
 using TwitchLib.Api.Helix.Models.EventSub;
 using System.Text.Json;
 using System.Net;
+using Microsoft.Extensions.Logging;
 
 namespace TwitchLib.Api.Helix
 {
     public class EventSub : ApiBase
     {
-        public EventSub(IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) : base(settings, rateLimiter, http)
+        public EventSub(ILogger<EventSub> logger, IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) 
+            : base(logger, settings, rateLimiter, http)
         {
         }
 
@@ -66,7 +68,7 @@ namespace TwitchLib.Api.Helix
 
             var response = await TwitchDeleteAsync("/eventsub/subscriptions", ApiVersion.Helix, getParams, accessToken, clientId);
 
-            return response.Key == (int)HttpStatusCode.NoContent;
+            return response.Key == HttpStatusCode.NoContent;
         }
     }
 }

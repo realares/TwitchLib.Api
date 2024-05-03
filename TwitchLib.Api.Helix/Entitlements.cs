@@ -10,12 +10,14 @@ using TwitchLib.Api.Helix.Models.Entitlements.GetDropsEntitlements;
 using TwitchLib.Api.Helix.Models.Entitlements.RedeemCode;
 using TwitchLib.Api.Helix.Models.Entitlements.UpdateDropsEntitlements;
 using System.Text.Json;
+using Microsoft.Extensions.Logging;
 
 namespace TwitchLib.Api.Helix
 {
     public class Entitlements : ApiBase
     {
-        public Entitlements(IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) : base(settings, rateLimiter, http)
+        public Entitlements(ILogger<Entitlements> logger, IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) 
+            : base(logger, settings, rateLimiter, http)
         {
         }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TwitchLib.Api.Core;
 using TwitchLib.Api.Core.Enums;
@@ -18,7 +19,8 @@ namespace TwitchLib.Api.Helix
       /// <param name="settings"></param>
       /// <param name="rateLimiter"></param>
       /// <param name="http"></param>
-      public ContentClassificationLabels(IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) : base(settings, rateLimiter, http)
+      public ContentClassificationLabels(ILogger<ContentClassificationLabels> logger, IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http)
+            : base(logger, settings, rateLimiter, http)
       {}
 
       #region GetContentClassificationLabels

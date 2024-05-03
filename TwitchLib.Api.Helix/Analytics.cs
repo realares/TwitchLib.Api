@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TwitchLib.Api.Core;
@@ -21,7 +22,7 @@ namespace TwitchLib.Api.Helix
         /// <param name="settings"></param>
         /// <param name="rateLimiter"></param>
         /// <param name="http"></param>
-        public Analytics(IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) : base(settings, rateLimiter, http)
+        public Analytics(ILogger<Analytics> logger, IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) : base(logger, settings, rateLimiter, http)
         {
         }
 

@@ -8,6 +8,7 @@ using TwitchLib.Api.Core.Enums;
 using TwitchLib.Api.Core.Interfaces;
 using TwitchLib.Api.Helix.Models.Ads;
 using System.Text.Json;
+using Microsoft.Extensions.Logging;
 
 namespace TwitchLib.Api.Helix
 {
@@ -16,7 +17,7 @@ namespace TwitchLib.Api.Helix
     /// </summary>
     public class Ads : ApiBase
     {
-        public Ads(IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) : base(settings, rateLimiter, http)
+        public Ads(ILogger<Ads> logger, IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) : base(logger, settings, rateLimiter, http)
         {
         }
 

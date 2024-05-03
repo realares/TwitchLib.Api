@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -20,7 +21,8 @@ namespace TwitchLib.Api.Helix
 {
     public class Users : ApiBase
     {
-        public Users(IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) : base(settings, rateLimiter, http)
+        public Users(ILogger<Users> logger, IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) 
+            : base(logger, settings, rateLimiter, http)
         {
         }
 

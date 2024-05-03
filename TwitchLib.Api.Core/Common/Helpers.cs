@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using TwitchLib.Api.Core.Enums;
 
 namespace TwitchLib.Api.Core.Common
@@ -16,6 +17,11 @@ namespace TwitchLib.Api.Core.Common
             return token.Contains(" ") ? token.Split(' ')[1] : token;
         }
 
+        /// <summary>
+        /// Converts AuthScope enum to Twitch scope string
+        /// </summary>
+        /// <param name="scope">Scope as AuthScope Enum</param>
+        /// <returns>Twitch scope string</returns>
         public static string AuthScopesToString(AuthScopes scope)
         {
             return scope switch
@@ -28,6 +34,8 @@ namespace TwitchLib.Api.Core.Common
                 AuthScopes.Analytics_Read_Extensions => "analytics:read:extensions",
                 AuthScopes.Analytics_Read_Games => "analytics:read:games",
                 AuthScopes.Bits_Read => "bits:read",
+                AuthScopes.Channel_Bot => "channel:bot",
+                AuthScopes.Channel_Manage_Ads => "channel:manage:ads",
                 AuthScopes.Channel_Edit_Commercial => "channel:edit:commercial",
                 AuthScopes.Channel_Manage_Broadcast => "channel:manage:broadcast",
                 AuthScopes.Channel_Manage_Extensions => "channel:manage:extensions",
@@ -40,6 +48,7 @@ namespace TwitchLib.Api.Core.Common
                 AuthScopes.Channel_Manage_VIPs => "channel:manage:vips",
                 AuthScopes.Channel_Manage_Guest_Star => "channel:manage:guest_star",
                 AuthScopes.Channel_Manage_Raids => "channel:manage:raids",
+                AuthScopes.Channel_Read_Ads => "channel:read:ads",
                 AuthScopes.Channel_Read_Charity => "channel:read:charity",
                 AuthScopes.Channel_Read_Editors => "channel:read:editors",
                 AuthScopes.Channel_Read_Goals => "channel:read:goals",
@@ -53,15 +62,18 @@ namespace TwitchLib.Api.Core.Common
                 AuthScopes.Channel_Read_Guest_Star => "channel:read:guest_star",
                 AuthScopes.Clips_Edit => "clips:edit",
                 AuthScopes.Moderation_Read => "moderation:read",
+                AuthScopes.User_Bot => "user:bot",
                 AuthScopes.User_Edit => "user:edit",
                 AuthScopes.User_Read_BlockedUsers => "user:read:blocked_users",
                 AuthScopes.User_Read_Broadcast => "user:read:broadcast",
+                AuthScopes.User_Read_Chat => "user:read:chat",
                 AuthScopes.User_Read_Email => "user:read:email",
                 AuthScopes.User_Read_Follows => "user:read:follows",
                 AuthScopes.User_Read_Subscriptions => "user:read:subscriptions",
                 AuthScopes.User_Manage_BlockedUsers => "user:manage:blocked_users",
                 AuthScopes.User_Manage_Chat_Color => "user:manage:chat_color",
                 AuthScopes.User_Manage_Whispers => "user:manage:whispers",
+                AuthScopes.User_Write_Chat => "user:write:chat",
                 AuthScopes.Moderator_Manage_Announcements => "moderator:manage:announcements",
                 AuthScopes.Moderator_Manage_Automod => "moderator:manage:automod",
                 AuthScopes.Moderator_Manage_Automod_Settings => "moderator:manage:automod_settings",
@@ -103,7 +115,9 @@ namespace TwitchLib.Api.Core.Common
                 "analytics:read:extensions" => AuthScopes.Analytics_Read_Extensions,
                 "analytics:read:games" => AuthScopes.Analytics_Read_Games,
                 "bits:read" => AuthScopes.Bits_Read,
+                "channel:bot" => AuthScopes.Channel_Bot,
                 "channel:edit:commercial" => AuthScopes.Channel_Edit_Commercial,
+                "channel:manage:ads" => AuthScopes.Channel_Manage_Ads,
                 "channel:manage:broadcast" => AuthScopes.Channel_Manage_Broadcast,
                 "channel:manage:extensions" => AuthScopes.Channel_Manage_Extensions,
                 "channel:manage:moderators" => AuthScopes.Channel_Manage_Moderators,
@@ -115,6 +129,7 @@ namespace TwitchLib.Api.Core.Common
                 "channel:manage:vips" => AuthScopes.Channel_Manage_VIPs,
                 "channel:manage:guest_star" => AuthScopes.Channel_Manage_Guest_Star,
                 "channel:manage:raids" => AuthScopes.Channel_Manage_Raids,
+                "channel:read:ads" => AuthScopes.Channel_Read_Ads,
                 "channel:read:charity" => AuthScopes.Channel_Read_Charity,
                 "channel:read:editors" => AuthScopes.Channel_Read_Editors,
                 "channel:read:goals" => AuthScopes.Channel_Read_Goals,
@@ -128,9 +143,11 @@ namespace TwitchLib.Api.Core.Common
                 "channel:read:guest_star" => AuthScopes.Channel_Read_Guest_Star,
                 "clips:edit" => AuthScopes.Clips_Edit,
                 "moderation:read" => AuthScopes.Moderation_Read,
+                "user:bot" => AuthScopes.User_Bot,
                 "user:edit" => AuthScopes.User_Edit,
                 "user:read:blocked_users" => AuthScopes.User_Read_BlockedUsers,
                 "user:read:broadcast" => AuthScopes.User_Read_Broadcast,
+                "user:read:chat" => AuthScopes.User_Read_Chat,
                 "user:read:email" => AuthScopes.User_Read_Email,
                 "user:read:follows" => AuthScopes.User_Read_Follows,
                 "user:read:subscriptions" => AuthScopes.User_Read_Subscriptions,
@@ -167,7 +184,7 @@ namespace TwitchLib.Api.Core.Common
         /// <returns>input as Base64 string</returns>
         public static string Base64Encode(string plainText)
         {
-            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+            var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
             return Convert.ToBase64String(plainTextBytes);
         }
     }

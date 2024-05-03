@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using TwitchLib.Api.Core;
 using TwitchLib.Api.Core.Enums;
@@ -8,21 +10,41 @@ using TwitchLib.Api.Core.Exceptions;
 using TwitchLib.Api.Core.Interfaces;
 using TwitchLib.Api.Helix.Models.Extensions.LiveChannels;
 using TwitchLib.Api.Helix.Models.Extensions.ReleasedExtensions;
+using TwitchLib.Api.Helix.Models.Extensions.SendExtensionPubSubMessage;
 using TwitchLib.Api.Helix.Models.Extensions.Transactions;
 
 namespace TwitchLib.Api.Helix
 {
     public class Extensions : ApiBase
     {
-        public Extensions(IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) : base(settings, rateLimiter, http)
+        public Extensions(ILogger<Extensions> logger, IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) : base(logger, settings, rateLimiter, http)
         { }
+
+        public async Task<bool> SendExtensionPubSubMessage(string msg, string channel_id, string? jwtAuth = null)
+        {
+            ArgumentNullException.ThrowIfNull(msg, nameof(msg));
+            ArgumentNullException.ThrowIfNull(channel_id, nameof(channel_id));
+
+            SendExtensionPubSubMessageRequest request = SendExtensionPubSubMessageRequest.CreateBroadcast();
+
+            request.Message = msg;
+            request.Broadcaster_id = channel_id;
+
+            var resultkeyPair = await TwitchPostAsync(
+                "/extensions/pubsub", ApiVersion.Helix,
+                JsonSerializer.Serialize(request),null,
+                jwtAuth);
+
+            return (resultkeyPair.Key == System.Net.HttpStatusCode.NoContent);
+        }
 
         #region GetExtensionTransactions
 
         public Task<GetExtensionTransactionsResponse?> GetExtensionTransactionsAsync(
             string extensionId, List<string>? ids = null, string? after = null, int first = 20, string? applicationAccessToken = null)
         {
-            if(extensionId == null)
+            
+            if (extensionId == null)
                 throw new BadParameterException("extensionId cannot be null");
 
             if (first < 1 || first > 100)

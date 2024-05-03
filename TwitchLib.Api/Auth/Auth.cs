@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TwitchLib.Api.Core;
 using TwitchLib.Api.Core.Enums;
@@ -10,7 +11,8 @@ namespace TwitchLib.Api.Auth
     /// <summary>These endpoints fall outside of v5 and Helix, and relate to Authorization</summary>
     public class Auth : ApiBase
     {
-        public Auth(IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) : base(settings, rateLimiter, http)
+        public Auth(ILogger<Auth> logger, IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) 
+            : base(logger, settings, rateLimiter, http)
         {
         }
 

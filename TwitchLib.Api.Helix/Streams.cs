@@ -13,12 +13,13 @@ using TwitchLib.Api.Helix.Models.Streams.GetStreams;
 using TwitchLib.Api.Helix.Models.Streams.GetStreamTags;
 using System.Text.Json.Nodes;
 using System.Text.Json;
+using Microsoft.Extensions.Logging;
 
 namespace TwitchLib.Api.Helix
 {
     public class Streams : ApiBase
     {
-        public Streams(IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) : base(settings, rateLimiter, http)
+        public Streams(ILogger<Streams> logger, IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) : base(logger, settings, rateLimiter, http)
         {
         }
 

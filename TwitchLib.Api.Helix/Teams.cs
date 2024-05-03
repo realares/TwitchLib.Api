@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TwitchLib.Api.Core;
 using TwitchLib.Api.Core.Enums;
@@ -9,11 +10,11 @@ namespace TwitchLib.Api.Helix
 {
     public class Teams : ApiBase
     {
-        public Teams(IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) : base(settings, rateLimiter, http)
+        public Teams(ILogger<Teams> logger, IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) : base(logger, settings, rateLimiter, http)
         {
         }
 
-        public Task<GetChannelTeamsResponse> GetChannelTeamsAsync(string broadcasterId, string accessToken = null)
+        public Task<GetChannelTeamsResponse?> GetChannelTeamsAsync(string broadcasterId, string? accessToken = null)
         {
             var getParams = new List<KeyValuePair<string, string>>
             {
@@ -23,7 +24,7 @@ namespace TwitchLib.Api.Helix
             return TwitchGetGenericAsync<GetChannelTeamsResponse>("/teams/channel", ApiVersion.Helix, getParams, accessToken);
         }
 
-        public Task<GetTeamsResponse> GetTeamsAsync(string teamId = null, string teamName = null, string accessToken = null)
+        public Task<GetTeamsResponse?> GetTeamsAsync(string? teamId = null, string? teamName = null, string? accessToken = null)
         {
             var getParams = new List<KeyValuePair<string, string>>();
 

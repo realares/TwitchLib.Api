@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TwitchLib.Api.Core;
 using TwitchLib.Api.Core.Enums;
@@ -10,7 +11,8 @@ namespace TwitchLib.Api.Helix
 {
     public class HypeTrain : ApiBase
     {
-        public HypeTrain(IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) : base(settings, rateLimiter, http)
+        public HypeTrain(ILogger<HypeTrain> logger, IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) 
+            : base(logger, settings, rateLimiter, http)
         {
         }
 

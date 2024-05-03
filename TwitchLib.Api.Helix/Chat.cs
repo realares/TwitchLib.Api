@@ -8,6 +8,7 @@ using TwitchLib.Api.Core.Interfaces;
 using TwitchLib.Api.Helix.Models.Chat.Badges.GetChannelChatBadges;
 using TwitchLib.Api.Helix.Models.Chat.Badges.GetGlobalChatBadges;
 using TwitchLib.Api.Helix.Models.Chat.ChatSettings;
+using TwitchLib.Api.Helix.Models.Channels.SendChatMessage;
 using TwitchLib.Api.Helix.Models.Chat.Emotes.GetChannelEmotes;
 using TwitchLib.Api.Helix.Models.Chat.Emotes.GetEmoteSets;
 using TwitchLib.Api.Helix.Models.Chat.Emotes.GetGlobalEmotes;
@@ -16,12 +17,16 @@ using System.Web;
 using TwitchLib.Api.Helix.Models.Chat;
 using System.Text.Json.Nodes;
 using TwitchLib.Api.Helix.Models.Chat.GetUserChatColor;
+using TwitchLib.Api.Helix.Models.Moderation.GetModerators;
+using System.Drawing;
+using TwitchLib.Api.Helix.Models.Chat.SendChatMessage;
+using Microsoft.Extensions.Logging;
 
 namespace TwitchLib.Api.Helix
 {
     public class Chat : ApiBase
     {
-        public Chat(IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) : base(settings, rateLimiter, http)
+        public Chat(ILogger<Chat> logger, IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) : base(logger, settings, rateLimiter, http)
         { }
 
         #region Badges
@@ -236,6 +241,60 @@ namespace TwitchLib.Api.Helix
 
             return TwitchPostAsync("/chat/shoutouts", ApiVersion.Helix, null, getParams, accessToken);
         }
+
+        #endregion
+
+        #region ChatMessage
+
+        /// <summary>
+        /// Sends a message to a chat
+        /// </summary>
+        /// <param name="broadcasterId">The ID of the broadcaster whose chat room the message will be sent to.</param>
+        /// <param name="senderId">	The ID of the user sending the message. This ID must match the user ID in the user access token.</param>
+        /// <param name="message">	The message to send. The message is limited to a maximum of 500 characters. Chat messages can also include emoticons. To include emoticons, use the name of the emote. The names are case sensitive. Don’t include colons around the name (e.g., :bleedPurple:). If Twitch recognizes the name, Twitch converts the name to the emote before writing the chat message to the chat room</param>
+        /// <param name="accessToken"></param>
+        /// <returns></returns>
+        /// <exception cref="BadParameterException"></exception>
+        public Task<SendChatMessageResponse?> SendChatMessage(
+            SendMessageDto sendMessage, 
+            string? accessToken = null)
+        {
+            if (string.IsNullOrEmpty(sendMessage.Broadcaster_id))
+                throw new BadParameterException("broadcasterId must be set");
+
+            if (string.IsNullOrEmpty(sendMessage.Sender_id))
+                throw new BadParameterException("senderId must be set");
+
+            if (string.IsNullOrEmpty(sendMessage.Message))
+                throw new BadParameterException("message must be set");
+
+            return TwitchPostGenericModelAsync<SendChatMessageResponse>("/chat/messages", ApiVersion.Helix, sendMessage, null, accessToken);
+            //return TwitchPostGenericAsync<SendChatMessageResponse>("/chat/messages", ApiVersion.Helix, json.ToString(), null, accessToken);
+        }
+        //public Task<SendChatMessageResponse?> SendChatMessage(
+        //    string broadcasterId, string senderId,
+        //    string message, string? reply_parent_message_id = null,
+        //    string? accessToken = null)
+        //{
+        //    if (string.IsNullOrEmpty(broadcasterId))
+        //        throw new BadParameterException("broadcasterId must be set");
+
+        //    if (string.IsNullOrEmpty(senderId))
+        //        throw new BadParameterException("senderId must be set");
+
+        //    if (string.IsNullOrEmpty(message))
+        //        throw new BadParameterException("message must be set");
+
+        //    var json = new JsonObject
+        //    {
+        //        ["broadcaster_id"] = broadcasterId,
+        //        ["sender_id"] = senderId,
+        //        ["message"] = message,
+        //    };
+
+        //    return TwitchPostGenericAsync<SendChatMessageResponse>("/chat/messages", ApiVersion.Helix, json.ToString(), null, accessToken);
+        //}
+        
 
         #endregion
 

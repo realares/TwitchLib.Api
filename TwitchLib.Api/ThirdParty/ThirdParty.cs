@@ -13,17 +13,19 @@ using TwitchLib.Api.ThirdParty.AuthorizationFlow;
 using TwitchLib.Api.ThirdParty.ModLookup;
 using TwitchLib.Api.ThirdParty.UsernameChange;
 using System.Text.Json;
+using Microsoft.Extensions.Logging;
+using TwitchLib.Api.Helix;
 
 namespace TwitchLib.Api.ThirdParty
 {
     /// <summary>These endpoints are offered by third party services (NOT TWITCH), but are still pretty cool.</summary>
     public class ThirdParty
     {
-        public ThirdParty(IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http)
+        public ThirdParty(ILogger<ThirdParty> logger, IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http)
         {
-            UsernameChange = new UsernameChangeApi(settings, rateLimiter, http);
-            ModLookup = new ModLookupApi(settings, rateLimiter, http);
-            AuthorizationFlow = new AuthorizationFlowApi(settings, rateLimiter, http);
+            UsernameChange = new UsernameChangeApi(logger, settings, rateLimiter, http);
+            ModLookup = new ModLookupApi(logger, settings, rateLimiter, http);
+            AuthorizationFlow = new AuthorizationFlowApi(logger, settings, rateLimiter, http);
         }
 
         public UsernameChangeApi UsernameChange { get; }
@@ -32,7 +34,7 @@ namespace TwitchLib.Api.ThirdParty
 
         public class UsernameChangeApi : ApiBase
         {
-            public UsernameChangeApi(IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) : base(settings, rateLimiter, http)
+            public UsernameChangeApi(ILogger logger, IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) : base(logger, settings, rateLimiter, http)
             {
             }
 
@@ -54,7 +56,7 @@ namespace TwitchLib.Api.ThirdParty
 
         public class ModLookupApi : ApiBase
         {
-            public ModLookupApi(IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) : base(settings, rateLimiter, http)
+            public ModLookupApi(ILogger logger, IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) : base(logger, settings, rateLimiter, http)
             {
             }
 
@@ -94,7 +96,7 @@ namespace TwitchLib.Api.ThirdParty
             private string _apiId;
             private Timer _pingTimer;
 
-            public AuthorizationFlowApi(IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) : base(settings, rateLimiter, http)
+            public AuthorizationFlowApi(ILogger logger, IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) : base(logger, settings, rateLimiter, http)
             {
             }
 

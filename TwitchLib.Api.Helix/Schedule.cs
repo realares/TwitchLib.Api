@@ -11,12 +11,13 @@ using TwitchLib.Api.Helix.Models.Schedule.CreateChannelStreamSegment;
 using TwitchLib.Api.Helix.Models.Schedule.GetChannelStreamSchedule;
 using TwitchLib.Api.Helix.Models.Schedule.UpdateChannelStreamSegment;
 using System.Text.Json;
+using Microsoft.Extensions.Logging;
 
 namespace TwitchLib.Api.Helix
 {
     public class Schedule : ApiBase
     {
-        public Schedule(IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) : base(settings, rateLimiter, http)
+        public Schedule(ILogger<Schedule> logger, IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) : base(logger, settings, rateLimiter, http)
         { }
 
         public Task<GetChannelStreamScheduleResponse?> GetChannelStreamScheduleAsync(

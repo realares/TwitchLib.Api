@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
@@ -16,6 +17,7 @@ namespace TwitchLib.Api.Core
 {
     public class ApiBase
     {
+        protected readonly ILogger logger;
         protected readonly IApiSettings Settings;
         private readonly IRateLimiter _rateLimiter;
         private readonly IHttpCallHandler _http;
@@ -26,10 +28,11 @@ namespace TwitchLib.Api.Core
         private DateTime? _serverBasedAccessTokenExpiry;
         private string? _serverBasedAccessToken = null;
 
-        private readonly System.Text.Json.JsonSerializerOptions _ms_twitchLibJsonDeserializer;
+        protected readonly System.Text.Json.JsonSerializerOptions _ms_twitchLibJsonDeserializer;
    
-        public ApiBase(IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http)
+        public ApiBase(ILogger logger, IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http)
         {
+            this.logger = logger;
             Settings = settings;
             _rateLimiter = rateLimiter;
             _http = http;
@@ -62,7 +65,7 @@ namespace TwitchLib.Api.Core
         internal async Task<string?> GenerateServerBasedAccessToken()
         {
             var result = await _http.GeneralRequestAsync($"{BaseAuth}/token?client_id={Settings.ClientId}&client_secret={Settings.Secret}&grant_type=client_credentials", "POST", null, ApiVersion.Auth, Settings.ClientId, null).ConfigureAwait(false);
-            if (result.Key == 200)
+            if (result.Key ==  HttpStatusCode.OK)
             {
                 var user = System.Text.Json.JsonSerializer.Deserialize<TokeResult>(result.Value);
                 //var user = JsonConvert.DeserializeObject<dynamic>(result.Value);
@@ -97,8 +100,13 @@ namespace TwitchLib.Api.Core
 
         protected async Task<T?> Twitch__GenericAsync<T>(
             string methode,
-            string resource, ApiVersion api, string? payload = null, List<KeyValuePair<string, string>>? getParams = null,
-            string? accessToken = null, string? clientId = null, string? customBase = null)
+            string resource, ApiVersion api, 
+            string? payload = null, 
+            List<KeyValuePair<string, string>>? getParams = null,
+            string? accessToken = null, 
+            string? clientId = null, 
+            string? customBase = null,
+            bool throwExceptions = true)
         {
             var url = ConstructResourceUrl(resource, getParams, api, customBase);
 
@@ -110,47 +118,53 @@ namespace TwitchLib.Api.Core
 
             return await _rateLimiter
                 .Perform(async () => {
-                    var httpresult = (await _http.GeneralRequestAsync(url, methode, payload, api, clientId, accessToken).ConfigureAwait(false)).Value;
-                    return System.Text.Json.JsonSerializer.Deserialize<T>(httpresult, _ms_twitchLibJsonDeserializer);
+                    var httpresult = (await _http.GeneralRequestAsync(url, methode, payload, api, clientId, accessToken).ConfigureAwait(false));
+                    return HandleResponse<T>(httpresult, throwExceptions);
+
                 }).ConfigureAwait(false);
         }
 
         protected Task<T?> TwitchGetGenericAsync<T>(
             string resource, ApiVersion api, List<KeyValuePair<string, string>>? getParams = null, 
-            string? accessToken = null, string? clientId = null, string? customBase = null)
+            string? accessToken = null, string? clientId = null, string? customBase = null,
+            bool throwExceptions = true)
         {
-            return Twitch__GenericAsync<T>("GET", resource, api, null, getParams, accessToken, clientId, customBase);
+            return Twitch__GenericAsync<T>("GET", resource, api, null, getParams, accessToken, clientId, customBase, throwExceptions);
         }
 
         protected Task<T?> TwitchPatchGenericAsync<T>(
             string resource, ApiVersion api, string payload, List<KeyValuePair<string, string>>? getParams = null, 
-            string? accessToken = null, string? clientId = null, string? customBase = null)
+            string? accessToken = null, string? clientId = null, string? customBase = null,
+            bool throwExceptions = true)
         {
-            return Twitch__GenericAsync<T>("PATCH", resource, api, payload, getParams, accessToken, clientId, customBase);
+            return Twitch__GenericAsync<T>("PATCH", resource, api, payload, getParams, accessToken, clientId, customBase, throwExceptions);
         }
 
         protected Task<T?> TwitchPostGenericAsync<T>(
             string resource, ApiVersion api, string? payload = null, List<KeyValuePair<string, string>>? getParams = null, 
-            string? accessToken = null, string? clientId = null, string? customBase = null)
+            string? accessToken = null, string? clientId = null, string? customBase = null,
+            bool throwExceptions = true)
         {
-            return Twitch__GenericAsync<T>("POST", resource, api, payload, getParams, accessToken, clientId, customBase);
+            return Twitch__GenericAsync<T>("POST", resource, api, payload, getParams, accessToken, clientId, customBase, throwExceptions);
         }
 
         protected Task<T?> TwitchDeleteGenericAsync<T>(
             string resource, ApiVersion api, List<KeyValuePair<string, string>>? getParams = null, 
-            string? accessToken = null, string? clientId = null, string? customBase = null)
+            string? accessToken = null, string? clientId = null, string? customBase = null,
+            bool throwExceptions = true)
         {
-            return Twitch__GenericAsync<T>("DELETE", resource, api, null, getParams, accessToken, clientId, customBase);
+            return Twitch__GenericAsync<T>("DELETE", resource, api, null, getParams, accessToken, clientId, customBase, throwExceptions);
         }
 
         protected Task<T?> TwitchPutGenericAsync<T>(
             string resource, ApiVersion api, string payload, List<KeyValuePair<string, string>>? getParams = null, 
-            string? accessToken = null, string? clientId = null, string? customBase = null)
+            string? accessToken = null, string? clientId = null, string? customBase = null,
+            bool throwExceptions = true)
         {
-            return Twitch__GenericAsync<T>("PUT", resource, api, payload, getParams, accessToken, clientId, customBase);
+            return Twitch__GenericAsync<T>("PUT", resource, api, payload, getParams, accessToken, clientId, customBase, throwExceptions);
         }
 
-        protected async Task<KeyValuePair<int, string>> Twitch__Async(
+        protected async Task<KeyValuePair<HttpStatusCode, string>> Twitch__Async(
             string methode, 
             string resource, ApiVersion api, string? payload = null, List<KeyValuePair<string, string>>? getParams = null, 
             string? accessToken = null, string? clientId = null, string? customBase = null)
@@ -169,38 +183,39 @@ namespace TwitchLib.Api.Core
                 .ConfigureAwait(false);
         }
 
-        protected Task<KeyValuePair<int, string>> TwitchGetAsync(string resource, ApiVersion api, 
+        protected Task<KeyValuePair<HttpStatusCode, string>> TwitchGetAsync(string resource, ApiVersion api, 
             List<KeyValuePair<string, string>>? getParams = null, string? accessToken = null, string? clientId = null, string? customBase = null)
         {
             return Twitch__Async("GET", resource, api, null, getParams, accessToken, clientId, customBase);
         }
 
-        protected Task<KeyValuePair<int, string>> TwitchPatchAsync(string resource, ApiVersion api, string? payload, 
+        protected Task<KeyValuePair<HttpStatusCode, string>> TwitchPatchAsync(string resource, ApiVersion api, string? payload, 
             List<KeyValuePair<string, string>>? getParams = null, string? accessToken = null, string? clientId = null, string? customBase = null)
         {
             return Twitch__Async("PATCH", resource, api, payload, getParams, accessToken, clientId, customBase);
         }
 
-        protected Task<KeyValuePair<int, string>> TwitchDeleteAsync(string resource, ApiVersion api, 
+        protected Task<KeyValuePair<HttpStatusCode, string>> TwitchDeleteAsync(string resource, ApiVersion api, 
             List<KeyValuePair<string, string>>? getParams = null, string? accessToken = null, string? clientId = null, string? customBase = null)
         {
             return Twitch__Async("DELETE", resource, api, null, getParams, accessToken, clientId, customBase);
         }
 
-        protected Task<KeyValuePair<int, string>> TwitchPostAsync(string resource, ApiVersion api, 
-            string? payload, List<KeyValuePair<string, string>>? getParams = null, string? accessToken = null, string? clientId = null, string? customBase = null)
+        protected Task<KeyValuePair<HttpStatusCode, string>> TwitchPostAsync(string resource, ApiVersion api, 
+            string? payload, List<KeyValuePair<string, string>>? getParams = null, 
+            string? accessToken = null, string? clientId = null, string? customBase = null)
         {
             return Twitch__Async("POST", resource, api, payload, getParams, accessToken, clientId, customBase);
         }
 
-        protected Task<KeyValuePair<int, string>> TwitchPutAsync(string resource, ApiVersion api, 
+        protected Task<KeyValuePair<HttpStatusCode, string>> TwitchPutAsync(string resource, ApiVersion api, 
             string? payload, List<KeyValuePair<string, string>>? getParams = null, string? accessToken = null, string? clientId = null, string? customBase = null)
         {
             return Twitch__Async("PUT", resource, api, payload, getParams, accessToken, clientId, customBase);
         }
 
         protected async Task<T?> TwitchPostGenericModelAsync<T>(string resource, ApiVersion api, 
-            RequestModel model, string? accessToken = null, string? clientId = null, string? customBase = null)
+            Object model, string? accessToken = null, string? clientId = null, string? customBase = null)
         {
             var url = ConstructResourceUrl(resource, api: api, overrideUrl: customBase);
 
@@ -324,6 +339,116 @@ namespace TwitchLib.Api.Core
             return url;
         }
 
+        protected T? HandleResponse<T>(KeyValuePair<HttpStatusCode, string> webresult, bool throwExceptions)
+        {
+            switch (webresult.Key)
+            {
+                case HttpStatusCode.OK:
+                case HttpStatusCode.NoContent:
+                    return JsonSerializer.Deserialize<T>(webresult.Value, _ms_twitchLibJsonDeserializer); 
 
+                case HttpStatusCode.BadRequest:
+                    logger.LogError(webresult.Value);
+                    if (throwExceptions) throw new BadRequestException(webresult.Value);
+                    return default;
+
+                case HttpStatusCode.Unauthorized:
+                    logger.LogError(webresult.Value);
+                    if (throwExceptions) throw new UnauthorizedRequestException(webresult.Value);
+                    return default; 
+
+                // The ID in the broadcaster_id query parameter must match the user ID in the access token.
+                case HttpStatusCode.Forbidden:
+                    logger.LogError(webresult.Value);
+                    if (throwExceptions) throw new BadTokenException(webresult.Value);
+                    return default;
+
+                case HttpStatusCode.NotFound:
+                    logger.LogError(webresult.Value);
+                    if (throwExceptions) throw new NotFoundRequestException(webresult.Value);
+                    return default;
+
+                case HttpStatusCode.Conflict:
+                    logger.LogError(webresult.Value);
+                    if (throwExceptions) throw new ConflictRequestException(webresult.Value);
+                    return default;
+
+                case HttpStatusCode.UnprocessableEntity:
+                    logger.LogError(webresult.Value);
+                    if (throwExceptions) throw new UnprocessableEntityRequestException(webresult.Value);
+                    return default;
+
+                case (HttpStatusCode)425: // Too Early
+                    logger.LogError(webresult.Value);
+                    if (throwExceptions) throw new TooEarlyException(webresult.Value);
+                    return default;
+
+                case (HttpStatusCode)429: // Too Many Requests
+                    logger.LogError(webresult.Value);
+                    if (throwExceptions) throw new TooManyRequestsException(webresult.Value, "");
+                    return default;
+
+                default:
+                    logger.LogError(webresult.Value); 
+                    if (throwExceptions) throw new Exception(webresult.Value);
+                    return default;
+            }
+        }
+
+        protected bool HandleBooleanResponse(KeyValuePair<HttpStatusCode, string> webresult, bool throwExceptions)
+        {
+            switch (webresult.Key)
+            {
+                case HttpStatusCode.OK:
+                case HttpStatusCode.NoContent:
+                    return true;
+
+                case HttpStatusCode.BadRequest:
+                    logger.LogError(webresult.Value);
+                    if (throwExceptions) throw new BadRequestException(webresult.Value);
+                    return false;
+
+                case HttpStatusCode.Unauthorized:
+                    logger.LogError(webresult.Value);
+                    if (throwExceptions) throw new UnauthorizedRequestException(webresult.Value);
+                    return false;
+
+                // The ID in the broadcaster_id query parameter must match the user ID in the access token.
+                case HttpStatusCode.Forbidden:
+                    logger.LogError(webresult.Value);
+                    if (throwExceptions) throw new BadTokenException(webresult.Value);
+                    return false;
+
+                case HttpStatusCode.NotFound:
+                    logger.LogError(webresult.Value);
+                    if (throwExceptions) throw new NotFoundRequestException(webresult.Value);
+                    return false;
+
+                case HttpStatusCode.Conflict:
+                    logger.LogError(webresult.Value);
+                    if (throwExceptions) throw new ConflictRequestException(webresult.Value);
+                    return false;
+
+                case HttpStatusCode.UnprocessableEntity:
+                    logger.LogError(webresult.Value);
+                    if (throwExceptions) throw new UnprocessableEntityRequestException(webresult.Value);
+                    return false;
+
+                case (HttpStatusCode)425: // Too Early
+                    logger.LogError(webresult.Value);
+                    if (throwExceptions) throw new TooEarlyException(webresult.Value);
+                    return false;
+
+                case (HttpStatusCode)429: // Too Many Requests
+                    logger.LogError(webresult.Value);
+                    if (throwExceptions) throw new TooManyRequestsException(webresult.Value, "");
+                    return false;
+
+                default:
+                    logger.LogError(webresult.Value);
+                    if (throwExceptions) throw new Exception(webresult.Value);
+                    return false;
+            }
+        }
     }
 }

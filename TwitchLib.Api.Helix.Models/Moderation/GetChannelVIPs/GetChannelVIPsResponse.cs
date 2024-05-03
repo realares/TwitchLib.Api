@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using TwitchLib.Api.Helix.Models.Common;
 
-namespace TwitchLib.Api.Helix.Models.Channels.GetChannelVIPs
+namespace TwitchLib.Api.Helix.Models.Moderation.GetChannelVIPs
 {
     public record GetChannelVIPsResponse
     {

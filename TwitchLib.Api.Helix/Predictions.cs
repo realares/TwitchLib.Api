@@ -11,12 +11,13 @@ using TwitchLib.Api.Helix.Models.Predictions.EndPrediction;
 using TwitchLib.Api.Helix.Models.Predictions.GetPredictions;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using Microsoft.Extensions.Logging;
 
 namespace TwitchLib.Api.Helix
 {
     public class Predictions : ApiBase
     {
-        public Predictions(IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) : base(settings, rateLimiter, http)
+        public Predictions(ILogger<Predictions> logger, IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) : base(logger, settings, rateLimiter, http)
         {
         }
 

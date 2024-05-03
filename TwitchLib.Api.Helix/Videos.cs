@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TwitchLib.Api.Core;
@@ -12,11 +13,11 @@ namespace TwitchLib.Api.Helix
 {
     public class Videos : ApiBase
     {
-        public Videos(IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) : base(settings, rateLimiter, http)
+        public Videos(ILogger<Videos> logger, IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) : base(logger, settings, rateLimiter, http)
         {
         }
 
-        public Task<DeleteVideosResponse> DeleteVideosAsync(List<string> videoIds, string accessToken = null)
+        public Task<DeleteVideosResponse?> DeleteVideosAsync(List<string> videoIds, string? accessToken = null)
         {
             if (videoIds.Count > 5)
                 throw new BadParameterException($"Maximum of 5 video ids allowed per request (you passed {videoIds.Count})");
@@ -28,7 +29,7 @@ namespace TwitchLib.Api.Helix
             return TwitchDeleteGenericAsync<DeleteVideosResponse>("/videos", ApiVersion.Helix, getParams, accessToken);
         }
 
-        public Task<GetVideosResponse> GetVideosAsync(List<string> videoIds = null, string userId = null, string gameId = null, string after = null, string before = null, int first = 20, string language = null, Period period = Period.All, VideoSort sort = VideoSort.Time, VideoType type = VideoType.All, string accessToken = null)
+        public Task<GetVideosResponse?> GetVideosAsync(List<string>? videoIds = null, string? userId = null, string? gameId = null, string? after = null, string? before = null, int first = 20, string? language = null, Period period = Period.All, VideoSort sort = VideoSort.Time, VideoType type = VideoType.All, string? accessToken = null)
         {
             if ((videoIds == null || videoIds.Count == 0) && userId == null && gameId == null)
                 throw new BadParameterException("VideoIds, userId, and gameId cannot all be null/empty.");

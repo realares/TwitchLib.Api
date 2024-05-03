@@ -50,31 +50,31 @@ namespace TwitchLib.Api.Helix
             http = http ?? new TwitchHttpClient(loggerFactory?.CreateLogger<TwitchHttpClient>()!);
             Settings = settings ?? new ApiSettings();
 
-            Analytics = new Analytics(Settings, rateLimiter, http);
-            Ads = new Ads(Settings, rateLimiter, http);
-            Bits = new Bits(Settings, rateLimiter, http);
-            Chat = new Chat(Settings, rateLimiter, http);
-            Channels = new Channels(Settings, rateLimiter, http);
-            ChannelPoints = new ChannelPoints(Settings, rateLimiter, http);
-            Clips = new Clips(Settings, rateLimiter, http);
-            Entitlements = new Entitlements(Settings, rateLimiter, http);
-            EventSub = new EventSub(Settings, rateLimiter, http);
-            Extensions = new Extensions(Settings, rateLimiter, http);
-            Games = new Games(Settings, rateLimiter, http);
-            Goals = new Goals(Settings, rateLimiter, http);
-            HypeTrain = new HypeTrain(Settings, rateLimiter, http);
-            Moderation = new Moderation(Settings, rateLimiter, http);
-            Polls = new Polls(Settings, rateLimiter, http);
-            Predictions = new Predictions(Settings, rateLimiter, http);
-            Schedule = new Schedule(Settings, rateLimiter, http);
-            Search = new Search(Settings, rateLimiter, http);
-            Soundtrack = new Soundtrack(Settings, rateLimiter, http);
-            Streams = new Streams(Settings, rateLimiter, http);
-            Subscriptions = new Subscriptions(Settings, rateLimiter, http);
-            Tags = new Tags(Settings, rateLimiter, http);
-            Teams = new Teams(Settings, rateLimiter, http);
-            Users = new Users(Settings, rateLimiter, http);
-            Videos = new Videos(Settings, rateLimiter, http);
+            Analytics = new Analytics(loggerFactory?.CreateLogger<Analytics>()!, Settings, rateLimiter, http);
+            Ads = new Ads(loggerFactory?.CreateLogger<Ads>()!, Settings, rateLimiter, http);
+            Bits = new Bits(loggerFactory?.CreateLogger<Bits>()!, Settings, rateLimiter, http);
+            Chat = new Chat(loggerFactory?.CreateLogger<Chat>()!, Settings, rateLimiter, http);
+            Channels = new Channels(loggerFactory?.CreateLogger<Channels>()!, Settings, rateLimiter, http);
+            ChannelPoints = new ChannelPoints(loggerFactory?.CreateLogger<ChannelPoints>()!, Settings, rateLimiter, http);
+            Clips = new Clips(loggerFactory?.CreateLogger<Clips>()!, Settings, rateLimiter, http);
+            Entitlements = new Entitlements(loggerFactory?.CreateLogger<Entitlements>()!, Settings, rateLimiter, http);
+            EventSub = new EventSub(loggerFactory?.CreateLogger<EventSub>()!, Settings, rateLimiter, http);
+            Extensions = new Extensions(loggerFactory?.CreateLogger<Extensions>()!, Settings, rateLimiter, http);
+            Games = new Games(loggerFactory?.CreateLogger<Games>()!, Settings, rateLimiter, http);
+            Goals = new Goals(loggerFactory?.CreateLogger<Goals>()!, Settings, rateLimiter, http);
+            HypeTrain = new HypeTrain(loggerFactory?.CreateLogger<HypeTrain>()!, Settings, rateLimiter, http);
+            Moderation = new Moderation(loggerFactory?.CreateLogger<Moderation>()!, Settings, rateLimiter, http);
+            Polls = new Polls(loggerFactory?.CreateLogger<Polls>()!, Settings, rateLimiter, http);
+            Predictions = new Predictions(loggerFactory?.CreateLogger<Predictions>()!, Settings, rateLimiter, http);
+            Schedule = new Schedule(loggerFactory?.CreateLogger<Schedule>()!, Settings, rateLimiter, http);
+            Search = new Search(loggerFactory?.CreateLogger<Search>()!, Settings, rateLimiter, http);
+            Soundtrack = new Soundtrack(loggerFactory?.CreateLogger<Soundtrack>()!, Settings, rateLimiter, http);
+            Streams = new Streams(loggerFactory?.CreateLogger<Streams>()!, Settings, rateLimiter, http);
+            Subscriptions = new Subscriptions(loggerFactory?.CreateLogger<Subscriptions>()!, Settings, rateLimiter, http);
+            Tags = new Tags(loggerFactory?.CreateLogger<Tags>()!, Settings, rateLimiter, http);
+            Teams = new Teams(loggerFactory?.CreateLogger<Teams>()!, Settings, rateLimiter, http);
+            Users = new Users(loggerFactory?.CreateLogger<Users>()!, Settings, rateLimiter, http);
+            Videos = new Videos(loggerFactory?.CreateLogger<Videos>()!, Settings, rateLimiter, http);
         }
     }
 }

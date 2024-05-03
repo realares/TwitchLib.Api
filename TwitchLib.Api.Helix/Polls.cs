@@ -11,12 +11,13 @@ using TwitchLib.Api.Helix.Models.Polls.EndPoll;
 using TwitchLib.Api.Helix.Models.Polls.GetPolls;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using Microsoft.Extensions.Logging;
 
 namespace TwitchLib.Api.Helix
 {
     public class Polls : ApiBase
     {
-        public Polls(IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) : base(settings, rateLimiter, http)
+        public Polls(ILogger<Polls> logger, IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http) : base(logger, settings, rateLimiter, http)
         {
         }
 
