@@ -6,7 +6,7 @@ namespace TwitchLib.Api.Core.Exceptions
     {
         /// <inheritdoc />
         /// <summary>Exception constructor</summary>
-        public UnprocessableEntityRequestException(string apiData)
+        public UnprocessableEntityRequestException(string? apiData)
             : base(apiData)
         {
         }

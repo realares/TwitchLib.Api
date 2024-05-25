@@ -12,10 +12,10 @@ namespace TwitchLib.Api.Core.Exceptions
         /// </summary>
         /// <param name="data">This is the exception message as a string</param>
         /// <param name="resetTime">This is the reset time from twitch as a linux timestamp</param>
-        public TooManyRequestsException(string data, string resetTime)
+        public TooManyRequestsException(string? data, string? resetTime)
             : base(data)
         {
-            if (double.TryParse(resetTime, out var time))
+            if (resetTime != null && double.TryParse(resetTime, out var time))
             {
                 Data.Add("Ratelimit-Reset", time);
             }

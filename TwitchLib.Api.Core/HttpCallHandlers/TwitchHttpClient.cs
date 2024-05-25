@@ -80,12 +80,6 @@ namespace TwitchLib.Api.Core.HttpCallHandlers
 
             string error = await response.Content.ReadAsStringAsync();
 
-            //if (handleErrorResults)
-            //{
-            //    HandleWebException(response, error);
-            //    return new KeyValuePair<HttpStatusCode, string?>(0, null);
-            //}
-            //else
             return new KeyValuePair<HttpStatusCode, string?>(response.StatusCode, error);
             
         }

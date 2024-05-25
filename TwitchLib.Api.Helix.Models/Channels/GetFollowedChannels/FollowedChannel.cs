@@ -26,6 +26,6 @@ namespace TwitchLib.Api.Helix.Models.Channels.GetFollowedChannels
         /// The UTC timestamp when the user started following the broadcaster.
         /// </summary>
         [JsonPropertyName("followed_at")]
-        public string FollowedAt { get; protected set;  }
+        public string FollowedAt { get; set;  }
     }
 }

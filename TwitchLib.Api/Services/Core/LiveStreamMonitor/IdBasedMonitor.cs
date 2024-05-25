@@ -18,7 +18,7 @@ namespace TwitchLib.Api.Services.Core.LiveStreamMonitor
 
         public override Task<GetStreamsResponse> GetStreamsAsync(List<string> channels, string accessToken = null)
         {
-            return _api.Helix.Streams.GetStreamsAsync(first: channels.Count, userIds: channels, accessToken: accessToken);
+            return _api.Helix.Streams.GetStreamsAsync(userIds: channels, first: channels.Count, accessToken: accessToken);
         }
     }
 }

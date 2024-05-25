@@ -6,7 +6,7 @@ namespace TwitchLib.Api.Core.Exceptions
     {
         /// <inheritdoc />
         /// <summary>Exception constructor</summary>
-        public ConflictRequestException(string apiData)
+        public ConflictRequestException(string? apiData)
             : base(apiData)
         {
         }

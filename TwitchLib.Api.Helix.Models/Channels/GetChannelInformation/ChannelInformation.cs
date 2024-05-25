@@ -29,7 +29,7 @@ namespace TwitchLib.Api.Helix.Models.Channels.GetChannelInformation
         public int Delay { get; set; } = default!;
 
         [JsonPropertyName("tags")]
-        public string[] Tags{get; protected set; } = default!;
+        public string[] Tags{get;  set; } = default!;
 
     }
 }

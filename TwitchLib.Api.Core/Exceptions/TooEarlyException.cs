@@ -6,7 +6,7 @@ namespace TwitchLib.Api.Core.Exceptions
     {
         /// <inheritdoc />
         /// <summary>Exception constructor</summary>
-        public TooEarlyException(string data)
+        public TooEarlyException(string? data)
             : base(data)
         {
         }

@@ -221,7 +221,7 @@ namespace TwitchLib.Api.Helix
         /// <param name="moderatorId">The ID of the broadcaster or a user that is one of the broadcaster’s moderators. This ID must match the user ID in the access token.</param>
         /// <param name="accessToken"></param>
         /// <exception cref="BadParameterException"></exception>
-        public Task SendShoutoutAsync(string fromBroadcasterId, string toBroadcasterId, string moderatorId, string? accessToken = null)
+        public async Task<bool> SendShoutoutAsync(string fromBroadcasterId, string toBroadcasterId, string moderatorId, string? accessToken = null)
         {
             if (string.IsNullOrEmpty(fromBroadcasterId))
                 throw new BadParameterException("broadcasterId must be set");
@@ -234,12 +234,14 @@ namespace TwitchLib.Api.Helix
 
             var getParams = new List<KeyValuePair<string, string>>
             {
-                new KeyValuePair<string, string>("from_broadcaster_id", fromBroadcasterId),
-                new KeyValuePair<string, string>("to_broadcaster_id", toBroadcasterId),
-                new KeyValuePair<string, string>("moderator_id", moderatorId),
+                new("from_broadcaster_id", fromBroadcasterId),
+                new("to_broadcaster_id", toBroadcasterId),
+                new("moderator_id", moderatorId),
             };
 
-            return TwitchPostAsync("/chat/shoutouts", ApiVersion.Helix, null, getParams, accessToken);
+            var result = await TwitchPostAsync("/chat/shoutouts", ApiVersion.Helix, null, getParams, accessToken);
+            return HandleBooleanResponse(result, false);
+
         }
 
         #endregion
@@ -255,7 +257,7 @@ namespace TwitchLib.Api.Helix
         /// <param name="accessToken"></param>
         /// <returns></returns>
         /// <exception cref="BadParameterException"></exception>
-        public Task<SendChatMessageResponse?> SendChatMessage(
+        public async Task<SendChatMessageResponse?> SendChatMessage(
             SendMessageDto sendMessage, 
             string? accessToken = null)
         {
@@ -268,8 +270,15 @@ namespace TwitchLib.Api.Helix
             if (string.IsNullOrEmpty(sendMessage.Message))
                 throw new BadParameterException("message must be set");
 
-            return TwitchPostGenericModelAsync<SendChatMessageResponse>("/chat/messages", ApiVersion.Helix, sendMessage, null, accessToken);
-            //return TwitchPostGenericAsync<SendChatMessageResponse>("/chat/messages", ApiVersion.Helix, json.ToString(), null, accessToken);
+            var result = await TwitchPostGenericModelAsync<SendChatMessageResponse>("/chat/messages", ApiVersion.Helix, sendMessage, null, accessToken);
+
+            if (result?.Data != null && result.Data.Length > 0 && !result.Data[0].IsSent)
+            {
+                
+            }
+
+            return result;
+            
         }
         //public Task<SendChatMessageResponse?> SendChatMessage(
         //    string broadcasterId, string senderId,

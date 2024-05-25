@@ -8,7 +8,7 @@ namespace TwitchLib.Api.Core.Exceptions
     {
         /// <inheritdoc />
         /// <summary>Exception constructor</summary>
-        public BadRequestException(string apiData)
+        public BadRequestException(string? apiData)
             : base(apiData)
         {
         }

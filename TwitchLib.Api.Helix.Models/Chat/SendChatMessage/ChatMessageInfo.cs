@@ -18,7 +18,7 @@ namespace TwitchLib.Api.Helix.Models.Channels.SendChatMessage
         /// 	The reason the message was dropped, if any.
         /// </summary>
         [JsonPropertyName("drop_reason")]
-        public DropReason[] DropReason { get; set; } = [];
+        public DropReason? DropReason { get; set; }
 
     }
 }

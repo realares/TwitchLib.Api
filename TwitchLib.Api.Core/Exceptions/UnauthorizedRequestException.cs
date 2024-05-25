@@ -6,7 +6,7 @@ namespace TwitchLib.Api.Core.Exceptions
     {
         /// <inheritdoc />
         /// <summary>Exception constructor</summary>
-        public UnauthorizedRequestException(string apiData)
+        public UnauthorizedRequestException(string? apiData)
             : base(apiData)
         {
         }

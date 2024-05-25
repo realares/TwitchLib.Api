@@ -24,8 +24,8 @@ namespace TwitchLib.Api.Helix
         }
 
         public Task<GetStreamsResponse?> GetStreamsAsync(
-            string? after = null, List<string>? communityIds = null, int first = 20, List<string>? gameIds = null, 
-            List<string>? languages = null, string type = "all", List<string>? userIds = null, List<string>? userLogins = null, string? accessToken = null)
+            List<string>? userIds = null, List<string>? communityIds = null, List<string>? gameIds = null, List<string>? languages = null,
+            string type = "all", int first = 20, string? after = null, List<string>? userLogins = null, string? accessToken = null)
         {
             var getParams = new List<KeyValuePair<string, string>>
                 {

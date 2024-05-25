@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System;
+using System.Text.Json.Serialization;
 
 namespace TwitchLib.Api.Helix.Models.Clips.GetClips
 {
@@ -85,7 +86,7 @@ namespace TwitchLib.Api.Helix.Models.Clips.GetClips
         /// The date and time of when the clip was created. The date and time is in RFC3339 format.
         /// </summary>
         [JsonPropertyName("created_at")]
-        public string CreatedAt { get; set; } = null!;
+        public DateTimeOffset CreatedAt { get; set; }
 
         /// <summary>
         /// A URL to a thumbnail image of the clip.
@@ -105,6 +106,6 @@ namespace TwitchLib.Api.Helix.Models.Clips.GetClips
         /// <para>Note that there’s a delay between when a clip is created during a broadcast and when the offset is set. During the delay period, vod_offset is null. The delay is indeterminant but is typically minutes long.</para>
         /// </summary>
         [JsonPropertyName("vod_offset")]
-        public int VodOffset { get; protected set; }
+        public int? VodOffset { get; set; }
     }
 }

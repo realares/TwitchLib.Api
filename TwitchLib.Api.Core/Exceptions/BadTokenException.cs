@@ -10,7 +10,7 @@ namespace TwitchLib.Api.Core.Exceptions
     {
         /// <inheritdoc />
         /// <summary>Exception constructor</summary>
-        public BadTokenException(string data)
+        public BadTokenException(string? data)
             : base(data)
         {
         }

@@ -6,7 +6,7 @@ namespace TwitchLib.Api.Core.Exceptions
     {
         /// <inheritdoc />
         /// <summary>Exception constructor</summary>
-        public NotFoundRequestException(string apiData)
+        public NotFoundRequestException(string? apiData)
             : base(apiData)
         {
         }
