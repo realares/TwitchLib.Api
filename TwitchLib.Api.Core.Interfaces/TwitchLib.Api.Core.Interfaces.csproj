@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	  <TargetFrameworks>net8.0</TargetFrameworks>
+	  <TargetFrameworks>net9.0</TargetFrameworks>
     <PackageId>TwitchLib.Api.Core.Interfaces</PackageId>
     <VersionPrefix>4.5.0</VersionPrefix>
     <VersionSuffix>$(VersionSuffix)</VersionSuffix>

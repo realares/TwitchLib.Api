@@ -20,6 +20,27 @@ namespace TwitchLib.Api.Helix
 
         #region GetClips
 
+        /// <summary>
+        /// Gets one or more video clips that were captured from streams. For information about clips, see How to use clips.
+        /// </summary>
+        /// <param name="clipIds"></param>
+        /// <param name="gameId"></param>
+        /// <param name="broadcasterId"></param>
+        /// <param name="before">
+        /// The cursor used to get the previous page of results. 
+        /// The Pagination object in the response contains the cursor’s value.</param>
+        /// <param name="after">
+        /// The cursor used to get the next page of results. 
+        /// The Pagination object in the response contains the cursor’s value.</param>
+        /// <param name="startedAt"></param>
+        /// <param name="endedAt"></param>
+        /// <param name="first">
+        /// The maximum number of clips to return per page in the response. 
+        /// The minimum page size is 1 clip per page and the maximum is 100. 
+        /// The default is 20.</param>
+        /// <param name="accessToken"></param>
+        /// <returns></returns>
+        /// <exception cref="BadParameterException"></exception>
         public Task<GetClipsResponse?> GetClipsAsync(
             List<string>? clipIds = null, string? gameId = null, 
             string? broadcasterId = null, string? before = null, string? after = null, 

@@ -20,11 +20,11 @@ namespace TwitchLib.Api.Core.Internal
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             if (request.Content != null)
-                _logger?.LogInformation("Timestamp: {timestamp} Type: {type} Method: {method} Resource: {url} Content: {content}",
-                    DateTime.Now, "Request", request.Method.ToString(), request.RequestUri.ToString(), await request.Content.ReadAsStringAsync());
+                _logger?.LogTrace("Timestamp: {timestamp} Type: {type} Method: {method} Resource: {url} Content: {content}",
+                    DateTime.Now, "Request", request.Method.ToString(), request.RequestUri!.ToString(), await request.Content.ReadAsStringAsync());
             else
-                _logger?.LogInformation("Timestamp: {timestamp} Type: {type} Method: {method} Resource: {url}",
-                    DateTime.Now, "Request", request.Method.ToString(), request.RequestUri.ToString());
+                _logger?.LogTrace("Timestamp: {timestamp} Type: {type} Method: {method} Resource: {url}",
+                    DateTime.Now, "Request", request.Method.ToString(), request.RequestUri!.ToString());
 
             var stopwatch = Stopwatch.StartNew();
             var response = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
@@ -33,20 +33,20 @@ namespace TwitchLib.Api.Core.Internal
             if (response.IsSuccessStatusCode)
             {
                 if (response.Content != null)
-                    _logger?.LogInformation("Timestamp: {timestamp} Type: {type} Resource: {url} Statuscode: {statuscode} Elapsed: {elapsed} ms Content: {content}",
-                        DateTime.Now, "Response", response.RequestMessage.RequestUri, (int)response.StatusCode, stopwatch.ElapsedMilliseconds, await response.Content.ReadAsStringAsync());
+                    _logger?.LogTrace("Timestamp: {timestamp} Type: {type} Resource: {url} Statuscode: {statuscode} Elapsed: {elapsed} ms Content: {content}",
+                        DateTime.Now, "Response", response.RequestMessage!.RequestUri, (int)response.StatusCode, stopwatch.ElapsedMilliseconds, await response.Content.ReadAsStringAsync());
                 else
-                    _logger?.LogInformation("Timestamp: {timestamp} Type: {type} Resource: {url} Statuscode: {statuscode} Elapsed: {elapsed} ms",
-                        DateTime.Now, "Response", response.RequestMessage.RequestUri, (int)response.StatusCode, stopwatch.ElapsedMilliseconds);
+                    _logger?.LogTrace("Timestamp: {timestamp} Type: {type} Resource: {url} Statuscode: {statuscode} Elapsed: {elapsed} ms",
+                        DateTime.Now, "Response", response.RequestMessage!.RequestUri, (int)response.StatusCode, stopwatch.ElapsedMilliseconds);
             }
             else
             {
                 if (response.Content != null)
                     _logger?.LogError("Timestamp: {timestamp} Type: {type} Resource: {url} Statuscode: {statuscode} Elapsed: {elapsed} ms Content: {content}",
-                        DateTime.Now, "Response", response.RequestMessage.RequestUri, (int)response.StatusCode, stopwatch.ElapsedMilliseconds, await response.Content.ReadAsStringAsync());
+                        DateTime.Now, "Response", response.RequestMessage!.RequestUri, (int)response.StatusCode, stopwatch.ElapsedMilliseconds, await response.Content.ReadAsStringAsync());
                 else
                     _logger?.LogError("Timestamp: {timestamp} Type: {type} Resource: {url} Statuscode: {statuscode} Elapsed: {elapsed} ms",
-                        DateTime.Now, "Response", response.RequestMessage.RequestUri, (int)response.StatusCode, stopwatch.ElapsedMilliseconds);
+                        DateTime.Now, "Response", response.RequestMessage!.RequestUri, (int)response.StatusCode, stopwatch.ElapsedMilliseconds);
             }
 
             return response;

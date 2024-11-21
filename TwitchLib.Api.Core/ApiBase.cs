@@ -33,6 +33,11 @@ namespace TwitchLib.Api.Core
         public ApiBase(ILogger logger, IApiSettings settings, IRateLimiter rateLimiter, IHttpCallHandler http)
         {
             this.logger = logger;
+
+            if (this.logger == null)
+            {
+
+            }
             Settings = settings;
             _rateLimiter = rateLimiter;
             _http = http;
@@ -348,6 +353,7 @@ namespace TwitchLib.Api.Core
             {
                 case HttpStatusCode.OK:
                 case HttpStatusCode.NoContent:
+                case HttpStatusCode.Accepted:
                     if (webresult.Value == null)
                         return default;
                     return JsonSerializer.Deserialize<T>(webresult.Value, _ms_twitchLibJsonDeserializer); 

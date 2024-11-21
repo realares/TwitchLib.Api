@@ -21,6 +21,7 @@ using TwitchLib.Api.Helix.Models.Moderation.GetModerators;
 using System.Drawing;
 using TwitchLib.Api.Helix.Models.Chat.SendChatMessage;
 using Microsoft.Extensions.Logging;
+using TwitchLib.Api.Helix.Models.Chat.GetChatters;
 
 namespace TwitchLib.Api.Helix
 {
@@ -68,7 +69,7 @@ namespace TwitchLib.Api.Helix
         /// <param name="accessToken">optional access token to override the use of the stored one in the TwitchAPI instance</param>
         /// <returns cref="GetChattersResponse"></returns>
         /// <exception cref="BadParameterException"></exception>
-        public Task<GetChatSettingsResponse?> GetChatter(
+        public Task<GetChattersResponse?> GetChatter(
             string broadcasterId, string moderatorId, string? accessToken = null, int first = 100, string? afterCursor = null)
         {
             if (string.IsNullOrEmpty(broadcasterId))
@@ -89,7 +90,7 @@ namespace TwitchLib.Api.Helix
             if (afterCursor != null)
                 getParams.Add(new KeyValuePair<string, string>("after", afterCursor));
 
-            return TwitchGetGenericAsync<GetChatSettingsResponse>("/chat/settings", ApiVersion.Helix, getParams, accessToken);
+            return TwitchGetGenericAsync<GetChattersResponse>("/chat/chatters", ApiVersion.Helix, getParams, accessToken);
         }
         #endregion
 

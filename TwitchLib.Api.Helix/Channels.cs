@@ -149,6 +149,7 @@ namespace TwitchLib.Api.Helix
         /// Gets a list of users that follow the specified broadcaster.
         /// <para>You can also use this endpoint to see whether a specific user follows the broadcaster.</para>
         /// </summary>
+        /// <permission cref="moderator:read:followers"
         /// <param name="broadcasterId">The broadcaster’s ID. Returns the list of users that follow this broadcaster.</param>
         /// <param name="userId">
         /// A users’s ID. Use this parameter to see whether the user follows this broadcaster.
