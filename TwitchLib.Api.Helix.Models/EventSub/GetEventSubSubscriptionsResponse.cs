@@ -1,8 +1,10 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using TwitchLib.Api.Helix.Models.Common;
 
 namespace TwitchLib.Api.Helix.Models.EventSub
 {
+
     public record GetEventSubSubscriptionsResponse
     {
         /// <summary>
@@ -15,7 +17,7 @@ namespace TwitchLib.Api.Helix.Models.EventSub
         /// An array of subscription objects. The list is empty if you don’t have any subscriptions.
         /// </summary>
         [JsonPropertyName("data")]
-        public EventSubSubscription[] Subscriptions { get; set; } = null!;
+        public List<EventSubSubscription> Subscriptions { get; set; } = null!;
 
         /// <summary>
         /// The sum of all of your subscription costs.

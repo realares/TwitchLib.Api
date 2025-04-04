@@ -25,8 +25,8 @@ namespace TwitchLib.Api.Core
         internal const string BaseHelix = "https://api.twitch.tv/helix";
         internal const string BaseAuth = "https://id.twitch.tv/oauth2";
 
-        private DateTime? _serverBasedAccessTokenExpiry;
-        private string? _serverBasedAccessToken = null;
+        private static DateTime? _serverBasedAccessTokenExpiry;
+        private static string? _serverBasedAccessToken = null;
 
         protected readonly System.Text.Json.JsonSerializerOptions _ms_twitchLibJsonDeserializer;
    
@@ -69,15 +69,22 @@ namespace TwitchLib.Api.Core
 
         internal async Task<string?> GenerateServerBasedAccessToken()
         {
-            var result = await _http.GeneralRequestAsync($"{BaseAuth}/token?client_id={Settings.ClientId}&client_secret={Settings.Secret}&grant_type=client_credentials", "POST", null, ApiVersion.Auth, Settings.ClientId, null).ConfigureAwait(false);
-            if (result.Key ==  HttpStatusCode.OK && result.Value != null)
+            try
             {
-                var user = System.Text.Json.JsonSerializer.Deserialize<TokeResult>(result.Value);
-                if (user == null) return null;
-                var offset = (int)user.Expires_in;
-                _serverBasedAccessTokenExpiry = DateTime.Now + TimeSpan.FromSeconds(offset);
-                _serverBasedAccessToken = (string)user.Access_token;
-                return _serverBasedAccessToken;
+                var result = await _http.GeneralRequestAsync($"{BaseAuth}/token?client_id={Settings.ClientId}&client_secret={Settings.Secret}&grant_type=client_credentials", "POST", null, ApiVersion.Auth, Settings.ClientId, null).ConfigureAwait(false);
+                if (result.Key == HttpStatusCode.OK && result.Value != null)
+                {
+                    var user = System.Text.Json.JsonSerializer.Deserialize<TokeResult>(result.Value);
+                    if (user == null) return null;
+                    var offset = (int)user.Expires_in;
+                    _serverBasedAccessTokenExpiry = DateTime.Now + TimeSpan.FromSeconds(offset);
+                    _serverBasedAccessToken = (string)user.Access_token;
+                    return _serverBasedAccessToken;
+                }
+            }
+            catch (Exception e)
+            {
+                logger.LogError(e, e.Message);
             }
             return null;
         }

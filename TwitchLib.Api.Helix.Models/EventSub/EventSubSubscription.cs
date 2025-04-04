@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 namespace TwitchLib.Api.Helix.Models.EventSub
 {
+
+    /// <summary>
+    /// A single subscription.
+    /// </summary>
     public record EventSubSubscription
     {
         /// <summary>

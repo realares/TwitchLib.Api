@@ -56,7 +56,7 @@ namespace TwitchLib.Api.Helix
 
             var getParams = new List<KeyValuePair<string, string>>()
             {
-                new KeyValuePair<string, string>("broacaster_id", broadcasterId)
+                new KeyValuePair<string, string>("broadcaster_id", broadcasterId)
             };
 
             MessageRequest request = new MessageRequest()
